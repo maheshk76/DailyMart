@@ -27,23 +27,6 @@
                             <img src="~/Content/Products/images/system/logo1x.png" alt="image" width="107" height="24" data-retina="Content/Products/images/system/logo2x.png" data-width="107" data-height="24">
                         </a>
                     </div><!-- /.logo -->
-                    <ul class="menu-extra">
-
-                        @Html.Partial("_LoginPartial")
-
-                        <li class="box-cart nav-top-cart-wrapper">
-                            @{ var count = 0;
-                                if (Session["cart"] != null)
-                                {
-                                    // List<Item> cart = (List<Item>)Session["cart"];
-                                    // count = cart.Count();
-                                    count = 0;
-
-                                }
-                            }
-                            <a class="icon_cart nav-cart-trigger active" href="@Url.Action("Cart", "Home")"><span id="cartProductsCount">@count</span></a>
-                        </li>
-                    </ul>
                     <!-- /.menu-extra -->
                     <div class="nav-wrap">
                         <nav id="mainnav" class="mainnav">
@@ -56,40 +39,60 @@
                                 <li><a href="@Url.Action("Contact", "Home")">Contact</a></li>
                                 <li><a href="@Url.Action("About", "Home")">About</a></li>
                             </ul>
+
                         </nav><!-- /.mainnav -->
                     </div><!-- /.nav-wrap -->
+
+                    <ul class="menu-extra">
+                        @if (Request.IsAuthenticated)
+                        {
+                        <li class="box-cart nav-top-cart-wrapper">
+                            @{ var count = 0;
+                                if (Session["cart"] != null)
+                                {
+                                    // List<Item> cart = (List<Item>)Session["cart"];
+                                    // count = cart.Count();
+                                    count = 0;
+
+                                }
+                            }
+                            <a class="icon_cart nav-cart-trigger active" href="@Url.Action("Cart", "Home")"><span id="cartProductsCount">@count</span></a>
+                        </li>
+                                }
+                        @Html.Partial("_LoginPartial")
+
+                    </ul>
                 </div><!-- /.container-fluid -->
             </header><!-- /header -->
         </div><!-- /.site-header-wrap -->
 
 
         @RenderBody()
-
+    <div style="bottom:0;">
         <section class="flat-row mail-chimp">
             <div class="container">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="text">
-                            <h3>Sign up for Send Newsletter</h3>
+                            <h3>Get our Newsletter</h3>
                         </div>
                     </div>
                     <div class="col-md-8">
                         <div class="subscribe clearfix">
+
                             <form action="#" method="post" accept-charset="utf-8" id="subscribe-form">
                                 <div class="subscribe-content">
                                     <div class="input">
                                         <input type="email" name="subscribe-email" placeholder="Your Email">
                                     </div>
                                     <div class="button">
-                                        <button type="button">SUBCRIBE</button>
+                                        <button type="button">Subscribe</button>
                                     </div>
                                 </div>
                             </form>
                             <ul class="flat-social">
                                 <li><a href="@Url.Action("Error404", "Home")"><i class="fa fa-facebook"></i></a></li>
                                 <li><a href="@Url.Action("Error404", "Home")"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="@Url.Action("Error404", "Home")"><i class="fa fa-google"></i></a></li>
-                                <li><a href="@Url.Action("Error404", "Home")"><i class="fa fa-behance"></i></a></li>
                                 <li><a href="@Url.Action("Error404", "Home")"><i class="fa fa-linkedin"></i></a></li>
                             </ul><!-- /.flat-social -->
                         </div><!-- /.subscribe -->
@@ -115,9 +118,9 @@
                         <div class="widget widget-link link-login">
                             <ul>
                                 <li><a href="@Url.Action("Login", "Account")">Login/ Register</a></li>
-                                    @*<li><a href="@Url.Action("Cart", "Home")">Your Cart</a></li>
-                                    <li><a href="@Url.Action("MyOrders", "Home")">Your checkout</a></li>
-    *@
+                                @*<li><a href="@Url.Action("Cart", "Home")">Your Cart</a></li>
+                                <li><a href="@Url.Action("MyOrders", "Home")">Your checkout</a></li>
+                                *@
                             </ul>
                         </div><!-- /.widget -->
                     </div><!-- /.col-md-3 -->
@@ -138,8 +141,8 @@
                             </div>
                             <ul class="flat-contact">
                                 <li class="address">304 ,Aster Blossam Aura College Road ,Nadiad</li>
-                                <li class="phone">+91 9727254298</li>
-                                <li class="email">parthpatel@gmail.com</li>
+                                <li class="phone">+91 97698430164</li>
+                                <li class="email">mnkantariya173@gmail.com</li>
                             </ul><!-- /.flat-contact -->
                         </div><!-- /.widget -->
                     </div><!-- /.col-md-3 -->
@@ -151,12 +154,12 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <p class="copyright text-center"> <a href="/">Modaz</a></p>
+                        <p class="copyright text-center">&copy; @DateTime.Now.Year -All rights reserved</p>
                     </div>
                 </div>
             </div>
         </div>
-
+    </div>
         <!-- Go Top -->
         <a class="go-top">
             <i class="fa fa-chevron-up"></i>

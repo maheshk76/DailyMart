@@ -167,27 +167,20 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Content\ExternalLoginKeys.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202102171300194_adddomainclasses.cs" />
-    <Compile Include="Migrations\202102171300194_adddomainclasses.Designer.cs">
-      <DependentUpon>202102171300194_adddomainclasses.cs</DependentUpon>
+    <Compile Include="Migrations\202102190924585_initialmigration.cs" />
+    <Compile Include="Migrations\202102190924585_initialmigration.Designer.cs">
+      <DependentUpon>202102190924585_initialmigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202102171448392_adddomainclasses1.cs" />
-    <Compile Include="Migrations\202102171448392_adddomainclasses1.Designer.cs">
-      <DependentUpon>202102171448392_adddomainclasses1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202102171527391_addnameandphoneforuser.cs" />
-    <Compile Include="Migrations\202102171527391_addnameandphoneforuser.Designer.cs">
-      <DependentUpon>202102171527391_addnameandphoneforuser.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202102180355397_adddomainclassforpayment.cs" />
-    <Compile Include="Migrations\202102180355397_adddomainclassforpayment.Designer.cs">
-      <DependentUpon>202102180355397_adddomainclassforpayment.cs</DependentUpon>
+    <Compile Include="Migrations\202102190926000_adddomainclasses.cs" />
+    <Compile Include="Migrations\202102190926000_adddomainclasses.Designer.cs">
+      <DependentUpon>202102190926000_adddomainclasses.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -354,6 +347,8 @@
     <Content Include="Content\stylesheets\shortcodes.css" />
     <Content Include="Content\stylesheets\style.css" />
     <Content Include="Content\stylesheets\woocommerce.css" />
+    <Content Include="Content\toastr.css" />
+    <Content Include="Content\toastr.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -371,6 +366,8 @@
     <Content Include="Content\rev-slider\fonts\revicons\revicons90c6.eot" />
     <Content Include="Content\rev-slider\fonts\revicons\revicons90c6.ttf" />
     <Content Include="Content\rev-slider\fonts\revicons\revicons90c6.woff" />
+    <Content Include="Content\toastr.scss" />
+    <Content Include="Content\toastr.less" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -382,6 +379,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\toastr.js" />
+    <Content Include="Scripts\toastr.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -416,9 +415,12 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Account\LoggedIn.cshtml" />
+    <Content Include="Views\Manage\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -434,17 +436,11 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202102171300194_adddomainclasses.resx">
-      <DependentUpon>202102171300194_adddomainclasses.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202102190924585_initialmigration.resx">
+      <DependentUpon>202102190924585_initialmigration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202102171448392_adddomainclasses1.resx">
-      <DependentUpon>202102171448392_adddomainclasses1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202102171527391_addnameandphoneforuser.resx">
-      <DependentUpon>202102171527391_addnameandphoneforuser.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202102180355397_adddomainclassforpayment.resx">
-      <DependentUpon>202102180355397_adddomainclassforpayment.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202102190926000_adddomainclasses.resx">
+      <DependentUpon>202102190926000_adddomainclasses.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,0 +1,81 @@
+﻿@model DailyMart.Models.EditViewModel
+@{
+    ViewBag.Title = "Edit";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <br />
+            <div class="title-section">
+                <h2 class="title">
+                    @ViewBag.Title
+                </h2><hr />
+            </div>
+            @using (Html.BeginForm("Edit", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="col-md-12">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.User.Name, new { @class = "col-md-4 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.User.Name, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.User.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.User.Phone, new { @class = "col-md-4 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.User.Phone, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.User.Phone, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.User.Email, new { @class = "col-md-4 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.User.Email, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.User.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 mt-5">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Address.AddressLine, new { @class = "col-md-4 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.Address.AddressLine, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Address.AddressLine, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Address.City, new { @class = "col-md-4 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.Address.City, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Address.City, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Address.State, new { @class = "col-md-4 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.Address.State, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Address.State, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Address.ZipCode, new { @class = "col-md-4 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.Address.ZipCode, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Address.ZipCode, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    @Html.HiddenFor(m => m.User.Id)
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Save" class="themesflat-button bg-accent" />
+                        </div>
+                    </div>
+                </div>
+                    }
+                </div>
+            </div>
+    </div>

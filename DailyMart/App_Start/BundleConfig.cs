@@ -32,8 +32,8 @@ namespace DailyMart
                 "~/Content/stylesheets/style.css",
                 "~/Content/stylesheets/responsive.css",
                 "~/Content/stylesheets/colors/color1.css",
-                "~/Content/stylesheets/animate.css"
-
+                "~/Content/stylesheets/animate.css",
+                "~/Content/toastr.css"
                 ));
 
 
@@ -58,7 +58,8 @@ namespace DailyMart
                     "~/Content/javascript/jquery.cookie.js",
                     "~/Content/javascript/main.js",
                     "~/Content/javascript/rev-slider.js",
-                    "~/Content/javascript/jquery-ui.js"
+                    "~/Content/javascript/jquery-ui.js",
+                    "~/Scripts/toastr.js"
 
                 ));
 

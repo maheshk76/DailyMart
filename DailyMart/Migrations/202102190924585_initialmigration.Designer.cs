@@ -7,13 +7,13 @@ namespace DailyMart.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class addnameandphoneforuser : IMigrationMetadata
+    public sealed partial class initialmigration : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(addnameandphoneforuser));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(initialmigration));
         
         string IMigrationMetadata.Id
         {
-            get { return "202102171527391_addnameandphoneforuser"; }
+            get { return "202102190924585_initialmigration"; }
         }
         
         string IMigrationMetadata.Source

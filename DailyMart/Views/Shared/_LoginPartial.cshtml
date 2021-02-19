@@ -1,19 +1,27 @@
 ﻿@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
-    <li>
-        <a href="@Url.Action("Index","Home")"><i class="fa fa-user"></i></a>
-        @*@Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
-    </li>
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
-    {
-        @Html.AntiForgeryToken()
+    <div class="btn-group">
+        <li type="button" style="font-size:15px;" class=" fa fa-user btn btn-lg dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            
+        </li>
+        <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left">
+            <a href="@Url.Action("Index","Manage")"><li class="dropdown-item">Profile</li></a>
+            <a href="javascript:document.getElementById('logoutForm').submit()">
+                <li class="dropdown-item">
+                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                    {
+                        @Html.AntiForgeryToken()
+                    <li title="Logout">
+                        Signout
+                    </li>
+                }
+                    </li>
+                </a>
 
-        @*<ul class="nav navbar-nav navbar-right">*@
-
-        <li title="Logout"><a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-power-off"></i></a></li>
-        @*</ul>*@
-    }
+                </div>
+    </div>
+    
 }
 else
 {

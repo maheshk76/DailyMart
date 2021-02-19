@@ -9,9 +9,13 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using DailyMart.Models;
+using System.Web.Mvc.Filters;
+using System.Web.Routing;
 
 namespace DailyMart.Controllers
 {
+
+
     [Authorize]
     public class AccountController : Controller
     {
@@ -50,6 +54,10 @@ namespace DailyMart.Controllers
             {
                 _userManager = value;
             }
+        }
+        public ActionResult LoggedIn()
+        {
+            return View();
         }
 
         //
@@ -135,6 +143,7 @@ namespace DailyMart.Controllers
         }
 
         //
+        
         // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register()

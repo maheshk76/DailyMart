@@ -22,7 +22,7 @@ namespace DailyMart.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public DbSet<Product> Products { get; set; }
+       public DbSet<Product> Products { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Address> Address { get; set; }
         public DbSet<Category> Category { get; set; }

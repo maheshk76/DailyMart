@@ -3,12 +3,12 @@ namespace DailyMart.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class adddomainclasses1 : DbMigration
+    public partial class adddomainclasses : DbMigration
     {
         public override void Up()
         {
             CreateTable(
-                "dbo.Address",
+                "dbo.Addresses",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -21,7 +21,7 @@ namespace DailyMart.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.Category",
+                "dbo.Categories",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -35,11 +35,23 @@ namespace DailyMart.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         OrderDate = c.DateTime(nullable: false),
-                        OrderStatus = c.Int(nullable: false),
+                        OrderStatus = c.String(),
                         Amount = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        PaymentStatus = c.Int(nullable: false),
-                        PaymentType = c.Int(nullable: false),
                         UserId = c.String(nullable: false),
+                        PaymentId = c.Byte(),
+                        Payment_Id = c.Int(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Payments", t => t.Payment_Id)
+                .Index(t => t.Payment_Id);
+            
+            CreateTable(
+                "dbo.Payments",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Status = c.String(nullable: false),
+                        Type = c.String(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -58,18 +70,21 @@ namespace DailyMart.Migrations
                         Category_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Category", t => t.Category_Id)
+                .ForeignKey("dbo.Categories", t => t.Category_Id)
                 .Index(t => t.Category_Id);
             
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.Products", "Category_Id", "dbo.Category");
+            DropForeignKey("dbo.Products", "Category_Id", "dbo.Categories");
+            DropForeignKey("dbo.Orders", "Payment_Id", "dbo.Payments");
             DropIndex("dbo.Products", new[] { "Category_Id" });
+            DropIndex("dbo.Orders", new[] { "Payment_Id" });
             DropTable("dbo.Products");
+            DropTable("dbo.Payments");
             DropTable("dbo.Orders");
-            DropTable("dbo.Category");
+            DropTable("dbo.Categories");
             DropTable("dbo.Addresses");
         }
     }

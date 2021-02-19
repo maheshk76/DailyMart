@@ -5,8 +5,14 @@ using Microsoft.Owin.Security;
 
 namespace DailyMart.Models
 {
+    public class EditViewModel
+    {
+        public ApplicationUser User { get; set; }
+        public Address Address { get; set; }
+    }
     public class IndexViewModel
     {
+        public ApplicationUser User { get; set; }
         public bool HasPassword { get; set; }
         public IList<UserLoginInfo> Logins { get; set; }
         public string PhoneNumber { get; set; }

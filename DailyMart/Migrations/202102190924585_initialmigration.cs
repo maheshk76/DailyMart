@@ -3,7 +3,7 @@ namespace DailyMart.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class adddomainclasses : DbMigration
+    public partial class initialmigration : DbMigration
     {
         public override void Up()
         {
@@ -35,6 +35,8 @@ namespace DailyMart.Migrations
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
+                        Name = c.String(),
+                        Phone = c.String(),
                         Email = c.String(maxLength: 256),
                         EmailConfirmed = c.Boolean(nullable: false),
                         PasswordHash = c.String(),

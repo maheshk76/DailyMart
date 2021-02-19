@@ -7,13 +7,13 @@ namespace DailyMart.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class adddomainclasses1 : IMigrationMetadata
+    public sealed partial class adddomainclasses : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(adddomainclasses1));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(adddomainclasses));
         
         string IMigrationMetadata.Id
         {
-            get { return "202102171448392_adddomainclasses1"; }
+            get { return "202102190926000_adddomainclasses"; }
         }
         
         string IMigrationMetadata.Source

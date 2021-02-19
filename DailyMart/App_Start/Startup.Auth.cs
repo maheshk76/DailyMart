@@ -6,6 +6,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using DailyMart.Models;
+using DailyMart.Content;
 
 namespace DailyMart
 {
@@ -54,15 +55,16 @@ namespace DailyMart
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+          /*  app.UseFacebookAuthentication(
+               appId: ExternalLoginKeys.Facebook.Id,
+               appSecret: ExternalLoginKeys.Facebook.Code);
 
-           /* app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
-                ClientId = "",
-                ClientSecret = ""
-            });*/
+                ClientId = ExternalLoginKeys.Google.Id,
+                 ClientSecret = ExternalLoginKeys.Google.Code
+             });*/
         }
     }
 }

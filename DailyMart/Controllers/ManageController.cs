@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using DailyMart.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace DailyMart.Controllers
 {
@@ -15,15 +16,17 @@ namespace DailyMart.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
+        private ApplicationDbContext _context;
         public ManageController()
         {
+            _context = new ApplicationDbContext();
         }
 
         public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            _context = new ApplicationDbContext();
         }
 
         public ApplicationSignInManager SignInManager
@@ -49,6 +52,74 @@ namespace DailyMart.Controllers
                 _userManager = value;
             }
         }
+        [AllowAnonymous]
+        public ActionResult Edit()
+        {
+            ApplicationUser user = new ApplicationUser();
+            user = UserManager.FindById(User.Identity.GetUserId());
+            EditViewModel viewmodel = new EditViewModel();
+            
+            viewmodel.User = user;
+            var address= _context.Address.SingleOrDefault(a => a.UserId == user.Id);
+            if (address == null)
+            {
+                address = new Address();
+            }
+            System.Diagnostics.Debug.WriteLine(address.Id);
+            viewmodel.Address = address;
+            return View(viewmodel);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(EditViewModel model)
+        {
+            
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var store = new UserStore<ApplicationUser>(new ApplicationDbContext());
+            var manager = new UserManager<ApplicationUser>(store);
+            var currentUser = manager.FindByEmail(model.User.Email);
+            currentUser.Name = model.User.Name;
+            currentUser.Phone = model.User.Phone;
+            await manager.UpdateAsync(currentUser);
+            var ctx = store.Context;
+            ctx.SaveChanges();
+
+            //Address Update
+            try
+            {
+                var address = model.Address;
+
+                System.Diagnostics.Debug.WriteLine(address.Id);
+                if (address.Id == 0)
+                {
+                    _context.Address.Add(address);
+                }
+                else { 
+                    var addressInDb= _context.Address.Single(c => c.Id == address.Id);
+                    addressInDb.AddressLine = model.Address.AddressLine;
+                    addressInDb.City = model.Address.City;
+                    addressInDb.State = model.Address.State;
+                    addressInDb.ZipCode = model.Address.ZipCode;
+                    addressInDb.UserId = model.User.Id;
+                }
+                _context.SaveChanges();
+
+                ManageMessageId? message = ManageMessageId.UserUpdate;
+                return RedirectToAction("Index", new { Message = message });
+            }
+            catch(Exception e)
+            {
+                return View(model);
+            }
+            // This doesn't count login failures towards account lockout
+            // To enable password failures to trigger account lockout, change to shouldLockout: true
+            
+        }
 
         //
         // GET: /Manage/Index
@@ -61,9 +132,12 @@ namespace DailyMart.Controllers
                 : message == ManageMessageId.Error ? "An error has occurred."
                 : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
+                : message == ManageMessageId.UserUpdate ? "Data is updated"
+                
                 : "";
 
             var userId = User.Identity.GetUserId();
+            
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
@@ -381,7 +455,8 @@ namespace DailyMart.Controllers
             SetPasswordSuccess,
             RemoveLoginSuccess,
             RemovePhoneSuccess,
-            Error
+            Error,
+            UserUpdate
         }
 
 #endregion

@@ -20,7 +20,6 @@ namespace DailyMart.Models
         [Required]
         public virtual IEnumerable<OrderItem> OrderItems { get; set; }
 
-        public byte? PaymentId { get; set; }
         public virtual Payment Payment { get; set; }
     }
 }

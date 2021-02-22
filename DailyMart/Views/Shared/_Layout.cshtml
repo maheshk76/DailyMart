@@ -23,21 +23,21 @@
 
                     <div class="mobile-button"><span></span></div>
                     <div id="logo" class="logo float-left">
-                        <a href="@Url.Action("Index", "Home")" title="logo">
-                            <img src="~/Content/Products/images/system/logo1x.png" alt="image" width="107" height="24" data-retina="Content/Products/images/system/logo2x.png" data-width="107" data-height="24">
+                        <a href="@Url.Action("index", "home")" title="logo">
+                            <img src="~/Content/Products/images/system/logo3.png" alt="image" width="90" height="20" data-retina="Content/Products/images/system/logo3.png" data-width="40" data-height="10">
                         </a>
                     </div><!-- /.logo -->
                     <!-- /.menu-extra -->
                     <div class="nav-wrap">
                         <nav id="mainnav" class="mainnav">
                             <ul class="menu">
-                                <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                                <li><a href="@Url.Action("index", "home")">Home</a></li>
                                 @if (Request.IsAuthenticated)
                                 {
-                                    <li><a href="@Url.Action("Index","Home"@*,new { userId=User.Identity.GetUserId()}*@)">Orders</a></li>
+                                    <li><a href="@Url.Action("index","home"@*,new { userId=User.Identity.GetUserId()}*@)">Orders</a></li>
                                 }
-                                <li><a href="@Url.Action("Contact", "Home")">Contact</a></li>
-                                <li><a href="@Url.Action("About", "Home")">About</a></li>
+                                <li><a href="@Url.Action("contact", "home")">Contact</a></li>
+                                <li><a href="@Url.Action("about", "home")">About</a></li>
                             </ul>
 
                         </nav><!-- /.mainnav -->
@@ -56,7 +56,7 @@
 
                                 }
                             }
-                            <a class="icon_cart nav-cart-trigger active" href="@Url.Action("Cart", "Home")"><span id="cartProductsCount">@count</span></a>
+                            <a class="icon_cart nav-cart-trigger active" href="@Url.Action("cart", "home")"><span id="cartProductsCount">@count</span></a>
                         </li>
                                 }
                         @Html.Partial("_LoginPartial")
@@ -91,9 +91,9 @@
                                 </div>
                             </form>
                             <ul class="flat-social">
-                                <li><a href="@Url.Action("Error404", "Home")"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="@Url.Action("Error404", "Home")"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="@Url.Action("Error404", "Home")"><i class="fa fa-linkedin"></i></a></li>
+                                <li><a href="@Url.Action("Error404", "home")"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="@Url.Action("Error404", "home")"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="@Url.Action("Error404", "home")"><i class="fa fa-linkedin"></i></a></li>
                             </ul><!-- /.flat-social -->
                         </div><!-- /.subscribe -->
                     </div>
@@ -107,19 +107,19 @@
                     <div class="col-md-3">
                         <div class="widget widget-link">
                             <ul>
-                                <li><a href="@Url.Action("About", "Home")">About Us</a></li>
-                                <li><a href="@Url.Action("Error404", "Home")">Online Store</a></li>
-                                <li><a href="@Url.Action("Error404", "Home")">Blog</a></li>
-                                <li><a href="@Url.Action("Contact", "Home")">Contact Us</a></li>
+                                <li><a href="@Url.Action("about", "home")">About Us</a></li>
+                                <li><a href="@Url.Action("Error404", "home")">Online Store</a></li>
+                                <li><a href="@Url.Action("Error404", "home")">Blog</a></li>
+                                <li><a href="@Url.Action("Contact", "home")">Contact Us</a></li>
                             </ul>
                         </div><!-- /.widget -->
                     </div><!-- /.col-md-3 -->
                     <div class="col-md-3">
                         <div class="widget widget-link link-login">
                             <ul>
-                                <li><a href="@Url.Action("Login", "Account")">Login/ Register</a></li>
-                                @*<li><a href="@Url.Action("Cart", "Home")">Your Cart</a></li>
-                                <li><a href="@Url.Action("MyOrders", "Home")">Your checkout</a></li>
+                                <li><a href="@Url.Action("login", "account")">Login/ Register</a></li>
+                                @*<li><a href="@Url.Action("Cart", "home")">Your Cart</a></li>
+                                <li><a href="@Url.Action("MyOrders", "home")">Your checkout</a></li>
                                 *@
                             </ul>
                         </div><!-- /.widget -->
@@ -127,17 +127,17 @@
                     <div class="col-md-3">
                         <div class="widget widget-link link-faq">
                             <ul>
-                                <li><a href="@Url.Action("Error404", "Home")">FAQs</a></li>
-                                <li><a href="@Url.Action("Error404", "Home")">Term of service</a></li>
-                                <li><a href="@Url.Action("Error404", "Home")">Privacy Policy</a></li>
-                                <li><a href="@Url.Action("Error404", "Home")">Returns</a></li>
+                                <li><a href="@Url.Action("Error404", "home")">FAQs</a></li>
+                                <li><a href="@Url.Action("Error404", "home")">Term of service</a></li>
+                                <li><a href="@Url.Action("Error404", "home")">Privacy Policy</a></li>
+                                <li><a href="@Url.Action("Error404", "home")">Returns</a></li>
                             </ul>
                         </div><!-- /.widget -->
                     </div><!-- /.col-md-3 -->
                     <div class="col-md-3">
                         <div class="widget widget-brand">
                             <div class="logo logo-footer">
-                                <a href="@Url.Action("Index", "Home")"><img src="~/Content/Products/images/system/logo2x.png" alt="image" width="107" height="24"></a>
+                                <a href="@Url.Action("index", "home")"><img src="~/Content/Products/images/system/logo3.png" alt="image" width="107" height="24"></a>
                             </div>
                             <ul class="flat-contact">
                                 <li class="address">304 ,Aster Blossam Aura College Road ,Nadiad</li>

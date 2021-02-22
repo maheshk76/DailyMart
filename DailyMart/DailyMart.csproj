@@ -182,6 +182,10 @@
     <Compile Include="Migrations\202102190926000_adddomainclasses.Designer.cs">
       <DependentUpon>202102190926000_adddomainclasses.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202102221338583_updatedomainclasses.cs" />
+    <Compile Include="Migrations\202102221338583_updatedomainclasses.Designer.cs">
+      <DependentUpon>202102221338583_updatedomainclasses.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
@@ -309,7 +313,9 @@
     <Content Include="Content\Products\images\system\logo1x.png" />
     <Content Include="Content\Products\images\system\logo2x.png" />
     <Content Include="Content\Products\images\system\LogoMakr_0F49XP.png" />
+    <Content Include="Content\Products\images\system\logo3.png" />
     <Content Include="Content\Products\images\system\placeholder-image.png" />
+    <Content Include="Content\Products\images\system\logo2.jpeg" />
     <Content Include="Content\Products\images\system\wordpress-version.png" />
     <Content Include="Content\rev-slider\assets\coloredbg.png" />
     <Content Include="Content\rev-slider\assets\gridtile.png" />
@@ -441,6 +447,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202102190926000_adddomainclasses.resx">
       <DependentUpon>202102190926000_adddomainclasses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102221338583_updatedomainclasses.resx">
+      <DependentUpon>202102221338583_updatedomainclasses.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -13,7 +13,7 @@
                     <hr />
                 </div>
                 <section id="loginForm">
-                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    @using (Html.BeginForm("login", "account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                     {
                         @Html.AntiForgeryToken()
 
@@ -50,7 +50,7 @@
                         </div>
                         <br />
                         <div class="btn btn-default font-weight-500">
-                            Don't have an account? @Html.ActionLink("Register here", "Register")
+                            Don't have an account? @Html.ActionLink("Register here", "register")
                         </div>
                         @* Enable this once you have account confirmation enabled for password reset functionality
                             <p>

@@ -348,7 +348,7 @@
 
     var goTop = function() {
       $(window).scroll(function() {
-          if ( $(this).scrollTop() > 800 ) {
+          if ($(this).scrollTop() > 70 ) {
               $('.go-top').addClass('show');
           } else {
               $('.go-top').removeClass('show');
@@ -752,7 +752,17 @@
             },500);
         });
     };
-
+    var toogleswitch = function () {
+        var passfields = $("#pass1,#pass2");
+        $("#showhide").change(function () {
+            if (passfields.attr("type") == "password") {
+                passfields.attr("type", "text");
+            }
+            else {
+                passfields.attr("type", "password");
+            }
+        });
+    };
     var flatContentBox = function(){
         $(window).on('load resize', function(){
             var mode = 'desktop';
@@ -805,7 +815,8 @@
     }; 
     
    	// Dom Ready
-	$(function() {
+    $(function () {
+        
       removePreloader();
       goTop();
       parallax(); 
@@ -817,7 +828,8 @@
       flatEqualHeight();
       flatAccordion();
       countDown();
-      flatCounter();
+        flatCounter();
+        toogleswitch();
       googleMap();
       //flatPrice();  
       flatFilterBox(); 
@@ -831,7 +843,9 @@
       flatEffectDir();
       flatIsotope();
       flatCarouselOwl();
-      flatContentBox();
+        flatContentBox();
+           
+        
    	});
 })(jQuery);
 

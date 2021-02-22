@@ -1,7 +1,7 @@
 ﻿@*@model GroceryShop.ViewModels.ShopViewModel
 @using PagedList;
 @using PagedList.Mvc;*@
-@{ ViewBag.Title = "Home"; }
+@{ ViewBag.Title = "home"; }
 <!-- IMAGE BOX -->
 <div class="flat-row no-padding">
     <div class="container-fluid container-width-94">
@@ -72,7 +72,7 @@
 
                     <div class="widget widget_tag">
                         <h5 class="widget-title">
-                            <a href="@Url.Action("Index", "Home",new { reset = 1 })" class="themesflat-button bg-accent" style="font-weight:500!important;">Reset Filters</a>
+                            <a href="@Url.Action("index", "home",new { reset = 1 })" class="themesflat-button bg-accent" style="font-weight:500!important;">Reset Filters</a>
 
                         </h5>
 
@@ -83,10 +83,10 @@
                             Sort By
                         </h5>
                        @* <ul>
-                            <li><a data-href="@Url.Action("Products", "Home", new { sortBy = 1, categoryID = Model.CategoryID })" class="dataLink @(Model.SortBy.HasValue ? Model.SortBy.Value ==1 ? "active" : string.Empty : string.Empty)">Default - Newest</a></li>
-                            <li><a data-href="@Url.Action("Products", "Home", new { sortBy = 2, categoryID = Model.CategoryID })" class="dataLink @(Model.SortBy.HasValue ? Model.SortBy.Value ==2 ? "active" : string.Empty : string.Empty)">Popularity</a></li>
-                            <li><a data-href="@Url.Action("Products", "Home", new { sortBy =3, categoryID = Model.CategoryID })" class="dataLink @(Model.SortBy.HasValue ? Model.SortBy.Value == 3 ? "active" : string.Empty : string.Empty)">Price: low to high</a></li>
-                            <li><a data-href="@Url.Action("Products", "Home",new { sortBy =4, categoryID = Model.CategoryID  })" class="dataLink @(Model.SortBy.HasValue ? Model.SortBy.Value == 4 ? "active" : string.Empty : string.Empty)">Price: high to low</a></li>
+                            <li><a data-href="@Url.Action("Products", "home", new { sortBy = 1, categoryID = Model.CategoryID })" class="dataLink @(Model.SortBy.HasValue ? Model.SortBy.Value ==1 ? "active" : string.Empty : string.Empty)">Default - Newest</a></li>
+                            <li><a data-href="@Url.Action("Products", "home", new { sortBy = 2, categoryID = Model.CategoryID })" class="dataLink @(Model.SortBy.HasValue ? Model.SortBy.Value ==2 ? "active" : string.Empty : string.Empty)">Popularity</a></li>
+                            <li><a data-href="@Url.Action("Products", "home", new { sortBy =3, categoryID = Model.CategoryID })" class="dataLink @(Model.SortBy.HasValue ? Model.SortBy.Value == 3 ? "active" : string.Empty : string.Empty)">Price: low to high</a></li>
+                            <li><a data-href="@Url.Action("Products", "home",new { sortBy =4, categoryID = Model.CategoryID  })" class="dataLink @(Model.SortBy.HasValue ? Model.SortBy.Value == 4 ? "active" : string.Empty : string.Empty)">Price: high to low</a></li>
                         </ul>*@
                     </div><!-- /.widget-sort-by -->
 
@@ -106,8 +106,8 @@
                         </h5>
                         <div class="tag-list">
                            @* @foreach (var category in ViewBag.Categories)
-                            {<a data-href="@Url.Action("Index", "Home", new { categoryID = category.ID, sortBy = ViewBag.SortBy!=null ? ViewBag.SortBy :null})" class="dataLink @(ViewBag.CategoryID.HasValue && ViewBag.CategoryID.Value == category.ID ? "active" : string.Empty)">@category.Name</a>*@
-@*                                            <a data-href="@Url.Action("Products", "Home", new { categoryID = category.ID, sortBy = Model.SortBy })" class="dataLink @(Model.CategoryID.HasValue && Model.CategoryID.Value == category.ID ? "active" : string.Empty)">@category.Name</a>}*@                        </div>
+                            {<a data-href="@Url.Action("index", "home", new { categoryID = category.ID, sortBy = ViewBag.SortBy!=null ? ViewBag.SortBy :null})" class="dataLink @(ViewBag.CategoryID.HasValue && ViewBag.CategoryID.Value == category.ID ? "active" : string.Empty)">@category.Name</a>*@
+@*                                            <a data-href="@Url.Action("Products", "home", new { categoryID = category.ID, sortBy = Model.SortBy })" class="dataLink @(Model.CategoryID.HasValue && Model.CategoryID.Value == category.ID ? "active" : string.Empty)">@category.Name</a>}*@                        </div>
                     </div><!-- /.widget -->
 
 
@@ -115,7 +115,7 @@
             </div><!-- /.col-md-3 -->
             <div class="col-md-9" id="productsDiv">
 
-              @*  @{Html.RenderAction("Products", "Home",
+              @*  @{Html.RenderAction("Products", "home",
                          new
                          {
                              search = Model.Search,

@@ -109,3 +109,4 @@ E:\DOCS-SEM8-Reports\DailyMart\DailyMart\obj\Debug\DailyMart.Migrations.initialm
 E:\DOCS-SEM8-Reports\DailyMart\DailyMart\obj\Debug\DailyMart.csproj.GenerateResource.cache
 E:\DOCS-SEM8-Reports\DailyMart\DailyMart\obj\Debug\DailyMart.csprojAssemblyReference.cache
 E:\DOCS-SEM8-Reports\DailyMart\DailyMart\obj\Debug\DailyMart.Migrations.adddomainclasses.resources
+E:\DOCS-SEM8-Reports\DailyMart\DailyMart\obj\Debug\DailyMart.Migrations.updatedomainclasses.resources

@@ -2,18 +2,19 @@
 @if (Request.IsAuthenticated)
 {
     <div class="btn-group">
-        <li type="button" style="font-size:15px;" class=" fa fa-user btn btn-lg dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            
+        <li type="button" style="font-size:15px;" 
+            class=" fa fa-user btn btn-lg dropdown-toggle dropdown-toggle-split" 
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">  
         </li>
         <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left">
-            <a href="@Url.Action("Index","Manage")"><li class="dropdown-item">Profile</li></a>
-            <a href="javascript:document.getElementById('logoutForm').submit()">
-                <li class="dropdown-item">
-                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+            <a class="dropdown-item" href="@Url.Action("index","manage")"><li>Profile</li></a>
+            <a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()">
+                <li>
+                    @using (Html.BeginForm("LogOff", "account", FormMethod.Post, new { id = "logoutForm" }))
                     {
                         @Html.AntiForgeryToken()
                     <li title="Logout">
-                        Signout
+                        Log out
                     </li>
                 }
                     </li>
@@ -26,6 +27,6 @@
 else
 {
     @*<ul class="nav navbar-nav navbar-right">*@
-    <li>@Html.ActionLink("Login", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    <li>@Html.ActionLink("Login", "login", "account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
     @*</ul>*@
 }

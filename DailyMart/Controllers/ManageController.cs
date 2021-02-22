@@ -110,7 +110,7 @@ namespace DailyMart.Controllers
                 _context.SaveChanges();
 
                 ManageMessageId? message = ManageMessageId.UserUpdate;
-                return RedirectToAction("Index", new { Message = message });
+                return RedirectToAction("index", new { Message = message });
             }
             catch(Exception e)
             {
@@ -137,7 +137,9 @@ namespace DailyMart.Controllers
                 : "";
 
             var userId = User.Identity.GetUserId();
-            
+            var store = new UserStore<ApplicationUser>(new ApplicationDbContext());
+            var manager = new UserManager<ApplicationUser>(store);
+            ViewBag.Username = manager.FindById(userId).Name;
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
@@ -216,7 +218,7 @@ namespace DailyMart.Controllers
             {
                 await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
             }
-            return RedirectToAction("Index", "Manage");
+            return RedirectToAction("index", "manage");
         }
 
         //
@@ -231,7 +233,7 @@ namespace DailyMart.Controllers
             {
                 await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
             }
-            return RedirectToAction("Index", "Manage");
+            return RedirectToAction("index", "manage");
         }
 
         //
@@ -261,7 +263,7 @@ namespace DailyMart.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
-                return RedirectToAction("Index", new { Message = ManageMessageId.AddPhoneSuccess });
+                return RedirectToAction("index", new { Message = ManageMessageId.AddPhoneSuccess });
             }
             // If we got this far, something failed, redisplay form
             ModelState.AddModelError("", "Failed to verify phone");
@@ -277,14 +279,14 @@ namespace DailyMart.Controllers
             var result = await UserManager.SetPhoneNumberAsync(User.Identity.GetUserId(), null);
             if (!result.Succeeded)
             {
-                return RedirectToAction("Index", new { Message = ManageMessageId.Error });
+                return RedirectToAction("index", new { Message = ManageMessageId.Error });
             }
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
             if (user != null)
             {
                 await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
             }
-            return RedirectToAction("Index", new { Message = ManageMessageId.RemovePhoneSuccess });
+            return RedirectToAction("index", new { Message = ManageMessageId.RemovePhoneSuccess });
         }
 
         //
@@ -312,7 +314,7 @@ namespace DailyMart.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
-                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+                return RedirectToAction("index", new { Message = ManageMessageId.ChangePasswordSuccess });
             }
             AddErrors(result);
             return View(model);
@@ -341,7 +343,7 @@ namespace DailyMart.Controllers
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                     }
-                    return RedirectToAction("Index", new { Message = ManageMessageId.SetPasswordSuccess });
+                    return RedirectToAction("index", new { Message = ManageMessageId.SetPasswordSuccess });
                 }
                 AddErrors(result);
             }
@@ -380,7 +382,7 @@ namespace DailyMart.Controllers
         public ActionResult LinkLogin(string provider)
         {
             // Request a redirect to the external login provider to link a login for the current user
-            return new AccountController.ChallengeResult(provider, Url.Action("LinkLoginCallback", "Manage"), User.Identity.GetUserId());
+            return new AccountController.ChallengeResult(provider, Url.Action("LinkLoginCallback", "manage"), User.Identity.GetUserId());
         }
 
         //

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -14,7 +15,6 @@ namespace DailyMart.Models
         public decimal? SellingPrice { get; set; }
         public string ImageURL { get; set; }
         public string Tags { get; set; }
-        public byte? CategoryId { get; set; }
         public virtual Category Category { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿@model DailyMart.Models.IndexViewModel
 @{
-    ViewBag.Title = "Manage";
+    ViewBag.Title = "manage";
 }
 <div class="container">
     <div class="row">
@@ -9,7 +9,7 @@
             <div class="title-section">
                 <br />
                 <h2 class="title">
-                    Hello,@User.Identity.Name
+                    Hello, @ViewBag.Username
                 </h2>
                 <hr />
             </div>
@@ -17,7 +17,7 @@
             <div class="text-success col-md-10">@ViewBag.StatusMessage</div>
             <div>
                 <div class="btn btn-default font-weight-100">
-                    Change your details @Html.ActionLink("here", "Edit")
+                    Change your details @Html.ActionLink("here", "edit")
                 </div>
                 <hr />
                 <div class="col-md-12">
@@ -27,7 +27,7 @@
                             [
                             @if (Model.HasPassword)
                             {
-                                @Html.ActionLink("Change your password", "ChangePassword")
+                                @Html.ActionLink("Change your password", "changepassword")
                             }
                             else
                             {
@@ -38,7 +38,7 @@
                         <dt>External Logins:</dt>
                         <dd>
                             @Model.Logins.Count [
-                            @Html.ActionLink("Manage", "ManageLogins") ]
+                            @Html.ActionLink("manage", "ManageLogins") ]
                         </dd>
 
                         Phone Numbers can used as a second factor of verification in a two-factor authentication system.
@@ -57,7 +57,7 @@
                             {
                                 <br />
                                 <text>[&nbsp;&nbsp;@Html.ActionLink("Change", "AddPhoneNumber")&nbsp;&nbsp;]</text>
-                                using (Html.BeginForm("RemovePhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                                using (Html.BeginForm("RemovePhoneNumber", "manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                                 {
                                     @Html.AntiForgeryToken()
                                     <text>[<input type="submit" value="Remove" class="btn-link" />]</text>
@@ -77,7 +77,7 @@
                             </p>
                             @if (Model.TwoFactor)
                             {
-                                using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                                using (Html.BeginForm("DisableTwoFactorAuthentication", "manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                                 {
                                     @Html.AntiForgeryToken()
                                     <text>Enabled
@@ -87,7 +87,7 @@
                             }
                             else
                             {
-                                using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                                using (Html.BeginForm("EnableTwoFactorAuthentication", "manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                                 {
                                     @Html.AntiForgeryToken()
                                     <text>Disabled

@@ -11,6 +11,9 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using DailyMart.Models;
+using System.Net.Mail;
+using System.Net;
+using DailyMart.Content;
 
 namespace DailyMart
 {
@@ -19,7 +22,23 @@ namespace DailyMart
         public Task SendAsync(IdentityMessage message)
         {
             // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+            MailMessage mess = new MailMessage();
+            mess.IsBodyHtml = true;
+            mess.To.Add(message.Destination);
+            mess.Subject = message.Subject;
+            mess.Body = message.Body;
+            mess.From = new MailAddress(ExternalLoginKeys.EmailKeys.Email);
+
+            SmtpClient client = new SmtpClient();
+            client.Port = 587;
+            client.Host = "smtp.gmail.com";
+            client.Timeout = 10000;
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.UseDefaultCredentials = false;
+            client.Credentials = new NetworkCredential(ExternalLoginKeys.EmailKeys.Email, ExternalLoginKeys.EmailKeys.Password);
+            client.EnableSsl = true;
+            return client.SendMailAsync(mess.From.ToString(), mess.To.ToString(), mess.Subject, mess.Body);
+           // return Task.FromResult(0);
         }
     }
 

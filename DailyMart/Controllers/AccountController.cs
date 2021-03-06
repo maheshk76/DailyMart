@@ -15,7 +15,19 @@ using System.Web.Routing;
 namespace DailyMart.Controllers
 {
 
+    public class IsAuthenticatedAttribute : ActionFilterAttribute
+    {
+        public override void OnActionExecuting(ActionExecutingContext context)
+        {
+            if (context.HttpContext.User.Identity.IsAuthenticated)
+            {
+                context.Result = new RedirectResult(url: "/Account/LoggedIn");
+                base.OnActionExecuting(context);
+            }
 
+               
+        }
+    }
     [Authorize]
     public class AccountController : Controller
     {
@@ -63,6 +75,8 @@ namespace DailyMart.Controllers
         //
         // GET: /Account/Login
         [AllowAnonymous]
+        [IsAuthenticatedAttribute]
+
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
@@ -146,6 +160,7 @@ namespace DailyMart.Controllers
         
         // GET: /Account/Register
         [AllowAnonymous]
+        [IsAuthenticatedAttribute]
         public ActionResult Register()
         {
             return View();
@@ -197,6 +212,7 @@ namespace DailyMart.Controllers
         //
         // GET: /Account/ForgotPassword
         [AllowAnonymous]
+        [IsAuthenticatedAttribute]
         public ActionResult ForgotPassword()
         {
             return View();
@@ -212,18 +228,18 @@ namespace DailyMart.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+              /*  if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
                     return View("ForgotPasswordConfirmation");
                 }
-
+*/
                 // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "account");
+                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                 var callbackUrl = Url.Action("ResetPassword", "account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
+                 await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                 return RedirectToAction("ForgotPasswordConfirmation", "account");
             }
 
             // If we got this far, something failed, redisplay form

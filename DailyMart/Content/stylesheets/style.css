@@ -2977,3 +2977,11 @@ article .more-link a:hover:after {
 input.input-validation-error {
 	border: 1px solid #d9534f ;
 }
+
+#Facebook {
+	background-color: cornflowerblue;
+	color: white;
+}
+
+#Google {
+}

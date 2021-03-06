@@ -55,11 +55,11 @@ namespace DailyMart
             //   consumerKey: "",
             //   consumerSecret: "");
 
-          /*  app.UseFacebookAuthentication(
+            app.UseFacebookAuthentication(
                appId: ExternalLoginKeys.Facebook.Id,
                appSecret: ExternalLoginKeys.Facebook.Code);
 
-
+            /*
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
                 ClientId = ExternalLoginKeys.Google.Id,

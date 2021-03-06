@@ -11,6 +11,7 @@ using Microsoft.Owin.Security;
 using DailyMart.Models;
 using System.Web.Mvc.Filters;
 using System.Web.Routing;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace DailyMart.Controllers
 {
@@ -177,10 +178,21 @@ namespace DailyMart.Controllers
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
+
+                
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    var store = new UserStore<ApplicationUser>(new ApplicationDbContext());
+                    var manager = new UserManager<ApplicationUser>(store);
+                    var currentUser = manager.FindByEmail(model.Email);
+                    currentUser.Name = model.Name;
+                    currentUser.Phone = model.Phone;
+
+                    await manager.UpdateAsync(currentUser);
+                    /*
+                    var ctx = store.Context;
+                    ctx.SaveChanges();*/
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -393,9 +405,16 @@ namespace DailyMart.Controllers
                     return View("ExternalLoginFailure");
                 }
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
+                    var store = new UserStore<ApplicationUser>(new ApplicationDbContext());
+                    var manager = new UserManager<ApplicationUser>(store);
+                    var currentUser = manager.FindByEmail(model.Email);
+                    currentUser.Name = model.Name;
+                    currentUser.Phone = model.Phone;
+                    await manager.UpdateAsync(currentUser);
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);
                     if (result.Succeeded)
                     {

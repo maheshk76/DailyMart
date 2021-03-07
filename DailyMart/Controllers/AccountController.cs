@@ -176,20 +176,25 @@ namespace DailyMart.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { 
+                    UserName = model.Email, 
+                    Email = model.Email,
+                    PhoneNumber=model.Phone,
+                    Name=model.Name
+                };
                 var result = await UserManager.CreateAsync(user, model.Password);
 
                 
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    var store = new UserStore<ApplicationUser>(new ApplicationDbContext());
+                    /*var store = new UserStore<ApplicationUser>(new ApplicationDbContext());
                     var manager = new UserManager<ApplicationUser>(store);
                     var currentUser = manager.FindByEmail(model.Email);
                     currentUser.Name = model.Name;
                     currentUser.Phone = model.Phone;
 
-                    await manager.UpdateAsync(currentUser);
+                    await manager.UpdateAsync(currentUser);*/
                     /*
                     var ctx = store.Context;
                     ctx.SaveChanges();*/
@@ -404,17 +409,17 @@ namespace DailyMart.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { 
+                    UserName = model.Email,
+                    Email = model.Email,
+                    Name=model.Name,
+                    PhoneNumber=model.Phone
+                    
+                };
 
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
-                    var store = new UserStore<ApplicationUser>(new ApplicationDbContext());
-                    var manager = new UserManager<ApplicationUser>(store);
-                    var currentUser = manager.FindByEmail(model.Email);
-                    currentUser.Name = model.Name;
-                    currentUser.Phone = model.Phone;
-                    await manager.UpdateAsync(currentUser);
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);
                     if (result.Succeeded)
                     {

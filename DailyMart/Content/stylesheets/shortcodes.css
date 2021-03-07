@@ -1350,9 +1350,9 @@
 }
 
 .sidebar.slidebar-shop .widget {
-	padding-bottom: 33px;
+
 	border-bottom: 1px solid #ebebeb;
-	margin-bottom: 48px;
+	
 }
 
 .sidebar.slidebar-shop .widget:last-child, .sidebar.slidebar-shop .widget:first-child {
@@ -1360,8 +1360,9 @@
 }
 
 .slidebar-shop .widget .widget-title {
-	line-height: 21px;
+	line-height: 15px;
 	margin-bottom: 11px;
+	font-size:14px;
 }
 
 .slidebar-shop .widget ul li a {
@@ -1437,10 +1438,13 @@
 	margin-top: -3px;
 }
 
-.widget.widget-price .ui-slider-horizontal {
-	height: 3px;
-}
-
+	.widget.widget-price .ui-slider-horizontal {
+		height: 3px;
+		width: 70%;
+	}
+	.widget-sort-by > ul,.price-filter{
+		margin-left:20px;
+	}
 .widget.widget-price .ui-state-default,
 .widget.widget-price .ui-widget-content .ui-state-default,
 .widget.widget-price .ui-widget-header .ui-state-default, 

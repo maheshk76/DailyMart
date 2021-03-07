@@ -39,14 +39,11 @@ namespace DailyMart
 
             //Extra scripts
             bundles.Add(new ScriptBundle("~/bundles/javascript/js").Include(
-                    "~/Content/javascript/jquery.min.js",
+                
                     "~/Content/javascript/tether.min.js",
                     "~/Content/javascript/bootstrap.min.js",
                     "~/Content/javascript/jquery.easing.js",
                     "~/Content/javascript/parallax.js",
-                    "~/Content/javascript/jquery-waypoints.js",
-                    "~/Content/javascript/jquery-countTo.js",
-                    "~/Content/javascript/jquery.countdown.js",
                     "~/Content/javascript/jquery.flexslider-min.js",
                     "~/Content/javascript/images-loaded.js",
                     "~/Content/javascript/jquery.isotope.min.js",
@@ -59,6 +56,9 @@ namespace DailyMart
                     "~/Content/javascript/main.js",
                     "~/Content/javascript/rev-slider.js",
                     "~/Content/javascript/jquery-ui.js",
+                    "~/Content/javascript/jquery-waypoints.js",
+                    "~/Content/javascript/jquery-countTo.js",
+                    "~/Content/javascript/jquery.countdown.js",
                     "~/Scripts/toastr.js"
 
                 ));

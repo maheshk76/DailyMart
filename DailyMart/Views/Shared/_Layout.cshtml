@@ -8,6 +8,8 @@
     @Styles.Render("~/Content/stylesheets/css")
     @Scripts.Render("~/bundles/modernizr")
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIEU6OT3xqCksCetQeNLIPps6-AYrhq-s&region=GB"></script>
 </head>
 <body class="header_sticky header-style-2 has-menu-extra">
     <!-- Preloader -->
@@ -46,19 +48,19 @@
                     <ul class="menu-extra">
                         @if (Request.IsAuthenticated)
                         {
-                        <li class="box-cart nav-top-cart-wrapper">
-                            @{ var count = 0;
-                                if (Session["cart"] != null)
-                                {
-                                    // List<Item> cart = (List<Item>)Session["cart"];
-                                    // count = cart.Count();
-                                    count = 0;
+                            <li class="box-cart nav-top-cart-wrapper">
+                                @{ var count = 0;
+                                    if (Session["cart"] != null)
+                                    {
+                                        // List<Item> cart = (List<Item>)Session["cart"];
+                                        // count = cart.Count();
+                                        count = 0;
 
+                                    }
                                 }
-                            }
-                            <a class="icon_cart nav-cart-trigger active" href="@Url.Action("cart", "home")"><span id="cartProductsCount">@count</span></a>
-                        </li>
-                                }
+                                <a class="icon_cart nav-cart-trigger active" href="@Url.Action("cart", "home")"><span id="cartProductsCount">@count</span></a>
+                            </li>
+                        }
                         @Html.Partial("_LoginPartial")
 
                     </ul>
@@ -68,106 +70,106 @@
 
 
         @RenderBody()
-    <div style="bottom:0;">
-        <section class="flat-row mail-chimp">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="text">
-                            <h3>Get our Newsletter</h3>
+        <div style="bottom:0;">
+            <section class="flat-row mail-chimp">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="text">
+                                <h3>Get our Newsletter</h3>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="subscribe clearfix">
+
+                                <form action="#" method="post" accept-charset="utf-8" id="subscribe-form">
+                                    <div class="subscribe-content">
+                                        <div class="input">
+                                            <input type="email" name="subscribe-email" placeholder="Your Email">
+                                        </div>
+                                        <div class="button">
+                                            <button type="button">Subscribe</button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <ul class="flat-social">
+                                    <li><a href="@Url.Action("Error404", "home")"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a href="@Url.Action("Error404", "home")"><i class="fa fa-twitter"></i></a></li>
+                                    <li><a href="@Url.Action("Error404", "home")"><i class="fa fa-linkedin"></i></a></li>
+                                </ul><!-- /.flat-social -->
+                            </div><!-- /.subscribe -->
                         </div>
                     </div>
-                    <div class="col-md-8">
-                        <div class="subscribe clearfix">
-
-                            <form action="#" method="post" accept-charset="utf-8" id="subscribe-form">
-                                <div class="subscribe-content">
-                                    <div class="input">
-                                        <input type="email" name="subscribe-email" placeholder="Your Email">
-                                    </div>
-                                    <div class="button">
-                                        <button type="button">Subscribe</button>
-                                    </div>
-                                </div>
-                            </form>
-                            <ul class="flat-social">
-                                <li><a href="@Url.Action("Error404", "home")"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="@Url.Action("Error404", "home")"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="@Url.Action("Error404", "home")"><i class="fa fa-linkedin"></i></a></li>
-                            </ul><!-- /.flat-social -->
-                        </div><!-- /.subscribe -->
-                    </div>
                 </div>
-            </div>
-        </section><!-- /.mail-chimp -->
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="widget widget-link">
-                            <ul>
-                                <li><a href="@Url.Action("about", "home")">About Us</a></li>
-                                <li><a href="@Url.Action("Error404", "home")">Online Store</a></li>
-                                <li><a href="@Url.Action("Error404", "home")">Blog</a></li>
-                                <li><a href="@Url.Action("Contact", "home")">Contact Us</a></li>
-                            </ul>
-                        </div><!-- /.widget -->
-                    </div><!-- /.col-md-3 -->
-                    <div class="col-md-3">
-                        <div class="widget widget-link link-login">
-                            <ul>
-                                <li><a href="@Url.Action("login", "account")">Login/ Register</a></li>
-                                @*<li><a href="@Url.Action("Cart", "home")">Your Cart</a></li>
-                                <li><a href="@Url.Action("MyOrders", "home")">Your checkout</a></li>
-                                *@
-                            </ul>
-                        </div><!-- /.widget -->
-                    </div><!-- /.col-md-3 -->
-                    <div class="col-md-3">
-                        <div class="widget widget-link link-faq">
-                            <ul>
-                                <li><a href="@Url.Action("Error404", "home")">FAQs</a></li>
-                                <li><a href="@Url.Action("Error404", "home")">Term of service</a></li>
-                                <li><a href="@Url.Action("Error404", "home")">Privacy Policy</a></li>
-                                <li><a href="@Url.Action("Error404", "home")">Returns</a></li>
-                            </ul>
-                        </div><!-- /.widget -->
-                    </div><!-- /.col-md-3 -->
-                    <div class="col-md-3">
-                        <div class="widget widget-brand">
-                            <div class="logo logo-footer">
-                                <a href="@Url.Action("index", "home")"><img src="~/Content/Products/images/system/logo3.png" alt="image" width="107" height="24"></a>
-                            </div>
-                            <ul class="flat-contact">
-                               @* <li class="address">304 ,Aster Blossam Aura College Road ,Nadiad</li>
-                                <li class="phone">+91 97698430164</li>*@
-                            <li class="email">divyashah.qa@gmail.com</li>
-                                <li class="email">mnkantariya173@gmail.com</li>
-                            </ul><!-- /.flat-contact -->
-                        </div><!-- /.widget -->
-                    </div><!-- /.col-md-3 -->
-                </div><!-- /.row -->
-            </div><!-- /.container -->
-        </footer><!-- /.footer -->
+            </section><!-- /.mail-chimp -->
+            <!-- Footer -->
+            <footer class="footer">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="widget widget-link">
+                                <ul>
+                                    <li><a href="@Url.Action("about", "home")">About Us</a></li>
+                                    <li><a href="@Url.Action("Error404", "home")">Online Store</a></li>
+                                    <li><a href="@Url.Action("Error404", "home")">Blog</a></li>
+                                    <li><a href="@Url.Action("Contact", "home")">Contact Us</a></li>
+                                </ul>
+                            </div><!-- /.widget -->
+                        </div><!-- /.col-md-3 -->
+                        <div class="col-md-3">
+                            <div class="widget widget-link link-login">
+                                <ul>
+                                    <li><a href="@Url.Action("login", "account")">Login/ Register</a></li>
+                                    @*<li><a href="@Url.Action("Cart", "home")">Your Cart</a></li>
+                                        <li><a href="@Url.Action("MyOrders", "home")">Your checkout</a></li>
+                                    *@
+                                </ul>
+                            </div><!-- /.widget -->
+                        </div><!-- /.col-md-3 -->
+                        <div class="col-md-3">
+                            <div class="widget widget-link link-faq">
+                                <ul>
+                                    <li><a href="@Url.Action("Error404", "home")">FAQs</a></li>
+                                    <li><a href="@Url.Action("Error404", "home")">Term of service</a></li>
+                                    <li><a href="@Url.Action("Error404", "home")">Privacy Policy</a></li>
+                                    <li><a href="@Url.Action("Error404", "home")">Returns</a></li>
+                                </ul>
+                            </div><!-- /.widget -->
+                        </div><!-- /.col-md-3 -->
+                        <div class="col-md-3">
+                            <div class="widget widget-brand">
+                                <div class="logo logo-footer">
+                                    <a href="@Url.Action("index", "home")"><img src="~/Content/Products/images/system/logo3.png" alt="image" width="107" height="24"></a>
+                                </div>
+                                <ul class="flat-contact">
+                                    @* <li class="address">304 ,Aster Blossam Aura College Road ,Nadiad</li>
+                                        <li class="phone">+91 97698430164</li>*@
+                                    <li class="email">divyashah.qa@gmail.com</li>
+                                    <li class="email">mnkantariya173@gmail.com</li>
+                                </ul><!-- /.flat-contact -->
+                            </div><!-- /.widget -->
+                        </div><!-- /.col-md-3 -->
+                    </div><!-- /.row -->
+                </div><!-- /.container -->
+            </footer><!-- /.footer -->
 
-        <div class="footer-bottom">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <p class="copyright text-center">&copy; @DateTime.Now.Year -All rights reserved</p>
+            <div class="footer-bottom">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="copyright text-center">&copy; @DateTime.Now.Year -All rights reserved</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
         <!-- Go Top -->
         <a class="go-top">
             <i class="fa fa-chevron-up"></i>
         </a>
 
     </div>
-
+    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/javascript/js")
     @Scripts.Render("~/bundles/rev-slider/js")
     @RenderSection("scripts", required: false)

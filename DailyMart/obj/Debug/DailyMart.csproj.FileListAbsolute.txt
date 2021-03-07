@@ -1,4 +1,3 @@
-E:\DOCS-SEM8-Reports\DailyMart\DailyMart\obj\Debug\DailyMart.csproj.CoreCompileInputs.cache
 E:\DOCS-SEM8-Reports\DailyMart\DailyMart\bin\DailyMart.dll.config
 E:\DOCS-SEM8-Reports\DailyMart\DailyMart\bin\DailyMart.dll
 E:\DOCS-SEM8-Reports\DailyMart\DailyMart\bin\DailyMart.pdb
@@ -70,6 +69,8 @@ E:\DOCS-SEM8-Reports\DailyMart\DailyMart\bin\Microsoft.Owin.Security.Twitter.dll
 E:\DOCS-SEM8-Reports\DailyMart\DailyMart\bin\Microsoft.Web.Infrastructure.dll
 E:\DOCS-SEM8-Reports\DailyMart\DailyMart\bin\Newtonsoft.Json.dll
 E:\DOCS-SEM8-Reports\DailyMart\DailyMart\bin\Owin.dll
+E:\DOCS-SEM8-Reports\DailyMart\DailyMart\bin\PagedList.dll
+E:\DOCS-SEM8-Reports\DailyMart\DailyMart\bin\PagedList.Mvc.dll
 E:\DOCS-SEM8-Reports\DailyMart\DailyMart\bin\System.Web.Helpers.dll
 E:\DOCS-SEM8-Reports\DailyMart\DailyMart\bin\System.Web.Mvc.dll
 E:\DOCS-SEM8-Reports\DailyMart\DailyMart\bin\System.Web.Optimization.dll
@@ -78,6 +79,8 @@ E:\DOCS-SEM8-Reports\DailyMart\DailyMart\bin\System.Web.WebPages.Deployment.dll
 E:\DOCS-SEM8-Reports\DailyMart\DailyMart\bin\System.Web.WebPages.dll
 E:\DOCS-SEM8-Reports\DailyMart\DailyMart\bin\System.Web.WebPages.Razor.dll
 E:\DOCS-SEM8-Reports\DailyMart\DailyMart\bin\WebGrease.dll
+E:\DOCS-SEM8-Reports\DailyMart\DailyMart\bin\PagedList.xml
+E:\DOCS-SEM8-Reports\DailyMart\DailyMart\bin\PagedList.Mvc.xml
 E:\DOCS-SEM8-Reports\DailyMart\DailyMart\bin\System.Web.Helpers.xml
 E:\DOCS-SEM8-Reports\DailyMart\DailyMart\bin\System.Web.Mvc.xml
 E:\DOCS-SEM8-Reports\DailyMart\DailyMart\bin\System.Web.Optimization.xml
@@ -102,11 +105,14 @@ E:\DOCS-SEM8-Reports\DailyMart\DailyMart\bin\Microsoft.Owin.Security.Twitter.xml
 E:\DOCS-SEM8-Reports\DailyMart\DailyMart\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 E:\DOCS-SEM8-Reports\DailyMart\DailyMart\bin\Microsoft.Owin.Security.OAuth.xml
 E:\DOCS-SEM8-Reports\DailyMart\DailyMart\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+E:\DOCS-SEM8-Reports\DailyMart\DailyMart\obj\Debug\DailyMart.Migrations.initialmigration.resources
+E:\DOCS-SEM8-Reports\DailyMart\DailyMart\obj\Debug\DailyMart.Migrations.adddomainclasses.resources
+E:\DOCS-SEM8-Reports\DailyMart\DailyMart\obj\Debug\DailyMart.Migrations.updatedomainclasses.resources
+E:\DOCS-SEM8-Reports\DailyMart\DailyMart\obj\Debug\DailyMart.Migrations.removephoneattributefromuser.resources
+E:\DOCS-SEM8-Reports\DailyMart\DailyMart\obj\Debug\DailyMart.csproj.GenerateResource.cache
+E:\DOCS-SEM8-Reports\DailyMart\DailyMart\obj\Debug\DailyMart.csproj.CoreCompileInputs.cache
 E:\DOCS-SEM8-Reports\DailyMart\DailyMart\obj\Debug\DailyMart.csproj.CopyComplete
 E:\DOCS-SEM8-Reports\DailyMart\DailyMart\obj\Debug\DailyMart.dll
 E:\DOCS-SEM8-Reports\DailyMart\DailyMart\obj\Debug\DailyMart.pdb
-E:\DOCS-SEM8-Reports\DailyMart\DailyMart\obj\Debug\DailyMart.Migrations.initialmigration.resources
-E:\DOCS-SEM8-Reports\DailyMart\DailyMart\obj\Debug\DailyMart.csproj.GenerateResource.cache
 E:\DOCS-SEM8-Reports\DailyMart\DailyMart\obj\Debug\DailyMart.csprojAssemblyReference.cache
-E:\DOCS-SEM8-Reports\DailyMart\DailyMart\obj\Debug\DailyMart.Migrations.adddomainclasses.resources
-E:\DOCS-SEM8-Reports\DailyMart\DailyMart\obj\Debug\DailyMart.Migrations.updatedomainclasses.resources
+E:\DOCS-SEM8-Reports\DailyMart\DailyMart\obj\Debug\DailyMart.Migrations.addstockcountforproduct.resources

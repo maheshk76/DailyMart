@@ -856,6 +856,7 @@ function hideLoader() {
 };
 
 function showLoader() {
+    console.log("Loading");
     $(".loader").show();
     $("#loading-overlay").show();
 };

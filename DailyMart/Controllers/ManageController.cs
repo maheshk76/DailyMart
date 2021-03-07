@@ -65,7 +65,6 @@ namespace DailyMart.Controllers
             {
                 address = new Address();
             }
-            System.Diagnostics.Debug.WriteLine(address.Id);
             viewmodel.Address = address;
             return View(viewmodel);
         }
@@ -84,7 +83,7 @@ namespace DailyMart.Controllers
             var manager = new UserManager<ApplicationUser>(store);
             var currentUser = manager.FindByEmail(model.User.Email);
             currentUser.Name = model.User.Name;
-            currentUser.Phone = model.User.Phone;
+            currentUser.PhoneNumber = model.User.PhoneNumber;
             await manager.UpdateAsync(currentUser);
             var ctx = store.Context;
             ctx.SaveChanges();

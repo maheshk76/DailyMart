@@ -13,31 +13,33 @@
             </div>
             @using (Html.BeginForm("edit", "manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
-                <div class="col-md-12">
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.User.Name, new { @class = "col-md-4 control-label" })
-                        <div class="col-md-10">
-                            @Html.TextBoxFor(m => m.User.Name, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.User.Name, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.User.Phone, new { @class = "col-md-4 control-label" })
-                        <div class="col-md-10">
-                            @Html.TextBoxFor(m => m.User.Phone, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.User.Phone, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.User.Email, new { @class = "col-md-4 control-label" })
-                        <div class="col-md-10">
-                            @Html.TextBoxFor(m => m.User.Email, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.User.Email, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
+        <div class="col-md-12">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <p class="text-info col-md-12">
+                Email address can not be changed.
+            </p><br />
+            <div class="form-group">
+                @Html.LabelFor(m => m.User.Name, new { @class = "col-md-4 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.User.Name, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.User.Name, "", new { @class = "text-danger" })
                 </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.User.PhoneNumber, new { @class = "col-md-4 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.User.PhoneNumber, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.User.PhoneNumber, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.User.Email, new { @class = "col-md-4 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.User.Email, new {@class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.User.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
                 <div class="col-md-12 mt-5">
                     <div class="form-group">
                         @Html.LabelFor(m => m.Address.AddressLine, new { @class = "col-md-4 control-label" })
@@ -78,5 +80,5 @@
                 </div>
             }
         </div>
-            </div>
+    </div>
     </div>

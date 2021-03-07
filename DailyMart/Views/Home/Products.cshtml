@@ -1,0 +1,110 @@
+﻿@*@model IEnumerable<GroceryShop.Models.Product>*@
+@using PagedList;
+@using PagedList.Mvc;
+@model IPagedList<DailyMart.Models.Product>
+
+@{ ViewBag.Title = "Products"; }
+
+<div class="filter-shop clearfix">
+    <p class="showing-product">
+
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, search = Request.QueryString["search"] }), new PagedListRenderOptions() { ItemSliceAndTotalFormat = "Showing {0} - {1} Of {2} Products.", DisplayItemSliceAndTotal = true, DisplayLinkToIndividualPages = false, DisplayLinkToNextPage = PagedListDisplayMode.Never, DisplayLinkToPreviousPage = PagedListDisplayMode.Never })
+
+    </p>
+
+</div><!-- /.filte-shop -->
+<div class="product-content product-fourcolumn clearfix">
+    <ul class="product style3">
+        @if (Model.Count() > 0)
+        {
+            foreach (var item in Model)
+            {
+<li class="product-item">
+    <div class="product-thumb clearfix">
+        @if (item.Stock <= 0)
+        {
+<span class="new sale" style="z-index:10;">&nbsp;Out Of Stock </span>}
+
+
+        <a href="@Url.Action("Details", "Home", new { ID = item.Id })" class="product-thumb">
+            <img src="@item.ImageURL" alt="image" style="height:150px">
+
+        </a>
+
+
+
+    </div>
+    <div class="product-info clearfix">
+        <span class="product-title">@Html.DisplayFor(modelItem => item.Name)</span>
+        <div class="price">
+            <del>
+                <span class="regular">$@Html.DisplayFor(modelItem => item.OriginalPrice)</span>
+            </del>
+            <ins>
+                <span class="amount">$@Html.DisplayFor(modelItem => item.SellingPrice)</span>
+            </ins>
+        </div>
+    </div>
+    <div class="add-to-cart text-center">
+        @if (item.Stock > 0)
+        {
+<a data-id="@item.Id" class="addTocartBtn">ADD TO CART</a> @*<a href="@Url.Action("AddToCart", "Home", new { productId = item.ID, url = "Index" })">ADD TO CART </a>*@}
+
+    </div>
+
+    <a href="#" class="like"><i class="fa fa-heart-o"></i></a>
+</li> }
+            }
+            else
+            {
+<li class="h4 m-5 text-center">
+    We could not find any results!  <br /> Please try again!
+</li>}
+    </ul><!-- /.product -->
+</div><!-- /.product-content -->
+
+<div class="product-pagination text-center clearfix">
+
+    <ul class="flat-pagination text-center">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, search = Request.QueryString["search"] }), new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded, DisplayLinkToFirstPage = PagedListDisplayMode.IfNeeded, DisplayLinkToLastPage = PagedListDisplayMode.IfNeeded })
+
+    </ul><!-- /.flat-pagination -->
+
+</div>
+
+<input type="hidden" id="SearchTerm" value="@ViewBag.Search" />
+<input type="hidden" id="SortBy" value="@ViewBag.SortBy" />
+<input type="hidden" id="CategoryID" value="@ViewBag.CategoryID" />
+
+@section Scripts{
+<script>
+    $(document).ready(function () {
+
+    $(".addTocartBtn").click(function () {
+
+		var id = parseInt($(this).attr("data-id"));
+
+		$.ajax({
+            url: '@Url.Action("AddToCart", "Shared")',
+
+            data: {
+                ProductId: id,
+                quantity:1
+
+			}
+
+		})
+        .done(function (response) {
+        	console.log(response);
+            if (response.Success) {
+              $("#cartProductsCount").html(response.CartLength);
+        	}
+           swal("Done", "Product Added To Cart", "success");
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        	alert("FAIL to Add Product In Cart");
+        });
+    });
+    });
+</script>
+}

@@ -3,7 +3,7 @@
 @using PagedList.Mvc;
 @{ ViewBag.Title = "home"; }
 <!-- IMAGE BOX -->
-<!--<div class="flat-row no-padding">
+<div class="flat-row no-padding">
     <div class="container-fluid container-width-94">
         <div class="row gutter-10">
             <div class="col-md-12">
@@ -47,13 +47,14 @@
                             </div>
                         </div>
 
-                    </div>-->
-<!-- /.owl-carousel -->
-<!--</div>--><!-- /.flat-image-box -->
-<!--</div>--><!-- /.col-md-12 -->
-<!--</div>--><!-- /.row -->
-<!--</div>
-</div>-->
+                    </div><!-- /.owl-carousel -->
+                </div><!-- /.flat-image-box -->
+            </div><!-- /.col-md-12 -->
+
+
+        </div><!-- /.row -->
+    </div>
+</div>
 <!-- END IMAGE BOX -->
 <section class="flat-row main-shop shop-slidebar">
     <div class="container">
@@ -104,16 +105,17 @@
                             Categories
                         </h5>
                         <div class="tag-list">
-                            @foreach (var category in ViewBag.Categories)
-                            {@*<a href="@Url.Action("index", "home",
-                                                     new { categoryID = category.Id, sortBy = ViewBag.SortBy!=null ? ViewBag.SortBy :null})"
-                                           class="dataLink @(ViewBag.CategoryID.HasValue && ViewBag.CategoryID.Value == category.Id ? "active" : string.Empty)">
-                                    @category.Name</a>*@
-                                            <a data-href="@Url.Action("Products", "home",
-                                            new { categoryID = category.Id, sortBy = Model.SortBy })"
-                                               class="dataLink @(Model.CategoryID.HasValue && Model.CategoryID.Value == category.Id ? "active" : string.Empty)">
-                                                @category.Name
-                                            </a>}
+                           @foreach (var category in ViewBag.Categories)
+                            {
+                               @*<a href="@Url.Action("index", "home", 
+                                             new { categoryID = category.Id, sortBy = ViewBag.SortBy!=null ? ViewBag.SortBy :null})"
+                                   class="dataLink @(ViewBag.CategoryID.HasValue && ViewBag.CategoryID.Value == category.Id ? "active" : string.Empty)">
+                            @category.Name</a>*@
+                               <a data-href="@Url.Action("Products", "home", 
+                                            new { categoryID = category.Id, sortBy = Model.SortBy })" 
+                                  class="dataLink @(Model.CategoryID.HasValue && Model.CategoryID.Value == category.Id ? "active" : string.Empty)">
+                            @category.Name</a>
+                          }    
                         </div>
                     </div><!-- /.widget -->
 
@@ -122,16 +124,16 @@
             </div><!-- /.col-md-3 -->
             <div class="col-md-9" id="productsDiv">
 
-                @{Html.RenderAction("Products", "home",
-                              new
-                              {
-                                  search = Model.Search,
-                                  categoryId = Model.CategoryID,
-                                  minimumPrice = ViewBag.MinimumPrice,
-                                  maximumPrice = ViewBag.MaximumPrice,
-                                  sortBy = Model.SortBy,
-                                  products = ViewBag.products
-                              }); }
+               @{Html.RenderAction("Products", "home",
+                         new
+                         {
+                             search = Model.Search,
+                             categoryId = Model.CategoryID,
+                             minimumPrice = ViewBag.MinimumPrice,
+                             maximumPrice = ViewBag.MaximumPrice,
+                             sortBy = Model.SortBy,
+                             products = ViewBag.products
+                         }); }
             </div><!-- /.col-md-9 -->
 
 
@@ -142,6 +144,7 @@
 
 @section Scripts{
     <script>
+        $(document).ready(function () {
 
 
     $("#amount").val("$" +@Model.MinimumPrice + ".00" + " - " + "$" + @ViewBag.MaximumPrice + ".00");
@@ -171,38 +174,40 @@
 	});
 
 
-        $("#searchTxt").change(function () {
-            showLoader();
-            var searchValue = $("#searchTxt").val();
-            $.ajax({
-			    url:'@Url.Action("Products", "Home")',
-                data: {
-                    search: searchValue,
-				    sortBy: $("#SortBy").val(),
-				    categoryID: $("#CategoryID").val(),
-				    minimumPrice : priceSlider.slider("values", 0),
-				    maximumPrice : priceSlider.slider("values", 1)
-                }
-		    })
-           .done(function (response) {
-        	    console.log("done search");
-               $("#productsDiv").html(response);
-               focusAction("productsDiv");
-            })
-            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-        	    console.log("fail search");
-        	    alert("FAIL");
-            })
-		    .always(function(){
-                console.log("always");
-                hideLoader();
-		    });
-		    console.log("getdata out");
-        });
+    $("#searchTxt").change(function () {
+          showLoader();  console.log("show");
+		var searchValue = $("#searchTxt").val();
+
+		$.ajax({
+			url:'@Url.Action("Products", "Home")',
+			data: {
+                search: searchValue,
+				sortBy: $("#SortBy").val(),
+				categoryID: $("#CategoryID").val(),
+				minimumPrice : priceSlider.slider("values", 0),
+				maximumPrice : priceSlider.slider("values", 1)
+			}
+		})
+       .done(function (response) {
+        	console.log("done search");
+           $("#productsDiv").html(response);
+           focusAction("productsDiv");
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        	console.log("fail search");
+        	alert("FAIL");
+        })
+		.always(function(){
+			console.log("always");
+            hideLoader();
+		});
+		console.log("getdata out");
+    });
        $(".shopnow").click(function () {
         focusAction("productsDiv");
     });
-
+    
+        });
         function focusAction(controlToFocus) {
             $('html, body').animate({
                 scrollTop: $("#" + controlToFocus).offset().top - 100
@@ -261,4 +266,4 @@
 		});
     }
     </script>
-}
+    }

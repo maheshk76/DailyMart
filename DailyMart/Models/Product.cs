@@ -16,5 +16,6 @@ namespace DailyMart.Models
         public string ImageURL { get; set; }
         public string Tags { get; set; }
         public virtual Category Category { get; set; }
+        public int Stock { get; set; }
     }
 }

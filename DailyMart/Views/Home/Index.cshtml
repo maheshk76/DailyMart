@@ -60,6 +60,13 @@
         <div class="row">
             <div class="col-md-3">
                 <div class="sidebar slidebar-shop">
+                    <div class="widget widget_tag filterBtn">
+                        <h5 class="widget-title">
+                            <a href="@Url.Action("index", "home",new { reset = 1 })" class="themesflat-button bg-accent" style="font-weight:500!important;">Reset Filters</a>
+
+                        </h5>
+
+                    </div>
                     <div class="widget widget-search">
                         <div role="search" class="search-form">
                             <label>
@@ -69,13 +76,7 @@
                         </div>
                     </div><!-- /.widget-search -->
 
-                    <div class="widget widget_tag">
-                        <h5 class="widget-title">
-                            <a href="@Url.Action("index", "home",new { reset = 1 })" class="themesflat-button bg-accent" style="font-weight:500!important;">Reset Filters</a>
 
-                        </h5>
-
-                    </div>
 
                     <div class="widget widget-sort-by">
                         <h5 class="widget-title">
@@ -106,9 +107,9 @@
                         <div class="tag-list">
                             @foreach (var category in ViewBag.Categories)
                             {@*<a href="@Url.Action("index", "home",
-                                                     new { categoryID = category.Id, sortBy = ViewBag.SortBy!=null ? ViewBag.SortBy :null})"
-                                           class="dataLink @(ViewBag.CategoryID.HasValue && ViewBag.CategoryID.Value == category.Id ? "active" : string.Empty)">
-                                    @category.Name</a>*@
+                                     new { categoryID = category.Id, sortBy = ViewBag.SortBy!=null ? ViewBag.SortBy :null})"
+                           class="dataLink @(ViewBag.CategoryID.HasValue && ViewBag.CategoryID.Value == category.Id ? "active" : string.Empty)">
+                    @category.Name</a>*@
                                             <a data-href="@Url.Action("Products", "home",
                                             new { categoryID = category.Id, sortBy = Model.SortBy })"
                                                class="dataLink @(Model.CategoryID.HasValue && Model.CategoryID.Value == category.Id ? "active" : string.Empty)">
@@ -142,8 +143,7 @@
 
 @section Scripts{
     <script>
-
-
+        $(".filterBtn").hide();
     $("#amount").val("$" +@Model.MinimumPrice + ".00" + " - " + "$" + @ViewBag.MaximumPrice + ".00");
 	var callTimeout;
 	var priceSlider = $("#slide-range").slider({
@@ -161,10 +161,13 @@
 			callTimeout = setTimeout(PriceRangeChange, 800);
 		}
 	});
-
+        $(".filterBtn").click(function () {
+            setTimeout(function () { $(".filterBtn").hide(); }, 2000);
+            
+        });
 	$(".dataLink").click(function () {
 		var url = $(this).attr("data-href");
-
+        ShowHideBtn();
 		if (url != "" || url != undefined) {
 			GetData(url);
 		}
@@ -173,6 +176,7 @@
 
         $("#searchTxt").change(function () {
             showLoader();
+            ShowHideBtn();
             var searchValue = $("#searchTxt").val();
             $.ajax({
 			    url:'@Url.Action("Products", "Home")',
@@ -208,7 +212,8 @@
                 scrollTop: $("#" + controlToFocus).offset().top - 100
             }, 1000);
         }
-        function GetData(dUrl){
+        function GetData(dUrl) {
+            
 		console.log("getdata in");
     showLoader();  console.log("show");
 
@@ -234,9 +239,10 @@
             hideLoader();
 		});
 		console.log("getdata out");
-	}
-
-    function PriceRangeChange() {
+        }
+        
+        function PriceRangeChange() {
+            ShowHideBtn();
         showLoader();  console.log("show");
 		$.ajax({
 			url: '@Url.Action("Products", "Home")',
@@ -259,6 +265,11 @@
 			console.log("always");
             hideLoader();
 		});
-    }
+        }
+        function ShowHideBtn() {
+            $(".filterBtn").show();
+            
+        }
+        
     </script>
 }

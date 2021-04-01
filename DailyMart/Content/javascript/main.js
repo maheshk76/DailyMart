@@ -844,7 +844,9 @@
       flatIsotope();
       flatCarouselOwl();
         flatContentBox();
-           
+        $("#User_Email").keypress(function (e) {
+            e.preventDefault();
+        });
         
    	});
 })(jQuery);

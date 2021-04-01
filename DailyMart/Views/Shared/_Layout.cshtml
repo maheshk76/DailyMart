@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using DailyMart.ViewModels;
+
+@using Microsoft.AspNet.Identity
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -10,6 +14,11 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIEU6OT3xqCksCetQeNLIPps6-AYrhq-s&region=GB"></script>
+    @*    @Scripts.Render("~/bundles/jquery")
+    *@
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    @Scripts.Render("~/bundles/javascript/js")
+    @Scripts.Render("~/bundles/rev-slider/js")
 </head>
 <body class="header_sticky header-style-2 has-menu-extra">
     <!-- Preloader -->
@@ -52,8 +61,8 @@
                                 @{ var count = 0;
                                     if (Session["cart"] != null)
                                     {
-                                        // List<Item> cart = (List<Item>)Session["cart"];
-                                        // count = cart.Count();
+                                        List<Item> cart = (List<Item>)Session["cart"];
+                                        count = cart.Count();
                                         count = 0;
 
                                     }
@@ -169,9 +178,7 @@
         </a>
 
     </div>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/javascript/js")
-    @Scripts.Render("~/bundles/rev-slider/js")
+
     @RenderSection("scripts", required: false)
 </body>
 

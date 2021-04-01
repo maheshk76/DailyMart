@@ -107,9 +107,9 @@
                         <div class="tag-list">
                             @foreach (var category in ViewBag.Categories)
                             {@*<a href="@Url.Action("index", "home",
-                                     new { categoryID = category.Id, sortBy = ViewBag.SortBy!=null ? ViewBag.SortBy :null})"
-                           class="dataLink @(ViewBag.CategoryID.HasValue && ViewBag.CategoryID.Value == category.Id ? "active" : string.Empty)">
-                    @category.Name</a>*@
+                                                     new { categoryID = category.Id, sortBy = ViewBag.SortBy!=null ? ViewBag.SortBy :null})"
+                                           class="dataLink @(ViewBag.CategoryID.HasValue && ViewBag.CategoryID.Value == category.Id ? "active" : string.Empty)">
+                                    @category.Name</a>*@
                                             <a data-href="@Url.Action("Products", "home",
                                             new { categoryID = category.Id, sortBy = Model.SortBy })"
                                                class="dataLink @(Model.CategoryID.HasValue && Model.CategoryID.Value == category.Id ? "active" : string.Empty)">
@@ -124,15 +124,15 @@
             <div class="col-md-9" id="productsDiv">
 
                 @{Html.RenderAction("Products", "home",
-                              new
-                              {
-                                  search = Model.Search,
-                                  categoryId = Model.CategoryID,
-                                  minimumPrice = ViewBag.MinimumPrice,
-                                  maximumPrice = ViewBag.MaximumPrice,
-                                  sortBy = Model.SortBy,
-                                  products = ViewBag.products
-                              }); }
+                                new
+                                {
+                                    search = Model.Search,
+                                    categoryId = Model.CategoryID,
+                                    minimumPrice = ViewBag.MinimumPrice,
+                                    maximumPrice = ViewBag.MaximumPrice,
+                                    sortBy = Model.SortBy,
+                                    products = ViewBag.products
+                                }); }
             </div><!-- /.col-md-9 -->
 
 
@@ -143,6 +143,7 @@
 
 @section Scripts{
     <script>
+        $(document).ready(function () {
         $(".filterBtn").hide();
     $("#amount").val("$" +@Model.MinimumPrice + ".00" + " - " + "$" + @ViewBag.MaximumPrice + ".00");
 	var callTimeout;
@@ -163,7 +164,7 @@
 	});
         $(".filterBtn").click(function () {
             setTimeout(function () { $(".filterBtn").hide(); }, 2000);
-            
+
         });
 	$(".dataLink").click(function () {
 		var url = $(this).attr("data-href");
@@ -213,7 +214,7 @@
             }, 1000);
         }
         function GetData(dUrl) {
-            
+
 		console.log("getdata in");
     showLoader();  console.log("show");
 
@@ -240,7 +241,7 @@
 		});
 		console.log("getdata out");
         }
-        
+
         function PriceRangeChange() {
             ShowHideBtn();
         showLoader();  console.log("show");
@@ -268,8 +269,30 @@
         }
         function ShowHideBtn() {
             $(".filterBtn").show();
-            
+
         }
-        
+        $(".addTocartBtn").on("click",function () {
+
+		    var productId = parseInt($(this).attr("data-id"));
+		    $.ajax({
+                url: '@Url.Action("AddToCart", "Shared")',
+
+                data: {
+                    ProductId: productId,
+                    quantity:1
+			    }
+		    })
+            .done(function (response) {
+        	    console.log(response);
+                if (response.Success) {
+                    $("#cartProductsCount").html(response.CartLength);
+        	    }
+                swal("Done", "Product Added To Cart", "success");
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        	        alert("FAIL to Add Product In Cart");
+            });
+        });
+    });
     </script>
 }

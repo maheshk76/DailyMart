@@ -28,7 +28,7 @@ namespace DailyMart
             mess.Subject = message.Subject;
             mess.Body = message.Body;
             mess.From = new MailAddress(ExternalLoginKeys.EmailKeys.Email);
-
+            
             SmtpClient client = new SmtpClient();
             client.Port = 587;
             client.Host = "smtp.gmail.com";

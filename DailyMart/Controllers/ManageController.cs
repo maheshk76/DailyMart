@@ -92,8 +92,7 @@ namespace DailyMart.Controllers
             try
             {
                 var address = model.Address;
-
-                System.Diagnostics.Debug.WriteLine(address.Id);
+                address.UserId = model.User.Id;
                 if (address.Id == 0)
                 {
                     _context.Address.Add(address);

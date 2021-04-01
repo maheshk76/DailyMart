@@ -1,10 +1,12 @@
 ﻿
 using DailyMart.Models;
 using DailyMart.ViewModels;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using PagedList;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -197,6 +199,13 @@ namespace DailyMart.Controllers
 
             return PartialView(pr);
         }
+        [Authorize]
+        public ActionResult CheckOut()
+        {
+            ApplicationUser user = UserManager.FindById(User.Identity.GetUserId());
+            ViewBag.User = user;
+            return View();
+        }
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -226,6 +235,64 @@ namespace DailyMart.Controllers
         public ActionResult Cart()
         {
             return View();
+        }
+        public JsonResult PlaceOrder(Order model)
+        {
+            JsonResult result = new JsonResult();
+            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            Order newOrder = new Order();
+            newOrder.UserId = User.Identity.GetUserId();
+            newOrder.OrderDate = DateTime.Now;
+            newOrder.OrderStatus = "Pending";
+            /*newOrder.FirstName = model.FirstName;
+            newOrder.LastName = model.LastName;
+            newOrder.PhoneNumber = model.PhoneNumber;
+            newOrder.Address1 = model.Address1;
+            newOrder.Address2 = model.Address2;
+            newOrder.City = model.City;
+            newOrder.ZipCode = model.ZipCode;*/
+            newOrder.Amount = model.Amount;
+            //newOrder.PaymentType = model.PaymentType;
+            if (Session["cart"] != null)
+            {
+                List<Item> cart = (List<Item>)Session["cart"];
+                List<OrderItem> orderitems = new List<OrderItem>();
+                foreach (var item in cart)
+                {
+
+                    if (item.Quantity > 0)
+                    {
+                        OrderItem orderItem = new OrderItem();
+                        orderItem.Quantity = item.Quantity;
+                        orderItem.ProductId = item.Product.Id;
+                        Product p = _context.Products.Find(item.Product.Id);
+                        p.Stock = p.Stock - item.Quantity;
+                        orderitems.Add(orderItem);
+
+                    }
+                }
+
+                newOrder.OrderItems = orderitems;
+
+                _context.Orders.Add(newOrder);
+                _context.SaveChanges();
+                Session["cart"] = null;
+                result.Data = new { Success = true, Message = "Product Updated to cart successfully" };
+
+            }
+
+            return result;
+        }
+        [Authorize]
+        public ActionResult MyOrders(string userId, string status)
+        {
+            var orders = _context.Orders.Where(x => x.Id == Convert.ToInt32(userId)).Include(x => x.OrderItems);
+            OrderViewModel model = new OrderViewModel();
+            model.PendingOrders = orders.Where(x => x.OrderStatus.ToLower().Contains("pending")).OrderByDescending(x => x.OrderDate).ToList();
+            model.InProgressOrders = orders.Where(x => x.OrderStatus.ToLower().Contains("inprogress")).OrderByDescending(x => x.OrderDate).ToList();
+            model.PreviousOrders = orders.Where(x => x.OrderStatus.ToLower().Contains("delivered")).OrderByDescending(x => x.OrderDate).ToList();
+
+            return View(model);
         }
     }
 }

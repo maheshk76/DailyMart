@@ -276,7 +276,13 @@ namespace DailyMart.Controllers
         [AllowAnonymous]
         public ActionResult ResetPassword(string code)
         {
-            return code == null ? View("Error") : View();
+            string Id = Request.QueryString["userId"];
+            ApplicationUser user = UserManager.FindById(Id);
+            ResetPasswordViewModel model = new ResetPasswordViewModel()
+            {
+                Email = user.Email
+            };
+            return code == null ? View("Error") : View(model);
         }
 
         //

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -18,8 +19,8 @@ namespace DailyMart.Models
         public string UserId { get; set; }
 
         [Required]
-        public virtual IEnumerable<OrderItem> OrderItems { get; set; }
-
-        public virtual Payment Payment { get; set; }
+        public virtual List<OrderItem> OrderItems { get; set; }
+        [NotMapped]
+        public string PaymentType { get; set; }
     }
 }

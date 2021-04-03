@@ -31,7 +31,7 @@ namespace DailyMart
                 "~/Content/stylesheets/bootstrap.css",
                 "~/Content/stylesheets/style.css",
                 "~/Content/stylesheets/responsive.css",
-                "~/Content/stylesheets/colors/color1.css",
+                "~/Content/stylesheets/colors/color3.css",
                 "~/Content/stylesheets/animate.css",
                 "~/Content/toastr.css"
                 ));

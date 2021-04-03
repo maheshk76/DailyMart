@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -18,7 +19,7 @@ namespace DailyMart.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
         public HomeController()
         {
             _context = new ApplicationDbContext();
@@ -73,12 +74,14 @@ namespace DailyMart.Controllers
             if (reset == 1)
             {
 
-                ShopViewModel model1 = new ShopViewModel();
-                model1.Search = search;
-                model1.CategoryID = categoryID;
-                model1.MinimumPrice = ViewBag.MinimumPrice;
-                model1.MaximumPrice = (int)(_context.Products.Max(x => x.SellingPrice));
-                model1.SortBy = sortBy;
+                ShopViewModel model1 = new ShopViewModel
+                {
+                    Search = search,
+                    CategoryID = categoryID,
+                    MinimumPrice = ViewBag.MinimumPrice,
+                    MaximumPrice = (int)(_context.Products.Max(x => x.SellingPrice)),
+                    SortBy = sortBy
+                };
                 ViewBag.products = _context.Products.ToList();
                 return View(model1);
             }
@@ -195,8 +198,16 @@ namespace DailyMart.Controllers
 
             TempData["categoryID"] = categoryID;
             IPagedList<Product> pr = products.ToPagedList(page ?? 1, 12);
-
-
+            
+                if (Request.IsAuthenticated)
+                {
+                    var user = User.Identity.GetUserId();
+                    var wish = _context.Wishlists.Where(w => w.UserId == user).Select(w=>w.ProductId).ToList();
+                if (wish.Count() == 0)
+                    ViewBag.Wishlist = null;
+                else
+                    ViewBag.Wishlist = wish;
+                }
             return PartialView(pr);
         }
         [Authorize]
@@ -204,6 +215,8 @@ namespace DailyMart.Controllers
         {
             ApplicationUser user = UserManager.FindById(User.Identity.GetUserId());
             ViewBag.User = user;
+            var address=_context.Address.FirstOrDefault(a => a.UserId == user.Id);
+            ViewBag.uAddress = address;
             return View();
         }
         public ActionResult Details(int? id)
@@ -217,6 +230,9 @@ namespace DailyMart.Controllers
             {
                 return HttpNotFound();
             }
+            var UserId = User.Identity.GetUserId();
+           var InWish= _context.Wishlists.FirstOrDefault(w => w.ProductId == id && w.UserId == UserId);
+            ViewBag.InWish = InWish;
             return View(product);
         }
         public ActionResult About()
@@ -236,23 +252,65 @@ namespace DailyMart.Controllers
         {
             return View();
         }
-        public JsonResult PlaceOrder(Order model)
+        public ActionResult WishList()
         {
-            JsonResult result = new JsonResult();
-            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            Order newOrder = new Order();
-            newOrder.UserId = User.Identity.GetUserId();
-            newOrder.OrderDate = DateTime.Now;
-            newOrder.OrderStatus = "Pending";
-            /*newOrder.FirstName = model.FirstName;
-            newOrder.LastName = model.LastName;
-            newOrder.PhoneNumber = model.PhoneNumber;
-            newOrder.Address1 = model.Address1;
-            newOrder.Address2 = model.Address2;
-            newOrder.City = model.City;
-            newOrder.ZipCode = model.ZipCode;*/
-            newOrder.Amount = model.Amount;
-            //newOrder.PaymentType = model.PaymentType;
+            List<WishlistViewModel> model = new List<WishlistViewModel>();
+            var userId = User.Identity.GetUserId();
+            var Wishlist = _context.Wishlists.Where(w => w.UserId == userId).ToList();
+            List<Product> plist = new List<Product>();
+            foreach(var wlist in Wishlist)
+            {
+                Product product=_context.Products.FirstOrDefault(p => p.Id == wlist.ProductId);
+                model.Add(
+                    new WishlistViewModel()
+                    {
+                        Id = wlist.Id,
+                        UserId = userId,
+                        Product = product
+                    });
+
+            }
+           
+            return View(model);
+        }
+        public async Task<JsonResult> PlaceOrder(string orderdata)
+        {
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            
+            var data = orderdata.Split('&');
+            for(int i = 0; i < data.Length; i++)
+            {
+                data[i] = data[i].Split('=')[1];
+            }
+            JsonResult result = new JsonResult
+            {
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+            Order newOrder = new Order
+            {
+                UserId = User.Identity.GetUserId(),
+                OrderDate = DateTime.Now,
+                OrderStatus = "Pending",
+                Amount = Convert.ToInt32(data[0])
+            };
+            if (data[1] == "true")
+            {
+                Address address = new Address
+                {
+                    UserId = User.Identity.GetUserId(),
+                    AddressLine = data[2],
+                    City = data[3],
+                    State = data[4],
+                    ZipCode = data[5]
+                };
+                _context.Address.Add(address);
+                _context.SaveChanges();
+                newOrder.PaymentType = data[6];
+            }
+            else
+            {
+                newOrder.PaymentType = data[2];
+            }
             if (Session["cart"] != null)
             {
                 List<Item> cart = (List<Item>)Session["cart"];
@@ -262,11 +320,13 @@ namespace DailyMart.Controllers
 
                     if (item.Quantity > 0)
                     {
-                        OrderItem orderItem = new OrderItem();
-                        orderItem.Quantity = item.Quantity;
-                        orderItem.ProductId = item.Product.Id;
+                        OrderItem orderItem = new OrderItem
+                        {
+                            Quantity = item.Quantity,
+                            ProductId = item.Product.Id
+                        };
                         Product p = _context.Products.Find(item.Product.Id);
-                        p.Stock = p.Stock - item.Quantity;
+                        p.Stock -= item.Quantity;
                         orderitems.Add(orderItem);
 
                     }
@@ -280,17 +340,21 @@ namespace DailyMart.Controllers
                 result.Data = new { Success = true, Message = "Product Updated to cart successfully" };
 
             }
-
+            var callbackUrl = Url.Action("MyOrders", "Home", new { userId = user.Id}, protocol: Request.Url.Scheme);
+            string body = "<html>Your order has been placed with Order Id:" + newOrder.Id+ "  <br/>Manage your orders here <a href=\"" + callbackUrl + "\">MyOrders</a></html>";
+            await UserManager.SendEmailAsync(user.Id,"Order Placed",body);
             return result;
         }
         [Authorize]
         public ActionResult MyOrders(string userId, string status)
         {
-            var orders = _context.Orders.Where(x => x.Id == Convert.ToInt32(userId)).Include(x => x.OrderItems);
-            OrderViewModel model = new OrderViewModel();
-            model.PendingOrders = orders.Where(x => x.OrderStatus.ToLower().Contains("pending")).OrderByDescending(x => x.OrderDate).ToList();
-            model.InProgressOrders = orders.Where(x => x.OrderStatus.ToLower().Contains("inprogress")).OrderByDescending(x => x.OrderDate).ToList();
-            model.PreviousOrders = orders.Where(x => x.OrderStatus.ToLower().Contains("delivered")).OrderByDescending(x => x.OrderDate).ToList();
+            var orders = _context.Orders.Where(x => x.UserId == userId).Include(x => x.OrderItems).ToList();
+            OrderViewModel model = new OrderViewModel
+            {
+                PendingOrders = orders.Where(x => x.OrderStatus.ToLower().Contains("pending")).OrderByDescending(x => x.OrderDate).ToList(),
+                InProgressOrders = orders.Where(x => x.OrderStatus.ToLower().Contains("inprogress")).OrderByDescending(x => x.OrderDate).ToList(),
+                PreviousOrders = orders.Where(x => x.OrderStatus.ToLower().Contains("delivered")).OrderByDescending(x => x.OrderDate).ToList()
+            };
 
             return View(model);
         }

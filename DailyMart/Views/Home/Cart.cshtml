@@ -1,6 +1,8 @@
 ﻿@using DailyMart.ViewModels;
-@{ ViewBag.Title = "Cart";
-                int Total = 0; }
+@{
+    ViewBag.Title = "Cart";
+    int Total = 0;
+}
 
 <div class="container w-50">
     <div class="content-inner active" style="display: block;">
@@ -8,81 +10,86 @@
 
             @if (Session["cart"] == null)
             {
-<ol class="review-list">
-    <li class="h4 alert alert-danger text-center">
-        <strong>Your Cart Is Empty!</strong>
-    </li>
-</ol> }
+                <ol class="review-list">
+                    <li class="h4 alert alert-danger text-center">
+                        <strong>Your Cart Is Empty!</strong>
+                    </li>
+                </ol>
+
+            }
             else
             {
-                List<Item> cart = (List<Item>)Session["cart"];
+                List<Item>cart = (List<Item>)Session["cart"];
 
                 var count = cart.Count();
                 if (count == 0)
                 {
-<ol class="review-list">
-    <li class="h4 alert alert-danger text-center">
-        <strong>Your Cart Is Empty!</strong>
-    </li>
-</ol> }
+                    <ol class="review-list">
+                        <li class="h4 alert alert-danger text-center">
+                            <strong>Your Cart Is Empty!</strong>
+                        </li>
+                    </ol>
+                }
                 else
                 {
 
-<ol class="review-list">
+                    <ol class="review-list">
 
-    @foreach (Item item in (List<Item>)Session["cart"])
-    {
-        int lineTotal = Convert.ToInt32(item.Quantity * item.Product.SellingPrice);
-        Total = Convert.ToInt32(@Total + lineTotal);
-<li class="review border-bottom" style="padding-top:25px;padding-bottom:25px;">
-    <div class="thumb">
-        <img src="@item.Product.ImageURL" alt="Image">
-    </div>
-    <div class="text-wrap">
-        <div class="review-meta">
-            <h5 class="name">@item.Product.Name</h5>
-            <div class="flat-star style-x">
-                <a class="removeFromCartbtn" data-id="@item.Product.Id">
-                    <i class="fa fa-remove"></i>
-                </a>
-            </div>
-        </div>
-        <div class="review-text">
-            <div class="product-detail">
-                <div class="product-quantity" style="margin-top:0px;">
-                    <div class="quantity">
-                        <input type="text" value="@item.Quantity" name="quantity-number" class="quantity-number">
-                        <span class="inc quantity-button increaseQty" data-id="@item.Product.Id">+</span>
-                        <span class="dec quantity-button decreaseQty" data-id="@item.Product.Id">-</span>
-                    </div>
-                    <div class="price ml-3">
-                        <ins>
-                            <span class="amount">
-                                Rs. @item.Product.SellingPrice
-                            </span>
-                        </ins>
-                        <del>
-                            <span class="regular">
-                                Rs. @item.Product.OriginalPrice
-                            </span>
-                        </del>
+                        @foreach (Item item in (List<Item>)Session["cart"])
+                        {
+                            int lineTotal = Convert.ToInt32(item.Quantity * item.Product.SellingPrice);
+                            Total = Convert.ToInt32(@Total + lineTotal);
+                        <li class="review border-bottom" style="padding-top:25px;padding-bottom:25px;">
+                            <div class="thumb">
+                                <img src="@item.Product.ImageURL" alt="Image">
+                            </div>
+                            <div class="text-wrap">
+                                <div class="review-meta">
+                                    <h5 class="name">@item.Product.Name</h5>
+                                    <div class="flat-star style-x">
+                                        <a class="removeFromCartbtn" data-id="@item.Product.Id">
+                                            <i class="fa fa-remove"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="review-text">
+                                    <div class="product-detail">
+                                        <div class="product-quantity" style="margin-top:0px;">
+                                            <div class="quantity">
+                                                <input type="text" value="@item.Quantity" name="quantity-number" class="quantity-number">
+                                                <span class="inc quantity-button increaseQty" data-id="@item.Product.Id">+</span>
+                                                <span class="dec quantity-button decreaseQty" data-id="@item.Product.Id">-</span>
+                                            </div>
+                                            <div class="price ml-3">
+                                                <ins>
+                                                    <span class="amount">
+                                                        Rs. @item.Product.SellingPrice
+                                                    </span>
+                                                </ins>
+                                                <del>
+                                                    <span class="regular">
+                                                        Rs. @item.Product.OriginalPrice
+                                                    </span>
+                                                </del>
 
-                    </div>
-                </div>
-            </div>
-            <div class="float-right">
-                <b>Sub Total:@lineTotal</b>
-            </div>
-        </div>
-    </div>
-    <hr />
-</li><!--  /.review    -->}
-</ol><!-- /.review-list -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="float-right">
+                                        <b>Sub Total:@lineTotal</b>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                        </li><!--  /.review    -->
+                        }
+                    </ol><!-- /.review-list -->
                     <div class="text-center mt-5">
                         <a href="@Url.Action("CheckOut", "Home")" class="themesflat-button bg-accent mb-4" style="font-weight:500!important;">Proceed To CheckOut &nbsp;&nbsp;   <span class="font-size-18 font-weight-bolder"> @Total Rs.</span>  ></a>
 
-                    </div>                }
-                                }
+                    </div>
+                }
+            }
 
 
 
@@ -91,9 +98,6 @@
 
 </div>
 <script>
-    $(document).ready(function () {
-
-    
     $(".removeFromCartbtn").click(function () {
         debugger;
 		var id = parseInt($(this).attr("data-id"));
@@ -166,6 +170,5 @@
         .fail(function (XMLHttpRequest, textStatus, errorThrown) {
         	alert("FAIL to Remove");
         });
-      });
     });
 </script>

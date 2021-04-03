@@ -25,8 +25,9 @@ namespace DailyMart.Models
         public DbSet<Order> Orders { get; set; }
         public DbSet<Address> Address { get; set; }
         public DbSet<Category> Category { get; set; }
-
-        
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Wishlist> Wishlists { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

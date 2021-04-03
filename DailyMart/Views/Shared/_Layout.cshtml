@@ -45,10 +45,11 @@
                                 <li><a href="@Url.Action("index", "home")">Home</a></li>
                                 @if (Request.IsAuthenticated)
                                 {
-                                    <li><a href="@Url.Action("index","home"@*,new { userId=User.Identity.GetUserId()}*@)">Orders</a></li>
+                                    <li><a href="@Url.Action("MyOrders","home",new { userId=User.Identity.GetUserId()})">Orders</a></li>
                                 }
                                 <li><a href="@Url.Action("contact", "home")">Contact</a></li>
                                 <li><a href="@Url.Action("about", "home")">About</a></li>
+                               
                             </ul>
 
                         </nav><!-- /.mainnav -->
@@ -57,18 +58,23 @@
                     <ul class="menu-extra">
                         @if (Request.IsAuthenticated)
                         {
+                            <li><a href="@Url.Action("WishList","home",new { userId=User.Identity.GetUserId()})">
+                                <i class="fa fa-heart"></i></a>
+                            </li>
                             <li class="box-cart nav-top-cart-wrapper">
                                 @{ var count = 0;
                                     if (Session["cart"] != null)
                                     {
                                         List<Item> cart = (List<Item>)Session["cart"];
                                         count = cart.Count();
-                                        count = 0;
+                                       // count = 0;
 
                                     }
                                 }
                                 <a class="icon_cart nav-cart-trigger active" href="@Url.Action("cart", "home")"><span id="cartProductsCount">@count</span></a>
                             </li>
+                            
+                                
                         }
                         @Html.Partial("_LoginPartial")
 
@@ -79,7 +85,7 @@
 
 
         @RenderBody()
-        <div style="bottom:0;">
+        <div style="bottom:0;" class="main-footer">
             <section class="flat-row mail-chimp">
                 <div class="container">
                     <div class="row">

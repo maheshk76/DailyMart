@@ -255,7 +255,7 @@ namespace DailyMart.Controllers
                 // Send an email with this link
                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                  var callbackUrl = Url.Action("ResetPassword", "account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                 await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                 await UserManager.SendEmailAsync(user.Id, "Reset Password", "<html>Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a></html>");
                  return RedirectToAction("ForgotPasswordConfirmation", "account");
             }
 
@@ -277,11 +277,13 @@ namespace DailyMart.Controllers
         public ActionResult ResetPassword(string code)
         {
             string Id = Request.QueryString["userId"];
+            
             ApplicationUser user = UserManager.FindById(Id);
             ResetPasswordViewModel model = new ResetPasswordViewModel()
             {
                 Email = user.Email
             };
+            
             return code == null ? View("Error") : View(model);
         }
 

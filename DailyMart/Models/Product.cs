@@ -15,7 +15,12 @@ namespace DailyMart.Models
         public decimal? SellingPrice { get; set; }
         public string ImageURL { get; set; }
         public string Tags { get; set; }
+        public int CategoryId { get; set; }
+        [ForeignKey("CategoryId")]
         public virtual Category Category { get; set; }
         public int Stock { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+        public DateTime UpdatedOn { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 @using PagedList;
 @using PagedList.Mvc;
 @model IPagedList<DailyMart.Models.Product>
-
+@using DailyMart.Models;
 @{ ViewBag.Title = "Products"; }
 
 <div class="filter-shop clearfix">
@@ -15,51 +15,85 @@
 </div><!-- /.filte-shop -->
 <div class="product-content product-fourcolumn clearfix">
     <ul class="product style3">
-        @if (Model.Count() > 0)
-        {
-            foreach (var item in Model)
-            {
-<li class="product-item">
-    <div class="product-thumb clearfix">
-        @if (item.Stock <= 0)
-        {
-<span class="new sale" style="z-index:10;">&nbsp;Out Of Stock </span>}
+     @{
+         List<int> wishlist = null;
+         bool inwish = false;
+         if (ViewBag.Wishlist != null) {
+             wishlist = ViewBag.Wishlist as List<int>;
 
+         }
+     }
+         @if (Model.Count() > 0)
+         {
+             foreach (var item in Model)
+             {
 
-        <a href="@Url.Action("Details", "Home", new { ID = item.Id })" class="product-thumb">
-            <img src="@item.ImageURL" alt="image" style="height:150px">
+                 {
+                     if (wishlist != null)
+                     {
+                         inwish= wishlist.Contains(item.Id);
+                     }
+                     else
+                     {
+                         inwish = false;
+                     }
+                 }
+                <li class="product-item">
+                    <div class="product-thumb clearfix">
+                        @if (item.Stock <= 0)
+                        {
+                                <span class="new sale" style="z-index:10;">&nbsp;Out Of Stock </span>}
 
-        </a>
+                        <a href="@Url.Action("Details", "Home", new { ID = item.Id})" class="product-thumb">
+                            <img src="@item.ImageURL" alt="image" style="height:150px">
+                        </a>
+                    </div>
+                    <div class="product-info clearfix">
+                        <span class="product-title">@Html.DisplayFor(modelItem => item.Name)</span>
+                        <div class="price">
+                            <del>
+                                <span class="regular">$@Html.DisplayFor(modelItem => item.OriginalPrice)</span>
+                            </del>
+                            <ins>
+                                <span class="amount">$@Html.DisplayFor(modelItem => item.SellingPrice)</span>
+                            </ins>
+                        </div>
+                    </div>
+                    <div class="add-to-cart text-center">
+                        @if (item.Stock > 0)
+                        {
+                                <a data-id="@item.Id" class="addTocartBtn">ADD TO CART</a>
+                        }
+                    </div>
+                    @if (wishlist != null)
+                    {
 
-
-
-    </div>
-    <div class="product-info clearfix">
-        <span class="product-title">@Html.DisplayFor(modelItem => item.Name)</span>
-        <div class="price">
-            <del>
-                <span class="regular">$@Html.DisplayFor(modelItem => item.OriginalPrice)</span>
-            </del>
-            <ins>
-                <span class="amount">$@Html.DisplayFor(modelItem => item.SellingPrice)</span>
-            </ins>
-        </div>
-    </div>
-    <div class="add-to-cart text-center">
-        @if (item.Stock > 0)
-        {
-<a data-id="@item.Id" class="addTocartBtn">ADD TO CART</a> @*<a href="@Url.Action("AddToCart", "Home", new { productId = item.ID, url = "Index" })">ADD TO CART </a>*@}
-
-    </div>
-
-    <a href="#" class="like"><i class="fa fa-heart-o"></i></a>
-</li> }
+                    if(wishlist.Contains(item.Id)){
+                    <a data-id="@item.Id" href="#" class="like removefromwish" title="Remove from wishlist">
+                                  <i class="fa fa-heart"></i>
+                                    </a>
+                    }
+                     else
+                        {
+                             <a data-id="@item.Id" href="#" class="like addTowish" title="Add to wishlist">
+                            <i class="fa fa-heart-o"></i>
+                            </a>
+                        }
+                    }else
+                        {
+                             <a data-id="@item.Id" href="#" class="like addTowish" title="Add to wishlist">
+                            <i class="fa fa-heart-o"></i>
+                            </a>
+                        }
+                </li> 
             }
-            else
-            {
-<li class="h4 m-5 text-center">
-    We could not find any results!  <br /> Please try again!
-</li>}
+         }
+         else
+         {
+                <li class="h4 m-5 text-center">
+                    We could not find any results!  <br /> Please try again!
+                </li>
+         }
     </ul><!-- /.product -->
 </div><!-- /.product-content -->
 

@@ -1,7 +1,8 @@
 ﻿@using DailyMart.ViewModels;
+@using DailyMart.Models;
 @using Microsoft.AspNet.Identity
 @{ ViewBag.Title = "CheckOut";
-                int Total = 0; }
+    int Total = 0; }
 <div class="container-fluid mt-5 ">
     <div class="row">
         <div class="col-md-5 order-md-2 mb-4">
@@ -9,88 +10,68 @@
                 <div class="content-inner active" style="display: block;">
                     <div class="inner max-width-83 padding-top-33">
 
-                        @if (Session["cart"] == null)
-                        {
-            <ol class="review-list">
-                <li class="h4 alert alert-danger text-center">
-                    <strong>Your Cart Is Empty!</strong>
-                </li>
-            </ol> }
-                        else
-                        {
+                        @{
                             List<Item> cart = (List<Item>)Session["cart"];
 
-                            var count = cart.Count();
-                            if (count == 0)
+                            //  var count = cart.Count();
+                            if (cart == null)
                             {
-            <ol class="review-list">
-                <li class="h4 alert alert-danger text-center">
-                    <strong>Your Cart Is Empty!</strong>
-                </li>
-            </ol> }
+                                  <ol class="review-list">
+                                    <li class="h4 alert alert-danger text-center">
+                                        <strong>Your Cart Is Empty!</strong>
+                                    </li>
+                                    </ol>
+                            }
                             else
                             {
 
-            <ol class="review-list">
+                                <ol class="review-list">
 
-                @foreach (Item item in (List<Item>)Session["cart"])
-                {
-                    if (item.Quantity != 0)
-                    {
-                        int lineTotal = Convert.ToInt32(item.Quantity * item.Product.SellingPrice);
-                        Total = Convert.ToInt32(@Total + lineTotal);
-<li class="review border-bottom" style="padding-top:25px;padding-bottom:25px;">
-    <div class="thumb">
-        <img src="@item.Product.ImageURL" alt="Image">
-    </div>
-    <div class="text-wrap">
-        <div class="review-meta">
-            <h5 class="name">@item.Product.Name</h5>
-            @*<div class="flat-star style-x">
-                    <a class="removeFromCartbtn" data-id="@item.Product.ID">
-                        <i class="fa fa-remove"></i>
-                    </a>
-                </div>*@
-        </div>
-        <div class="review-text">
-            <div class="product-detail">
-                <div class="product-quantity" style="margin-top:0px;">
-
-
-                    <strong class="h6">@item.Quantity &nbsp; </strong><i class="fa fa-remove"></i>
-
-                    <div class="price ml-3">
-                        <ins>
-                            <span class="amount">
-                                Rs. @item.Product.SellingPrice
-                            </span>
-                        </ins>
-                        <del>
-                            <span class="regular">
-                                Rs. @item.Product.SellingPrice
-                            </span>
-                        </del>
-
-                    </div>
-                </div>
-            </div>
-            <div class="float-right">
-                <b>Sub Total:@lineTotal</b>
-            </div>
-        </div>
-    </div>
-    <hr />
-</li><!--  /.review    -->}
-                    }
-            </ol><!-- /.review-list -->
+                                    @foreach (Item item in (List<Item>)Session["cart"])
+                                    {
+                                        if (item.Quantity != 0)
+                                        {
+                                            int lineTotal = Convert.ToInt32(item.Quantity * item.Product.SellingPrice);
+                                            Total = Convert.ToInt32(@Total + lineTotal);
+                                                <li class="review border-bottom" style="padding-top:25px;padding-bottom:25px;">
+                                                    <div class="thumb"><img src="@item.Product.ImageURL" alt="Image"></div>
+                                                    <div class="text-wrap">
+                                                        <div class="review-meta"><h5 class="name">@item.Product.Name</h5></div>
+                                                        <div class="review-text">
+                                                            <div class="product-detail">
+                                                                <div class="product-quantity" style="margin-top:0px;">
+                                                                    <strong class="h6">@item.Quantity &nbsp; </strong>
+                                                                    <i class="fa fa-remove"></i>
+                                                                    <div class="price ml-3">
+                                                                        <ins>
+                                                                            <span class="amount">
+                                                                                Rs. @item.Product.SellingPrice
+                                                                            </span>
+                                                                        </ins>
+                                                                        <del>
+                                                                            <span class="regular">
+                                                                                Rs. @item.Product.SellingPrice
+                                                                            </span>
+                                                                        </del>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="float-right">
+                                                                <b>Sub Total:@lineTotal</b>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                <hr />
+                                                </li><!--  /.review    -->
+                                        }
+                                    }
+                                </ol><!-- /.review-list -->
 
                                 <div class="text-center alert alert-warning">
                                     <h2>Grand Total-@Total Rs.</h2>
-                                </div>}
-                                            }
-
-
-
+                                </div>
+                            }
+                        }
                     </div>
                 </div>
 
@@ -105,126 +86,85 @@
                     </div>
                 </form>*@
         </div>
-        <div class="col-md-7 order-md-1">
-            <form class="needs-validation" id="orderModel">
-                <input type="hidden" value="@Total" name="TotalAmount" />
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="firstName">First name</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="" name="FirstName" value="@ViewBag.User.FirstName" required="">
-                        <div class="invalid-feedback">
+         @{
+            Address addr=null;
+             if (ViewBag.uAddress != null) {
+                 addr = ViewBag.uAddress as Address;
+             }
+         }
+        @if (cart != null) {
 
-                        </div>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="lastName">Last name</label>
-                        <input type="text" class="form-control" id="lastName" placeholder="" name="LastName" value="@ViewBag.User.LastName" required="">
-                        <div class="invalid-feedback">
-
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="mb-3">
-                    <label for="phonenumber">Phone Number</label>
-                    <input type="text" class="form-control" id="phonenumber" placeholder="" name="PhoneNumber" value="@ViewBag.User.PhoneNumber">
-                    <div class="invalid-feedback">
-
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label for="address">Address</label>
-                    <input type="text" class="form-control" id="address" name="Address1" placeholder="1234 Main St" required="" value="@ViewBag.User.Address1">
-                    <div class="invalid-feedback">
-
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label for="address2">Address 2 <span class="text-muted"></span></label>
-                    <input type="text" class="form-control" id="address2" name="Address2" placeholder="Apartment or suite" value="@ViewBag.User.Address2">
-                </div>
-
-                <div class="row">
-
-                    <div class="col-md-3 mb-3">
-                        <label for="city">Zip Code</label>
-                        <input type="text" class="form-control" id="city" name="City" placeholder="" value="@ViewBag.User.City" required="">
-                        <div class="invalid-feedback">
-
-                        </div>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label for="zip">Zip Code</label>
-                        <input type="text" class="form-control" id="zip" name="ZipCode" placeholder="" value="@ViewBag.User.ZipCode" required="">
-                        <div class="invalid-feedback">
-
-                        </div>
-                    </div>
-                </div>
-                <hr class="mb-4">
-
-
-
-                <h4 class="mb-3">Payment</h4>
-
-                <div class="d-block my-3">
-
-                    <div class="custom-control custom-radio">
-                        <input class="form-check-input" type="radio" name="paymentType" id="exampleRadios1" value="CoD" checked>
-                        <label class="form-check-label" for="exampleRadios1">
-                            CoD
-                        </label>
-                    </div>
-                    <div class="custom-control custom-radio">
-                        <input class="form-check-input" type="radio" name="paymentType" id="exampleRadios2" value="Online">
-                        <label class="form-check-label" for="exampleRadios2">
-                            Paypal
-                        </label>
-                    </div>
-
-
-
-                </div>
-                @*<div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="cc-name">Name on card</label>
-                            <input type="text" class="form-control" id="cc-name" placeholder="" >
-                            <small class="text-muted">Full name as displayed on card</small>
-                            <div class="invalid-feedback">
-                                Name on card is required
+                <div class="col-md-7 order-md-1">
+                    <h3 class="mb-3">Address</h3>
+                    <a href="@Url.Action("Edit", "Manage")" class=" bg-accent" style="font-weight:300!important;">Edit Address</a>
+                    <form class="needs-validation" id="orderModel">
+                        
+                        <input type="hidden" value="@Total" name="TotalAmount" />
+                          @if (addr != null)
+                          {
+                                    <p><label for="AddressLine">AddressLine : </label>
+                                    <span>@addr.AddressLine</span></p>
+                                    <p><label for="City">City : </label>
+                                    <span>@addr.City</span></p>
+                                   <p><label for="State">State : </label>
+                                    <span>@addr.State</span></p> 
+                                   <p><label for="Zipcode">Zip Code : </label>
+                                    <span>@addr.ZipCode</span></p> 
+                                    <input type="hidden" value="false" id="newaddress" name="Newaddress"/>
+                          }
+                          else
+                          {
+                            <button class="btn btn-primary btn-sm" type="button" id="new-addr">Add New Address</button>
+                             <input type="hidden" value="true" id="newaddress" name="Newaddress"/>
+                               <div class="address-bar">
+                            <div class="mb-3">
+                                <label for="AddressLine">AddressLine</label>
+                                <input type="text" class="form-control" id="AddressLine" name="AddressLine" required="" value="">
+                                <div class="invalid-feedback"></div>
+                            </div>
+                                <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label for="City">City</label>
+                                    <input type="text" class="form-control" id="City" placeholder="" name="City" value="" required="">
+                                    <div class="invalid-feedback"> </div>
+                                </div>
+                                      <div class="col-md-4 mb-3">
+                                <label for="State">State</label>
+                                <input type="text" class="form-control" id="State" placeholder="" name="State" value="">
+                                <div class="invalid-feedback"></div>
+                            </div>
+                                <div class="col-md-3 mb-3">
+                                    <label for="Zipcode">Zip Code</label>
+                                    <input type="text" class="form-control" id="Zipcode" placeholder="" name="Zipcode" value="" required="">
+                                    <div class="invalid-feedback"></div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="cc-number">Credit card number</label>
-                            <input type="text" class="form-control" id="cc-number" placeholder="" >
-                            <div class="invalid-feedback">
-                                Credit card number is required
+                          }
+                          
+                        <hr class="mb-4">
+                        <h3 class="mb-3">Payment</h3>
+                        <div class="d-block my-3">
+                            <div class="custom-control custom-radio">
+                                <input class="form-check-input" type="radio" name="paymentType" id="exampleRadios1" value="CoD" checked>
+                                <label class="form-check-label" for="exampleRadios1">
+                                    CoD
+                                </label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input class="form-check-input" type="radio" name="paymentType" id="exampleRadios2" value="Online">
+                                <label class="form-check-label" for="exampleRadios2">
+                                    Paypal
+                                </label>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3 mb-3">
-                            <label for="cc-expiration">Expiration</label>
-                            <input type="text" class="form-control" id="cc-expiration" placeholder="">
-                            <div class="invalid-feedback">
-                                Expiration date required
+                        <hr class="mb-4">
+                        <div class="mt-5">
+                        <button class="themesflat-button bg-accent" id="placeOrderBtn">Place Order</button>
                             </div>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <label for="cc-expiration">CVV</label>
-                            <input type="text" class="form-control" id="cc-cvv" placeholder="" >
-                            <div class="invalid-feedback">
-                                Security code required
-                            </div>
-                        </div>
-                    </div>*@
-                <hr class="mb-4">
-                <button class="btn btn-primary btn-lg btn-block" id="placeOrderBtn">Continue to checkout</button>
-            </form>
-        </div>
+                    </form>
+                </div>
+        }
     </div>
 </div>
 
@@ -232,22 +172,42 @@
 
 
 <script>
-        $("#placeOrderBtn").click(function () {
+    $(".address-bar").hide();
+    $("#new-addr").on("click", function () {
+        $(".address-bar").fadeIn();
+    });
+    $("#placeOrderBtn").click(function () {
+        if (validAddress()) {
+            $.ajax({
+                url: '@Url.Action("PlaceOrder", "Home")',
+                data: { orderdata: $("#orderModel").serialize() }
+            })
+                .done(function (response) {
 
-        $.ajax({
-            url: '@Url.Action("PlaceOrder", "Home")',
-            data: $("#orderModel").serialize()
-		})
-            .done(function (response) {
+                    window.location.replace('@Url.Action("MyOrders", "Home",new { userId=User.Identity.GetUserId()})');
 
-                window.location.replace('@Url.Action("MyOrders", "Home",new { userId=User.Identity.GetUserId()})');
+                })
+                .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                    swal("Error", "Please Try Again!", "warning");
 
-        })
-        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-            swal("Error", "Please Try Again!", "warning");
+                });
+        }
+        else {
+            swal({
+                position: 'top-end',
+                icon: 'warning',
+                 title:'Info',
+                text: 'Provide your complete address',
+                timer: 1500
+                }
+            );
+        }
 
-        });
-
-	});
+    });
+    function validAddress() {
+        if ($("#AddressLine").val() == '' || $("#City").val()=='' || $("#Zipcode").val()=='' || $("#State").val()=='')
+            return false;
+        return true;
+    }
 </script>
 

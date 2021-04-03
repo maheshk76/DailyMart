@@ -192,7 +192,6 @@
            .done(function (response) {
         	    console.log("done search");
                $("#productsDiv").html(response);
-               focusAction("productsDiv");
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
         	    console.log("fail search");
@@ -205,14 +204,9 @@
 		    console.log("getdata out");
         });
        $(".shopnow").click(function () {
-        focusAction("productsDiv");
     });
 
-        function focusAction(controlToFocus) {
-            $('html, body').animate({
-                scrollTop: $("#" + controlToFocus).offset().top - 100
-            }, 1000);
-        }
+        
         function GetData(dUrl) {
 
 		console.log("getdata in");
@@ -229,7 +223,6 @@
         .done(function (response) {
         	console.log("done");
             $("#productsDiv").html(response);
-                focusAction("productsDiv");
         })
         .fail(function (XMLHttpRequest, textStatus, errorThrown) {
         	console.log("fail");
@@ -244,7 +237,8 @@
 
         function PriceRangeChange() {
             ShowHideBtn();
-        showLoader();  console.log("show");
+            showLoader();
+            console.log("show");
 		$.ajax({
 			url: '@Url.Action("Products", "Home")',
 			data: {
@@ -257,7 +251,6 @@
 		})
         .done(function (response) {
             $("#productsDiv").html(response);
-                focusAction("productsDiv");
         })
         .fail(function (XMLHttpRequest, textStatus, errorThrown) {
         	alert("FAIL");
@@ -272,7 +265,6 @@
 
         }
         $(".addTocartBtn").on("click",function () {
-
 		    var productId = parseInt($(this).attr("data-id"));
 		    $.ajax({
                 url: '@Url.Action("AddToCart", "Shared")',

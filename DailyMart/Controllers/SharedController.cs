@@ -6,17 +6,20 @@ using System.Web.Mvc;
 using System.IO;
 using DailyMart.Models;
 using DailyMart.ViewModels;
+using Microsoft.AspNet.Identity;
 
 namespace GroceryShop.Controllers
 {
     public class SharedController : Controller
     {
-        private ApplicationDbContext ctx = new ApplicationDbContext();
+        private readonly ApplicationDbContext ctx = new ApplicationDbContext();
         [Authorize(Roles = "Admin")]
         public JsonResult UploadImage()
         {
-            JsonResult result = new JsonResult();
-            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            JsonResult result = new JsonResult
+            {
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
 
             try
             {
@@ -34,7 +37,7 @@ namespace GroceryShop.Controllers
             }
             catch (Exception ex)
             {
-                result.Data = new { Success = false, Message = ex.Message };
+                result.Data = new { Success = false, ex.Message };
             }
 
             return result;
@@ -42,8 +45,10 @@ namespace GroceryShop.Controllers
 
         public JsonResult DecreaseQty(int productId)
         {
-            JsonResult result = new JsonResult();
-            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            JsonResult result = new JsonResult
+            {
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
             var q = 0;
             if (Session["cart"] != null)
             {
@@ -79,8 +84,10 @@ namespace GroceryShop.Controllers
         }
         public JsonResult IncreaseQty(int productId)
         {
-            JsonResult result = new JsonResult();
-            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            JsonResult result = new JsonResult
+            {
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
             var q = 0;
             if (Session["cart"] != null)
             {
@@ -193,8 +200,10 @@ namespace GroceryShop.Controllers
         }
         public JsonResult RemoveFromCart(int productId)
         {
-            JsonResult result = new JsonResult();
-            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            JsonResult result = new JsonResult
+            {
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
 
             List<Item> cart = (List<Item>)Session["cart"];
             foreach (var item in cart)
@@ -205,12 +214,42 @@ namespace GroceryShop.Controllers
                     break;
                 }
             }
+            
             Session["cart"] = cart;
             var itemCount = cart.Count();
             result.Data = new { Success = true, Message = "Product Removed from cart successfully", CartLength = itemCount };
             return result;
         }
+        public JsonResult MakeWishlist(int productId, int act)
+        {
+            string userId = User.Identity.GetUserId();
+            JsonResult result = new JsonResult
+            {
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+            if (act == 1)
+            {
+                Wishlist wishlist = new Wishlist()
+                {
+                    UserId = User.Identity.GetUserId(),
+                    ProductId = productId
 
+                };
+                ctx.Wishlists.Add(wishlist);
+                ctx.SaveChanges();
+                result.Data = new { Success = true, Message = "Product Added to your Wishlist" };
+                return result;
+            }
+            else
+            {
+
+                var wish = ctx.Wishlists.FirstOrDefault(w => w.ProductId == productId && w.UserId == userId);
+                ctx.Wishlists.Remove(wish);
+                ctx.SaveChanges();
+                result.Data = new { Success = true, Message = "Product Removed from Wishlist" };
+                return result;
+            }
+        }
 
     }
 

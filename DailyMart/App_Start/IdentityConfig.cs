@@ -21,14 +21,15 @@ namespace DailyMart
     {
         public Task SendAsync(IdentityMessage message)
         {
+            
             // Plug in your email service here to send an email.
             MailMessage mess = new MailMessage();
-            mess.IsBodyHtml = true;
             mess.To.Add(message.Destination);
             mess.Subject = message.Subject;
             mess.Body = message.Body;
             mess.From = new MailAddress(ExternalLoginKeys.EmailKeys.Email);
-            
+            mess.BodyEncoding = System.Text.Encoding.UTF8;
+            mess.IsBodyHtml = true;
             SmtpClient client = new SmtpClient();
             client.Port = 587;
             client.Host = "smtp.gmail.com";
@@ -37,7 +38,7 @@ namespace DailyMart
             client.UseDefaultCredentials = false;
             client.Credentials = new NetworkCredential(ExternalLoginKeys.EmailKeys.Email, ExternalLoginKeys.EmailKeys.Password);
             client.EnableSsl = true;
-            return client.SendMailAsync(mess.From.ToString(), mess.To.ToString(), mess.Subject, mess.Body);
+            return client.SendMailAsync(mess);
            // return Task.FromResult(0);
         }
     }

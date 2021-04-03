@@ -1,0 +1,72 @@
+﻿@model IEnumerable<DailyMart.ViewModels.WishlistViewModel>
+@{
+    ViewBag.Title = "Wishlist";
+}
+
+<div class="container w-50">
+    <div class="content-inner active" style="display: block;">
+        <div class="inner max-width-83 padding-top-33">
+
+            @if(!Model.Any())
+            {
+                <ol class="review-list">
+                    <li class="h4 alert alert-danger text-center">
+                        <strong>Nothing in your wishlist!</strong>
+                    </li>
+                </ol>
+
+            }
+            else
+            {
+                
+                    <ol class="review-list">
+            @foreach(var item in Model) { 
+                        <li class="review border-bottom" style="padding-top:25px;padding-bottom:25px;">
+                            <div class="thumb">
+                                <img src="@item.Product.ImageURL" alt="Image">
+                            </div>
+                            <div class="text-wrap">
+                                <div class="review-meta">
+                                    <h5 class="name">@item.Product.Name</h5>
+                                    <div class="flat-star style-x">
+                                       <a data-id="@item.Product.Id" class="like removefromwish" title="Remove from wishlist">
+                                  <i class="fa fa-heart"></i>
+                                    </a>
+                                    </div>
+                                </div>
+                                <div class="review-text">
+                                    <div class="product-detail">
+                                        <div class="product-quantity" style="margin-top:0px;">
+                                            <div class="price ml-3">
+                                                <ins>
+                                                    <span class="amount">
+                                                        Rs. @item.Product.SellingPrice
+                                                    </span>
+                                                </ins>
+                                                <del>
+                                                    <span class="regular">
+                                                        Rs. @item.Product.OriginalPrice
+                                                    </span>
+                                                </del>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                        </li><!--  /.review    -->
+                        }
+                    </ol><!-- /.review-list -->
+                
+            }
+
+
+
+        </div>
+    </div>
+
+</div>
+<script>
+       
+</script>

@@ -1,0 +1,244 @@
+﻿@using DailyMart.Models
+@model DailyMart.ViewModels.OrderViewModel
+
+@{
+    ViewBag.Title = "MyOrders";
+}
+
+<section class="flat-row shop-detail-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="flat-tabs style-1 has-border">
+                    <div class="inner">
+                        <ul class="menu-tab">
+                            <li class="active">Pending</li>
+                            <li>In Progress</li>
+                            <li>Previous</li>
+                            <li>Cancelled</li>
+                        </ul>
+                        <div class="content-tab">
+                            <div class="content-inner">
+                                <div class="container p-5">
+                                    @if (! (Model.PendingOrders.ToList().Count() > 0))
+                                    {
+                                    <div class="alert alert-danger text-center h5" role="alert">
+                                        Can't Find Any Pending Orders!
+                                    </div>
+                                    }
+                                    @foreach (var item in Model.PendingOrders.ToList())
+                                    {
+
+                                        <div class="row">
+                                            <div class="col-md-4 order-md-2 mb-4">
+                                                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                                                    <span class="text-muted">Products</span>
+                                                    <span class="badge badge-secondary badge-pill">@item.OrderItems.Count()</span>
+                                                </h4>
+                                                <ul class="list-group mb-3">
+                                                    @foreach (OrderItem item1 in (List<OrderItem>)@item.OrderItems)
+                                                    {
+                                                        <li class="list-group-item d-flex justify-content-between lh-condensed">
+
+                                                            <div>
+                                                                <img src="@item1.Product.ImageURL" class="rounded" alt="..." style="width:50px;height:50px;">
+
+                                                                <h6 class="my-0">@item1.Product.Name</h6>
+                                                                <small class="text-muted">@item1.Product.SellingPrice Rs.</small>
+                                                            </div>
+                                                            <span class="text-muted">Qty-&nbsp;@item1.Quantity</span>
+                                                        </li>
+
+                                                    }
+                                                    <li class="list-group-item d-flex justify-content-between">
+                                                        <span>Total (INR)</span>
+                                                        <strong>@item.Amount Rs.</strong>
+                                                    </li>
+                                                </ul>
+
+                                                <form class="card p-2">
+                                                    <div class="form-group">
+                                                        <label for="status">Status</label>
+                                                        <input type="text" class="form-control" readonly value="@item.OrderStatus">
+
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="col-md-3 ">
+                                    <span class="text-muted">This order will be deliverd at your default address</span></div>
+                                        </div>
+                                        
+                                        <hr />
+                                    }
+
+                                </div>
+                            </div><!-- /.content-inner -->
+                            <div class="content-inner">
+                                <div class="container p-5">
+                                    @if (!(Model.InProgressOrders.ToList().Count() > 0))
+                                    {
+                                        <div class="alert alert-danger text-center h5" role="alert">
+                                           Can't Find Any In-Progress Orders!
+                                        </div>
+                                    }
+                                    @foreach (var item in Model.InProgressOrders.ToList())
+                                    {
+
+                                    <div class="row">
+                                        <div class="col-md-4 order-md-2 mb-4">
+                                            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                                                <span class="text-muted">Products</span>
+                                                <span class="badge badge-secondary badge-pill">@item.OrderItems.Count()</span>
+                                            </h4>
+                                            <ul class="list-group mb-3">
+                                                @foreach (OrderItem item1 in (List<OrderItem>)@item.OrderItems)
+                                                {
+                                                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+
+                                                        <div>
+                                                            <img src="@item1.Product.ImageURL" class="rounded" alt="..." style="width:50px;height:50px;">
+
+                                                            <h6 class="my-0">@item1.Product.Name</h6>
+                                                            <small class="text-muted">@item1.Product.SellingPrice Rs.</small>
+                                                        </div>
+                                                        <span class="text-muted">Qty-&nbsp;@item1.Quantity</span>
+                                                    </li>
+
+                                                }
+                                                <li class="list-group-item d-flex justify-content-between">
+                                                    <span>Total (INR)</span>
+                                                    <strong>@item.Amount Rs.</strong>
+                                                </li>
+                                            </ul>
+
+                                            <form class="card p-2">
+                                                <div class="form-group">
+                                                    <label for="status">Status</label>
+                                                    <input type="text" class="form-control" readonly value="@item.OrderStatus">
+
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                    <hr />
+                                    }
+
+
+                                </div>
+                            </div><!-- /.content-inner -->
+                            <div class="content-inner">
+                                <div class="container p-5">
+                                    @if (!(Model.PreviousOrders.ToList().Count() > 0))
+                                    {
+                                        <div class="alert alert-danger text-center h5" role="alert">
+                                            Can't Find Any Previous Orders!
+                                        </div>
+                                    }
+                                    @foreach (var item in Model.PreviousOrders.ToList())
+                                    {
+
+                                        <div class="row">
+                                            <div class="col-md-4 order-md-2 mb-4">
+                                                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                                                    <span class="text-muted">Products</span>
+                                                    <span class="badge badge-secondary badge-pill">@item.OrderItems.Count()</span>
+                                                </h4>
+                                                <ul class="list-group mb-3">
+                                                    @foreach (OrderItem item1 in (List<OrderItem>)@item.OrderItems)
+                                                    {
+                                                        <li class="list-group-item d-flex justify-content-between lh-condensed">
+
+                                                            <div>
+                                                                <img src="@item1.Product.ImageURL" class="rounded" alt="..." style="width:50px;height:50px;">
+
+                                                                <h6 class="my-0">@item1.Product.Name</h6>
+                                                                <small class="text-muted">@item1.Product.SellingPrice Rs.</small>
+                                                            </div>
+                                                            <span class="text-muted">Qty-&nbsp;@item1.Quantity</span>
+                                                        </li>
+
+                                                    }
+                                                    <li class="list-group-item d-flex justify-content-between">
+                                                        <span>Total (INR)</span>
+                                                        <strong>@item.Amount Rs.</strong>
+                                                    </li>
+                                                </ul>
+
+                                                <form class="card p-2">
+                                                    <div class="form-group">
+                                                        <label for="status">Status</label>
+                                                        <input type="text" class="form-control" readonly value="@item.OrderStatus">
+
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+
+                                        <hr />
+                                    }
+
+
+                                </div>
+                            </div><!-- /.content-inner -->
+                            <div class="content-inner">
+                                <div class="container p-5">
+                                    @if (!(Model.PreviousOrders.ToList().Count() > 0))
+                                    {
+                                        <div class="alert alert-danger text-center h5" role="alert">
+                                            Can't Find Any Cancelled Orders!
+                                        </div>
+                                    }
+                                    @foreach (var item in Model.PreviousOrders.ToList())
+                                    {
+
+                                        <div class="row">
+                                            <div class="col-md-4 order-md-2 mb-4">
+                                                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                                                    <span class="text-muted">Products</span>
+                                                    <span class="badge badge-secondary badge-pill">@item.OrderItems.Count()</span>
+                                                </h4>
+                                                <ul class="list-group mb-3">
+                                                    @foreach (OrderItem item1 in (List<OrderItem>)@item.OrderItems)
+                                                    {
+                                                        <li class="list-group-item d-flex justify-content-between lh-condensed">
+
+                                                            <div>
+                                                                <img src="@item1.Product.ImageURL" class="rounded" alt="..." style="width:50px;height:50px;">
+
+                                                                <h6 class="my-0">@item1.Product.Name</h6>
+                                                                <small class="text-muted">@item1.Product.SellingPrice Rs.</small>
+                                                            </div>
+                                                            <span class="text-muted">Qty-&nbsp;@item1.Quantity</span>
+                                                        </li>
+
+                                                    }
+                                                    <li class="list-group-item d-flex justify-content-between">
+                                                        <span>Total (INR)</span>
+                                                        <strong>@item.Amount Rs.</strong>
+                                                    </li>
+                                                </ul>
+
+                                                <form class="card p-2">
+                                                    <div class="form-group">
+                                                        <label for="status">Status</label>
+                                                        <input type="text" class="form-control" readonly value="@item.OrderStatus">
+
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+
+                                        <hr />
+                                    }
+
+
+                                </div>
+                            </div><!-- /.content-inner -->
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+</section><!-- /.shop-detail-content -->

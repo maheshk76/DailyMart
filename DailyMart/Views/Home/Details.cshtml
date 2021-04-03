@@ -99,9 +99,18 @@
                                     <div class="add-to-cart">
                                         <a data-id="@Model.Id" class="addTocartBtn">ADD TO CART</a>
                                     </div>
-                                    <div class="box-like">
-                                        <a href="#" class="like"><i class="fa fa-heart-o"></i></a>
+                                    @if (ViewBag.InWish!=null)
+                                    {
+                                        <div class="box-like">
+                                        <a data-id="@Model.Id" class="like removefromwish" title="Remove from wishlist"><i class="fa fa-heart"></i></a>
                                     </div>
+                                    }
+                                    else
+                                    {
+                                    <div class="box-like">
+                                        <a  data-id="@Model.Id" class="like addTowish" title="Add to wishlist"><i class="fa fa-heart-o"></i></a>
+                                    </div>
+                                    }
                                 </div>
                                 <div class="product-categories">
                                     <span>Category: </span> @Html.ActionLink(@Model.Category.Name, "Index", new { categoryID = Model.Category.Id })
@@ -257,5 +266,50 @@
         .fail(function (XMLHttpRequest, textStatus, errorThrown) {
         	alert("FAIL to Add Product In Cart");
         });
-	});
+    });
+     $(".addTowish").on("click",function () {
+            var productId = parseInt($(this).attr("data-id"));
+             $.ajax({
+                url: '@Url.Action("MakeWishlist", "Shared")',
+
+                data: {
+                    ProductId: productId,
+                    act:1
+			    }
+		    })
+                    .done(function (response) {
+        	            console.log(response);
+                        if (response.Success) {
+                            $(this).html("<i class='fa fa-heart'></i>");
+                            swal("Done", response.Message, "success");
+                        }
+                        
+                    })
+                .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        	                alert("FAIL to Add Product to wishlist");
+                    });
+        });
+            $(".removefromwish").on("click",function () {
+                var productId = parseInt($(this).attr("data-id"));
+               
+                $.ajax({
+                    url: '@Url.Action("MakeWishlist","Shared")',
+                    data: {
+                        ProductId: productId,
+                        act: 0
+                    }
+
+                })
+                    .done(function (response) {
+        	            console.log(response);
+                        if (response.Success) {
+                            $(this).html("<i class='fa fa-heart-o'></i>");
+                        }
+                        swal("Done", response.Message, "success");
+                    })
+                    .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert(XMLHttpRequest.data);
+        	                alert("FAIL to Remove from wishlist");
+                    });
+        });
 </script>

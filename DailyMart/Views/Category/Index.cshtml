@@ -1,0 +1,215 @@
+﻿@model IEnumerable<DailyMart.Models.Category>
+@{
+    ViewBag.Title = "Categories";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+@*<div class="container">
+        <form method="post">
+            <div class="input-group mb-3">
+                <input class="form-control" id="searchTxt" name="Search" placeholder="Search Category" />
+                <div class="input-group-append">
+                    <button class="btn btn-primary" id="searchBtn">Search</button>
+                    <button class="btn btn-primary" id="resetBtn">Reset</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <p class="my-3">
+        @Html.ActionLink("Create New", "Create")
+        <button id="newBtn">Create New</button>
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                Products
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @item.Products.Count
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID })
+
+                    @Html.ActionLink("Details", "Details", new { id = item.ID })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+
+                    <button class="editBtn" data-id="@item.ID">Edit</button>
+                    <button class="deleteBtn" data-id="@item.ID">Delete</button>
+                </td>
+            </tr>
+        }
+
+    </table>*@
+    <label>
+        @Html.ActionLink("Create New", "Create",null, new { @class = "btn btn-primary ml-4"})
+        @*<button id="newBtn">Create New</button>*@
+    </label>
+<div class="card mb-3">
+    @*<div class="card-header">
+        <i class="fas fa-table"></i>
+      Category
+    </div>*@
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Name)
+                        </th>
+                        <th>
+                            Products
+                        </th>
+                    @*    <th>
+                            @Html.DisplayNameFor(model => model.Description)
+                        </th>*@
+
+                        <th>
+                            Actions
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @if (Model.Count() == 0)
+                    {
+                        <tr>
+                            <td>
+                                Not Matching Category Found!
+                            </td>
+
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var item in Model)
+                        {
+
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @item.Products.Count()
+
+                                </td>
+                                @*<td>
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>*@
+
+                                <td>
+                                  
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary" })
+
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-primary" })
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+</div>
+<script>
+
+    $("#searchBtn").click(function () {
+		var searchValue = $("#searchTxt").val();
+
+		$.ajax({
+			url: '@Url.Action("CategoryTable", "Category")',
+			data: {
+				search: searchValue
+			}
+		})
+        .done(function (response) {
+
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        	alert("FAIL");
+        });
+    });
+    @*$("#resetBtn").click(function () {
+		var searchValue = '';
+
+		$.ajax({
+			url:'@Url.Action("CategoryTable", "Category")',
+			data: {
+				search: searchValue
+			}
+		})
+        .done(function (response) {
+
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        	alert("FAIL");
+        });
+	});
+	$("#newBtn").click(function () {
+		$.ajax({
+			url: '@Url.Action("Create", "Category")',
+		})
+        .done(function (response) {
+
+
+
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        	alert("FAIL");
+        });
+    });
+
+    $(".editBtn").click(function () {
+		$.ajax({
+            url: '@Url.Action("Edit", "Category")',
+            data: {
+                id: $(this).attr('data-id')
+			}
+		})
+        .done(function (response) {
+
+
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        	alert("FAIL");
+        });
+    });
+     $(".deleteBtn").click(function () {
+		$.ajax({
+            url:'@Url.Action("Delete", "Category")',
+            data: {
+                id: $(this).attr('data-id')
+			}
+		})
+        .done(function (response) {
+
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        	alert("FAIL");
+        });
+	});*@
+</script>

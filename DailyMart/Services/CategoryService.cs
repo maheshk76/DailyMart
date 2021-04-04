@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Text;
 using System.Web;
 
 namespace DailyMart.Services
@@ -75,15 +77,17 @@ namespace DailyMart.Services
 
         public void SaveCategory(Category category)
         {
+            category.CreatedOn = DateTime.Now;
             using (var context = new ApplicationDbContext())
             {
-                context.Category.Add(category);
-                context.SaveChanges();
+                    context.Category.Add(category);
+                    context.SaveChanges();
             }
         }
 
         public void UpdateCategory(Category category)
         {
+            category.UpdateOn = DateTime.Now;
             using (var context = new ApplicationDbContext())
             {
                 context.Entry(category).State = System.Data.Entity.EntityState.Modified;

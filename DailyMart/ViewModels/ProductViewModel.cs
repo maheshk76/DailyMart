@@ -45,8 +45,8 @@ namespace DailyMart.ViewModels
     }
     public class ShopViewModel
     {
-        public int MaximumPrice { get; set; }
-        public int MinimumPrice { get; set; }
+        public int? MaximumPrice { get; set; }
+        public int? MinimumPrice { get; set; }
         public int? SortBy { get; set; }
         public int? CategoryID { get; set; }
         public string Search{ get; set; }

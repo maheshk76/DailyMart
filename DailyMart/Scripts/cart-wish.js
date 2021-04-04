@@ -1,4 +1,4 @@
-﻿
+﻿$(document).ready(function () {
 $(".addTocartBtn").on("click", function () {
     var productId = parseInt($(this).attr("data-id"));
     $.ajax({
@@ -89,4 +89,6 @@ $(".removefromwish").on("click", function () {
         .fail(function (XMLHttpRequest, textStatus, errorThrown) {
             alert("FAIL to Remove from wishlist");
         });
+});
+
 });

@@ -70,7 +70,7 @@ namespace DailyMart.Controllers
             }
             ViewBag.Categories = _context.Category.ToList();
             ViewBag.MinimumPrice = 0;
-            ViewBag.MaximumPrice = (int)(_context.Products.Max(x => x.SellingPrice));
+            ViewBag.MaximumPrice = _context.Products.Max(x => x.SellingPrice);
 
             if (reset == 1)
             {
@@ -116,7 +116,7 @@ namespace DailyMart.Controllers
                 model.CategoryID = categoryID;
             }
 
-            model.MaximumPrice = (int)(_context.Products.Max(x => x.SellingPrice));
+            model.MaximumPrice = (int?)_context.Products.Max(x => x.SellingPrice);
 
             if (TempData["MinimumPrice"] != null)
             {

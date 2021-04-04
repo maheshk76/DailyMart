@@ -243,6 +243,14 @@
     <Compile Include="Migrations\202104040309367_paymenttypefororders.Designer.cs">
       <DependentUpon>202104040309367_paymenttypefororders.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202104040658462_descpropertyforcategories.cs" />
+    <Compile Include="Migrations\202104040658462_descpropertyforcategories.Designer.cs">
+      <DependentUpon>202104040658462_descpropertyforcategories.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104040736563_datetypechangeforcategory.cs" />
+    <Compile Include="Migrations\202104040736563_datetypechangeforcategory.Designer.cs">
+      <DependentUpon>202104040736563_datetypechangeforcategory.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
@@ -2254,11 +2262,8 @@
     <Content Include="Views\Home\Details.cshtml" />
     <Content Include="Views\Home\CheckOut.cshtml" />
     <Content Include="Views\Admin\DashBoard.cshtml" />
-    <Content Include="Views\Category\CategoryTable.cshtml" />
-    <Content Include="Views\Category\Create.cshtml" />
-    <Content Include="Views\Category\Delete.cshtml" />
     <Content Include="Views\Category\Details.cshtml" />
-    <Content Include="Views\Category\Edit.cshtml" />
+    <Content Include="Views\Category\CategoryForm.cshtml" />
     <Content Include="Views\Category\Index.cshtml" />
     <Content Include="Views\Home\MyOrders.cshtml" />
     <Content Include="Views\Home\Error404.cshtml" />
@@ -2327,6 +2332,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202104040309367_paymenttypefororders.resx">
       <DependentUpon>202104040309367_paymenttypefororders.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104040658462_descpropertyforcategories.resx">
+      <DependentUpon>202104040658462_descpropertyforcategories.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104040736563_datetypechangeforcategory.resx">
+      <DependentUpon>202104040736563_datetypechangeforcategory.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

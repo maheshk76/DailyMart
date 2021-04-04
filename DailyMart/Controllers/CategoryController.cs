@@ -14,12 +14,53 @@ namespace DailyMart.Controllers
 
     public class CategoryController : Controller
     {
-        private ApplicationDbContext _context;
+        public  string TimeAgo(DateTime dateTime)
+        {
+            string result = string.Empty;
+            var timeSpan = DateTime.Now.Subtract(dateTime);
+
+            if (timeSpan <= TimeSpan.FromSeconds(60))
+            {
+                result = string.Format("{0} seconds ago", timeSpan.Seconds);
+            }
+            else if (timeSpan <= TimeSpan.FromMinutes(60))
+            {
+                result = timeSpan.Minutes > 1 ?
+                    String.Format("about {0} minutes ago", timeSpan.Minutes) :
+                    "about a minute ago";
+            }
+            else if (timeSpan <= TimeSpan.FromHours(24))
+            {
+                result = timeSpan.Hours > 1 ?
+                    String.Format("about {0} hours ago", timeSpan.Hours) :
+                    "about an hour ago";
+            }
+            else if (timeSpan <= TimeSpan.FromDays(30))
+            {
+                result = timeSpan.Days > 1 ?
+                    String.Format("about {0} days ago", timeSpan.Days) :
+                    "yesterday";
+            }
+            else if (timeSpan <= TimeSpan.FromDays(365))
+            {
+                result = timeSpan.Days > 30 ?
+                    String.Format("about {0} months ago", timeSpan.Days / 30) :
+                    "about a month ago";
+            }
+            else
+            {
+                result = timeSpan.Days > 365 ?
+                    String.Format("about {0} years ago", timeSpan.Days / 365) :
+                    "about a year ago";
+            }
+
+            return result;
+        }
+        private readonly ApplicationDbContext _context;
         public CategoryController()
         {
             _context = new ApplicationDbContext();
         }
-        // GET: Category
         public ActionResult Index(string search)
         {
             List<Category> categories = _context.Category.Include(x=>x.Products).ToList();
@@ -27,20 +68,10 @@ namespace DailyMart.Controllers
             {
                 categories = categories.Where(c => c.Name != null && c.Name.ToLower().Contains(search.ToLower())).ToList();
             }
+            ViewBag.LastUpdate = TimeAgo(Convert.ToDateTime(categories.OrderByDescending(c => c.UpdateOn).Select(c=>c.UpdateOn).FirstOrDefault()));
             return View(categories);
 
         }
-
-        public ActionResult CategoryTable(string search)
-        {
-            List<Category> categories = _context.Category.Include(x => x.Products).ToList();
-            if (!string.IsNullOrEmpty(search))
-            {
-                categories = categories.Where(c => c.Name != null && c.Name.ToLower().Contains(search.ToLower())).ToList();
-            }
-            return View(categories);
-        }
-        // GET: Category/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -54,89 +85,54 @@ namespace DailyMart.Controllers
             }
             return View(category);
         }
-
-        // GET: Category/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Category/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Category category)
+        public ActionResult Save(Category category)
         {
             if (ModelState.IsValid)
             {
-                CategoryService c = new CategoryService();
-                c.SaveCategory(category);
-                return RedirectToAction("Index");
-            }
-
-            return View(category);
-        }
-
-        // GET: Category/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Category category = _context.Category.Find(id);
-            if (category == null)
-            {
-                return HttpNotFound();
-            }
-            return View(category);
-        }
-
-        // POST: Category/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,Description")] Category category)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Entry(category).State = EntityState.Modified;
+                if (category.Id == 0)
+                {
+                    category.CreatedOn = category.UpdateOn = DateTime.Now;
+                    _context.Category.Add(category);
+                }
+                else
+                {
+                    category.UpdateOn = DateTime.Now;
+                    _context.Entry(category).State = EntityState.Modified;
+                }
                 _context.SaveChanges();
                 return RedirectToAction("Index");
             }
+
             return View(category);
         }
-
-        // GET: Category/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult CategoryForm(int? id)
         {
+            Category category = new Category();
             if (id == null)
+                ViewBag.ActionType = "Create";
+            else
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Category category = _context.Category.Find(id);
-            if (category == null)
-            {
-                return HttpNotFound();
+                ViewBag.ActionType = "Edit";
+                category = _context.Category.Find(id);
+                if (category == null)
+                {
+                    return HttpNotFound();
+                }
             }
             return View(category);
         }
-
-        // POST: Category/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        [HttpPost]
+        public JsonResult Delete(int id)
         {
-            //_context.Categories.RemoveRange(_context.Categories.ToList());
-
             Category category = _context.Category.Find(id);
             _context.Category.Remove(category);
             _context.SaveChanges();
-            return RedirectToAction("Index");
+            JsonResult result = new JsonResult();
+            result.Data=new { Success=true,Message="Category is deleted sucessfully"};
+            return result;
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

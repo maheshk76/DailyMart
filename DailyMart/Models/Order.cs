@@ -18,9 +18,7 @@ namespace DailyMart.Models
         [Required]
         public string UserId { get; set; }
 
-        [Required]
         public virtual List<OrderItem> OrderItems { get; set; }
-        [NotMapped]
         public string PaymentType { get; set; }
     }
 }

@@ -7,6 +7,7 @@ using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -147,11 +148,6 @@ namespace DailyMart.Controllers
             {
                 products = _context.Products.ToList();
             }
-
-
-
-
-
             if (!string.IsNullOrEmpty(search))
             {
                 products = products.Where(p => p.Category.Name.ToLower().Contains(search.ToLower()) || p.Name.ToLower().Contains(search.ToLower())).ToList();
@@ -353,10 +349,36 @@ namespace DailyMart.Controllers
             {
                 PendingOrders = orders.Where(x => x.OrderStatus.ToLower().Contains("pending")).OrderByDescending(x => x.OrderDate).ToList(),
                 InProgressOrders = orders.Where(x => x.OrderStatus.ToLower().Contains("inprogress")).OrderByDescending(x => x.OrderDate).ToList(),
-                PreviousOrders = orders.Where(x => x.OrderStatus.ToLower().Contains("delivered")).OrderByDescending(x => x.OrderDate).ToList()
+                PreviousOrders = orders.Where(x => x.OrderStatus.ToLower().Contains("delivered")).OrderByDescending(x => x.OrderDate).ToList(),
+                CancelledOrders = orders.Where(x => x.OrderStatus.ToLower().Contains("cancelled")).OrderByDescending(x => x.OrderDate).ToList()
+                
             };
 
             return View(model);
+        }
+        public async Task<JsonResult> CancelOrder(int orderId)
+        {
+            try
+            {
+                string userId = User.Identity.GetUserId();
+                JsonResult result = new JsonResult()
+                {
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+                var orderInDb = _context.Orders.FirstOrDefault(o => o.Id == orderId && o.UserId == userId);
+                orderInDb.OrderStatus = "Cancelled";
+                _context.SaveChanges();
+                result.Data = new { Success = true, Message = "Your order is cancelled with OrderId :" + orderId };
+                var callbackUrl = Url.Action("MyOrders", "Home", new { userId = userId }, protocol: Request.Url.Scheme);
+                string body = "<html>Your order (" + orderId + ") is <b>cancelled</b> on " + DateTime.Now + " <br/>Manage your orders here <a href=\"" + callbackUrl + "\">MyOrders</a></html>";
+                await UserManager.SendEmailAsync(userId, "Order Cancelled", body);
+                return result;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                string errorMessages = string.Join("; ", ex.EntityValidationErrors.SelectMany(x => x.ValidationErrors).Select(x => x.PropertyName + ": " + x.ErrorMessage));
+                throw new DbEntityValidationException(errorMessages);
+            }
         }
     }
 }

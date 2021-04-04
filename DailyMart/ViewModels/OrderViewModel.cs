@@ -11,5 +11,7 @@ namespace DailyMart.ViewModels
         public List<Order> PendingOrders { get; set; }
         public List<Order> InProgressOrders { get; set; }
         public List<Order> PreviousOrders { get; set; }
+
+        public List<Order> CancelledOrders { get; set; }
     }
 }

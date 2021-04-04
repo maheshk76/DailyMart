@@ -12,17 +12,17 @@ namespace DailyMart.Controllers
     public class AdminController : Controller
     {
 
-        private readonly ApplicationDbContext db;
+        private readonly ApplicationDbContext _context;
         public AdminController()
         {
-            db = new ApplicationDbContext();
+            _context = new ApplicationDbContext();
         }
         public ActionResult DashBoard()
         {
-            ViewBag.OrderCount = db.Orders.Count();
-            ViewBag.ProductCount = db.Products.Count();
-            ViewBag.CategoryCount = db.Category.Count();
-            ViewBag.MessageCount = db.Messages.Count();
+            ViewBag.OrderCount = _context.Orders.Count();
+            ViewBag.ProductCount = _context.Products.Count();
+            ViewBag.CategoryCount = _context.Category.Count();
+            ViewBag.MessageCount = _context.Messages.Count();
             return View();
         }
     }

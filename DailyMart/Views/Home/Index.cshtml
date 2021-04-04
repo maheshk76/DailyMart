@@ -1,60 +1,7 @@
 ﻿@model DailyMart.ViewModels.ShopViewModel
 @using PagedList;
 @using PagedList.Mvc;
-@{ ViewBag.Title = "home"; }
-<!-- IMAGE BOX -->
-<!--<div class="flat-row no-padding">
-    <div class="container-fluid container-width-94">
-        <div class="row gutter-10">
-            <div class="col-md-12">
-                <div class="divider h0"></div>
-                <div class="flat-image-box style-2 flat-carousel-box has-bullets bullet-circle bullet-absolute" data-gap="0" data-auto="true" data-column="1" data-column2="1" data-column3="1">
-                    <div class="owl-carousel owl-theme">
-                        <div class="item">
-                            <div class="inner">
-                                <div class="thumb">
-                                    <img src="~/Content/Products/images/system/parallax/bg-parallax3.jpg" alt="Image">
-                                    <div class="text-wrap">
-                                        <p class="sub-title">Welcome To</p>
-                                        <h2 class="title text-accent">Fresh Mart</h2>
-                                        <span class="themesflat-button bg-accent has-padding-36 shopnow">SHOP NOW</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="inner">
-                                <div class="thumb">
-                                    <img src="~/Content/Products/images/system/parallax/bg-parallax3.jpg" alt="Image">
-                                    <div class="text-wrap">
-                                        <p class="sub-title">Winter Sale</p>
-                                        <h2 class="title text-accent">New Products</h2>
-                                        <span class="themesflat-button bg-accent has-padding-36 shopnow">SHOP NOW</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="inner">
-                                <div class="thumb">
-                                    <img src="~/Content/Products/images/system/parallax/bg-parallax3.jpg" alt="Image">
-                                    <div class="text-wrap">
-                                        <p class="sub-title">Christmas Offers</p>
-                                        <h2 class="title text-accent">Get Upto 30% Off</h2>
-                                        <span class="themesflat-button bg-accent has-padding-36 shopnow">SHOP NOW</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>-->
-<!-- /.owl-carousel -->
-<!--</div>--><!-- /.flat-image-box -->
-<!--</div>--><!-- /.col-md-12 -->
-<!--</div>--><!-- /.row -->
-<!--</div>
-</div>-->
-<!-- END IMAGE BOX -->
+@{ ViewBag.Title = "Home"; }
 <section class="flat-row main-shop shop-slidebar">
     <div class="container">
         <div class="row">
@@ -62,7 +9,7 @@
                 <div class="sidebar slidebar-shop">
                     <div class="widget widget_tag filterBtn">
                         <h5 class="widget-title">
-                            <a href="@Url.Action("index", "home",new { reset = 1 })" class="themesflat-button bg-accent" style="font-weight:500!important;">Reset Filters</a>
+                            <a href="@Url.Action("Index", "Home",new { reset = 1 })" class="themesflat-button bg-accent" style="font-weight:500!important;">Reset Filters</a>
 
                         </h5>
 
@@ -74,23 +21,18 @@
                             </label>
 
                         </div>
-                    </div><!-- /.widget-search -->
-
-
-
+                    </div>
                     <div class="widget widget-sort-by">
                         <h5 class="widget-title">
                             Sort By
                         </h5>
                         <ul>
-                            <li><a data-href="@Url.Action("Products", "home", new { sortBy = 1, categoryID = Model.CategoryID })" class="dataLink @(Model.SortBy.HasValue ? Model.SortBy.Value ==1 ? "active" : string.Empty : string.Empty)">Default - Newest</a></li>
-                            <li><a data-href="@Url.Action("Products", "home", new { sortBy = 2, categoryID = Model.CategoryID })" class="dataLink @(Model.SortBy.HasValue ? Model.SortBy.Value ==2 ? "active" : string.Empty : string.Empty)">Popularity</a></li>
-                            <li><a data-href="@Url.Action("Products", "home", new { sortBy =3, categoryID = Model.CategoryID })" class="dataLink @(Model.SortBy.HasValue ? Model.SortBy.Value == 3 ? "active" : string.Empty : string.Empty)">Price: low to high</a></li>
-                            <li><a data-href="@Url.Action("Products", "home",new { sortBy =4, categoryID = Model.CategoryID  })" class="dataLink @(Model.SortBy.HasValue ? Model.SortBy.Value == 4 ? "active" : string.Empty : string.Empty)">Price: high to low</a></li>
+                            <li><a data-href="@Url.Action("Products", "Home", new { sortBy = 1, categoryID = Model.CategoryID })" class="dataLink @(Model.SortBy.HasValue ? Model.SortBy.Value ==1 ? "active" : string.Empty : string.Empty)">Default - Newest</a></li>
+                            <li><a data-href="@Url.Action("Products", "Home", new { sortBy = 2, categoryID = Model.CategoryID })" class="dataLink @(Model.SortBy.HasValue ? Model.SortBy.Value ==2 ? "active" : string.Empty : string.Empty)">Popularity</a></li>
+                            <li><a data-href="@Url.Action("Products", "Home", new { sortBy =3, categoryID = Model.CategoryID })" class="dataLink @(Model.SortBy.HasValue ? Model.SortBy.Value == 3 ? "active" : string.Empty : string.Empty)">Price: low to high</a></li>
+                            <li><a data-href="@Url.Action("Products", "Home",new { sortBy =4, categoryID = Model.CategoryID  })" class="dataLink @(Model.SortBy.HasValue ? Model.SortBy.Value == 4 ? "active" : string.Empty : string.Empty)">Price: high to low</a></li>
                         </ul>
-                    </div><!-- /.widget-sort-by -->
-
-
+                    </div>
                     <div class="widget widget-price">
                         <h5 class="widget-title">Filter by price</h5>
                         <div class="price-filter">
@@ -106,11 +48,9 @@
                         </h5>
                         <div class="tag-list">
                             @foreach (var category in ViewBag.Categories)
-                            {@*<a href="@Url.Action("index", "home",
-                                                     new { categoryID = category.Id, sortBy = ViewBag.SortBy!=null ? ViewBag.SortBy :null})"
-                                           class="dataLink @(ViewBag.CategoryID.HasValue && ViewBag.CategoryID.Value == category.Id ? "active" : string.Empty)">
-                                    @category.Name</a>*@
-                                            <a data-href="@Url.Action("Products", "home",
+                            {
+
+                                            <a data-href="@Url.Action("Products", "Home",
                                             new { categoryID = category.Id, sortBy = Model.SortBy })"
                                                class="dataLink @(Model.CategoryID.HasValue && Model.CategoryID.Value == category.Id ? "active" : string.Empty)">
                                                 @category.Name
@@ -123,7 +63,7 @@
             </div><!-- /.col-md-3 -->
             <div class="col-md-9" id="productsDiv">
 
-                @{Html.RenderAction("Products", "home",
+                @{Html.RenderAction("Products", "Home",
                                 new
                                 {
                                     search = Model.Search,
@@ -264,27 +204,9 @@
             $(".filterBtn").show();
 
         }
-        $(".addTocartBtn").on("click",function () {
-		    var productId = parseInt($(this).attr("data-id"));
-		    $.ajax({
-                url: '@Url.Action("AddToCart", "Shared")',
-
-                data: {
-                    ProductId: productId,
-                    quantity:1
-			    }
-		    })
-            .done(function (response) {
-        	    console.log(response);
-                if (response.Success) {
-                    $("#cartProductsCount").html(response.CartLength);
-        	    }
-                swal("Done", "Product Added To Cart", "success");
-            })
-            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-        	        alert("FAIL to Add Product In Cart");
-            });
+        
         });
-    });
+
+
     </script>
 }

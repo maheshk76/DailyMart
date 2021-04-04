@@ -107,244 +107,6 @@
         });
     };
 
-    var googleMap = function () {
-        // gmap default
-        if ($().gmap3) {
-            var data = JSON.parse('[{"address":"515 Crescent St, Brooklyn, NY 11208","content":""}]');
-            $(".flat-map")
-                .gmap3({
-                    map: {
-                        options: {
-                            zoom: 17,
-                            center: [40.6749633, -73.8699887, 18.75],
-                            mapTypeId: 'Modaz',
-                            mapTypeControlOptions: {
-                                mapTypeIds: ['Modaz', google.maps.MapTypeId.SATELLITE, google.maps.MapTypeId.HYBRID]
-                            },
-                            scrollwheel: true
-                        },
-                    },
-                });
-
-        }
-        // json loop
-        $.each(data, function (key, val) {
-            $('.flat-map').gmap3({
-                marker: {
-                    values: [{
-                        address: val.address,
-                        options: {
-                            icon: "./images/maps/map_icon.png"
-                        },
-                        events: {
-                            mouseover: function () {
-                                $(this).gmap3({
-                                    overlay: {
-                                        address: val.address,
-                                        options: {
-                                            content: "<div class='infobox'><p>203, Envato Labs, Behind Alis Steet</p><div class='clearfix'></div></div>",
-                                            offset: {
-                                                y: 32,
-                                                x: -19
-
-                                            }
-                                        }
-                                    }
-                                });
-                            },
-                            mouseout: function () {
-                                $('.infobox').each(function () {
-                                    $(this).remove();
-                                });
-                            }
-                        }
-                    }]
-                },
-                styledmaptype: {
-                    id: "Modaz",
-                    options: {
-                        name: "Modaz"
-                    },
-                    styles: [
-                        {
-                            "featureType": "water",
-                            "elementType": "geometry",
-                            "stylers": [
-                                {
-                                    "color": "#e9e9e9"
-                                },
-                                {
-                                    "lightness": 17
-                                }
-                            ]
-                        },
-                        {
-                            "featureType": "landscape",
-                            "elementType": "geometry",
-                            "stylers": [
-                                {
-                                    "color": "#f5f5f5"
-                                },
-                                {
-                                    "lightness": 20
-                                }
-                            ]
-                        },
-                        {
-                            "featureType": "road.highway",
-                            "elementType": "geometry.fill",
-                            "stylers": [
-                                {
-                                    "color": "#ffffff"
-                                },
-                                {
-                                    "lightness": 17
-                                }
-                            ]
-                        },
-                        {
-                            "featureType": "road.highway",
-                            "elementType": "geometry.stroke",
-                            "stylers": [
-                                {
-                                    "color": "#ffffff"
-                                },
-                                {
-                                    "lightness": 29
-                                },
-                                {
-                                    "weight": 0.2
-                                }
-                            ]
-                        },
-                        {
-                            "featureType": "road.arterial",
-                            "elementType": "geometry",
-                            "stylers": [
-                                {
-                                    "color": "#ffffff"
-                                },
-                                {
-                                    "lightness": 18
-                                }
-                            ]
-                        },
-                        {
-                            "featureType": "road.local",
-                            "elementType": "geometry",
-                            "stylers": [
-                                {
-                                    "color": "#ffffff"
-                                },
-                                {
-                                    "lightness": 16
-                                }
-                            ]
-                        },
-                        {
-                            "featureType": "poi",
-                            "elementType": "geometry",
-                            "stylers": [
-                                {
-                                    "color": "#f5f5f5"
-                                },
-                                {
-                                    "lightness": 21
-                                }
-                            ]
-                        },
-                        {
-                            "featureType": "poi.park",
-                            "elementType": "geometry",
-                            "stylers": [
-                                {
-                                    "color": "#dedede"
-                                },
-                                {
-                                    "lightness": 21
-                                }
-                            ]
-                        },
-                        {
-                            "elementType": "labels.text.stroke",
-                            "stylers": [
-                                {
-                                    "visibility": "on"
-                                },
-                                {
-                                    "color": "#ffffff"
-                                },
-                                {
-                                    "lightness": 16
-                                }
-                            ]
-                        },
-                        {
-                            "elementType": "labels.text.fill",
-                            "stylers": [
-                                {
-                                    "saturation": 36
-                                },
-                                {
-                                    "color": "#333333"
-                                },
-                                {
-                                    "lightness": 40
-                                }
-                            ]
-                        },
-                        {
-                            "elementType": "labels.icon",
-                            "stylers": [
-                                {
-                                    "visibility": "off"
-                                }
-                            ]
-                        },
-                        {
-                            "featureType": "transit",
-                            "elementType": "geometry",
-                            "stylers": [
-                                {
-                                    "color": "#f2f2f2"
-                                },
-                                {
-                                    "lightness": 19
-                                }
-                            ]
-                        },
-                        {
-                            "featureType": "administrative",
-                            "elementType": "geometry.fill",
-                            "stylers": [
-                                {
-                                    "color": "#fefefe"
-                                },
-                                {
-                                    "lightness": 20
-                                }
-                            ]
-                        },
-                        {
-                            "featureType": "administrative",
-                            "elementType": "geometry.stroke",
-                            "stylers": [
-                                {
-                                    "color": "#fefefe"
-                                },
-                                {
-                                    "lightness": 17
-                                },
-                                {
-                                    "weight": 1.2
-                                }
-                            ]
-                        }
-                    ]
-                }
-            });
-        });
-    };
 
     var goTop = function () {
         $(window).scroll(function () {
@@ -785,77 +547,7 @@
         });
     };
 
-    var wishbutton = function () {
-        $(".addTowish").on("click", function () {
-            var productId = parseInt($(this).attr("data-id"));
-            $.ajax({
-                url: '/Shared/MakeWishlist/',
-
-                data: {
-                    ProductId: productId,
-                    act: 1
-                }
-            })
-                .done(function (response) {
-                    console.log(response);
-                    if (response.Success) {
-                        swal({
-                            icon: 'success',
-                            title: 'Done',
-                            text: response.Message,
-                            timer: 1500,
-                            buttons: {
-                                OK: "OK",
-                            },
-                        }).then((value) => {
-                            switch (value) {
-                                case "OK":
-                                    window.location.reload();
-                                    break;
-                            }
-                        });
-                    }
-                    setTimeout(function () { window.location.reload() }, 2500);
-                })
-                .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-                    alert("FAIL to Add Product to wishlist");
-                });
-        });
-        $(".removefromwish").on("click", function () {
-            var productId = parseInt($(this).attr("data-id"));
-
-            $.ajax({
-                url: '/Shared/MakeWishlist/',
-                data: {
-                    ProductId: productId,
-                    act: 0
-                }
-
-            }).done(function (response) {
-                if (response.Success) {
-                    swal({
-                        icon: 'success',
-                        title: 'Done',
-                        text: response.Message,
-                        timer: 1500,
-                        buttons: {
-                            OK: "OK",
-                        },
-                    }).then((value) => {
-                        switch (value) {
-                            case "OK":
-                                window.location.reload();
-                                break;
-                        }
-                    });
-                }
-                    setTimeout(function () { window.location.reload() }, 2500);
-                })
-                .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-                    alert("FAIL to Remove from wishlist");
-                });
-        });
-    };
+    
 
     var swClick = function () {
         function activeLayout () {
@@ -888,7 +580,6 @@
     
    	// Dom Ready
     $(function () {
-        wishbutton();
       removePreloader();
       goTop();
       parallax(); 
@@ -902,8 +593,6 @@
       countDown();
         flatCounter();
         toogleswitch();
-      googleMap();
-      //flatPrice();  
       flatFilterBox(); 
       flatShopSearch();
       topSearch();
@@ -919,7 +608,7 @@
         $("#User_Email").keypress(function (e) {
             e.preventDefault();
         });
-        
+
    	});
 })(jQuery);
 

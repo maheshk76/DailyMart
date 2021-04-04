@@ -9,18 +9,22 @@ using System.Web.Mvc;
 using DailyMart.Models;
 using DailyMart.ViewModels;
 
-namespace GroceryShop.Controllers
+namespace DailyMart.Controllers
 {
     [Authorize(Roles = "Admin")]
 
     public class ProductsController : Controller
     {
-        private readonly ApplicationDbContext db = new ApplicationDbContext();
+        private readonly ApplicationDbContext _context;
+        public ProductsController()
+        {
+            _context = new ApplicationDbContext();
+        }
 
         // GET: Products
         public ActionResult Index(string search)
         {
-            var products = db.Products.ToList();
+            var products = _context.Products.ToList();
             if (!string.IsNullOrEmpty(search))
             {
                 products = products.Where(p => p.Name != null && p.Name.ToLower().Contains(search.ToLower())).ToList();
@@ -29,7 +33,7 @@ namespace GroceryShop.Controllers
         }
         public ActionResult ProductTable(string search)
         {
-            var products = db.Products.ToList();
+            var products = _context.Products.ToList();
             if (!string.IsNullOrEmpty(search))
             {
                 products = products.Where(p => p.Name != null && p.Name.ToLower().Contains(search.ToLower())).ToList();
@@ -44,7 +48,7 @@ namespace GroceryShop.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = db.Products.Find(id);
+            Product product = _context.Products.Find(id);
             if (product == null)
             {
                 return HttpNotFound();
@@ -58,7 +62,7 @@ namespace GroceryShop.Controllers
 
             NewProductViewModel model = new NewProductViewModel
             {
-                AvailableCategories = db.Category.ToList()
+                AvailableCategories = _context.Category.ToList()
             };
             return View(model);
         }
@@ -80,14 +84,14 @@ namespace GroceryShop.Controllers
                     SellingPrice = model.SellingPrice,
                     Stock = model.stock,
                     Tags = model.Tags,
-                    Category = db.Category.Find(model.CategoryID),
+                    Category = _context.Category.Find(model.CategoryID),
 
                     ImageURL = model.ImageURL
                 };
                 /* newProduct.CreatedOn = DateTime.Now;
                  newProduct.UpdatedOn = DateTime.Now;*/
-                db.Products.Add(newProduct);
-                db.SaveChanges();
+                _context.Products.Add(newProduct);
+                _context.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -104,7 +108,7 @@ namespace GroceryShop.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = db.Products.Find(id);
+            Product product = _context.Products.Find(id);
             if (product == null)
             {
                 return HttpNotFound();
@@ -119,7 +123,7 @@ namespace GroceryShop.Controllers
             model.ImageURL = product.ImageURL;
             model.Tags = product.Tags;
 
-            model.AvailableCategories = db.Category.ToList();
+            model.AvailableCategories = _context.Category.ToList();
 
             return View(model);
 
@@ -133,7 +137,7 @@ namespace GroceryShop.Controllers
         {
             if (ModelState.IsValid)
             {
-                var existingProduct = db.Products.Find(model.ID);
+                var existingProduct = _context.Products.Find(model.ID);
                 existingProduct.Name = model.Name;
                 existingProduct.Description = model.Description;
                 existingProduct.OriginalPrice = model.OriginalPrice;
@@ -141,7 +145,7 @@ namespace GroceryShop.Controllers
                 existingProduct.Stock = model.stock;
                 existingProduct.Category = null; //mark it null. Because the referncy key is changed below
                 existingProduct.CategoryId = model.CategoryID;
-                //existingProduct.Category = db.Categories.Find(model.CategoryID);
+                //existingProduct.Category = _context.Categories.Find(model.CategoryID);
                 existingProduct.Tags = model.Tags;
                // existingProduct.UpdatedOn = DateTime.Now;
                 //don't update imageURL if its empty
@@ -149,8 +153,8 @@ namespace GroceryShop.Controllers
                 {
                     existingProduct.ImageURL = model.ImageURL;
                 }
-                db.Entry(existingProduct).State = EntityState.Modified;
-                db.SaveChanges();
+                _context.Entry(existingProduct).State = EntityState.Modified;
+                _context.SaveChanges();
                 return RedirectToAction("Index");
 
             }
@@ -167,7 +171,7 @@ namespace GroceryShop.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = db.Products.Find(id);
+            Product product = _context.Products.Find(id);
             if (product == null)
             {
                 return HttpNotFound();
@@ -180,9 +184,9 @@ namespace GroceryShop.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Product product = db.Products.Find(id);
-            db.Products.Remove(product);
-            db.SaveChanges();
+            Product product = _context.Products.Find(id);
+            _context.Products.Remove(product);
+            _context.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -190,7 +194,7 @@ namespace GroceryShop.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _context.Dispose();
             }
             base.Dispose(disposing);
         }

@@ -1,4 +1,4 @@
-﻿@*@model IEnumerable<GroceryShop.Models.Product>*@
+﻿
 @using PagedList;
 @using PagedList.Mvc;
 @model IPagedList<DailyMart.Models.Product>
@@ -69,19 +69,19 @@
                     {
 
                     if(wishlist.Contains(item.Id)){
-                    <a data-id="@item.Id" href="#" class="like removefromwish" title="Remove from wishlist">
+                    <a data-id="@item.Id"  class="like removefromwish" title="Remove from wishlist">
                                   <i class="fa fa-heart"></i>
                                     </a>
                     }
                      else
                         {
-                             <a data-id="@item.Id" href="#" class="like addTowish" title="Add to wishlist">
+                             <a data-id="@item.Id" class="like addTowish" title="Add to wishlist">
                             <i class="fa fa-heart-o"></i>
                             </a>
                         }
                     }else
                         {
-                             <a data-id="@item.Id" href="#" class="like addTowish" title="Add to wishlist">
+                             <a data-id="@item.Id" class="like addTowish" title="Add to wishlist">
                             <i class="fa fa-heart-o"></i>
                             </a>
                         }
@@ -109,10 +109,7 @@
 <input type="hidden" id="SearchTerm" value="@ViewBag.Search" />
 <input type="hidden" id="SortBy" value="@ViewBag.SortBy" />
 <input type="hidden" id="CategoryID" value="@ViewBag.CategoryID" />
-
+<script src="~/Scripts/cart-wish.js"></script>
 @section Scripts{
-<script>
- 
- 
-</script>
+    
 }

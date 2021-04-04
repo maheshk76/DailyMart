@@ -8,7 +8,7 @@ using DailyMart.Models;
 using DailyMart.ViewModels;
 using Microsoft.AspNet.Identity;
 
-namespace GroceryShop.Controllers
+namespace DailyMart.Controllers
 {
     public class SharedController : Controller
     {

@@ -33,7 +33,8 @@ namespace DailyMart
                 "~/Content/stylesheets/responsive.css",
                 "~/Content/stylesheets/colors/color3.css",
                 "~/Content/stylesheets/animate.css",
-                "~/Content/toastr.css"
+                "~/Content/toastr.css",
+                "~/Content/sweetalert/sweet-alert.css"
                 ));
 
 
@@ -56,7 +57,6 @@ namespace DailyMart
                     "~/Content/javascript/main.js",
                     "~/Content/javascript/rev-slider.js",
                     "~/Content/javascript/jquery-ui.js",
-                    "~/Content/javascript/jquery-waypoints.js",
                     "~/Content/javascript/jquery-countTo.js",
                     "~/Content/javascript/jquery.countdown.js",
                     "~/Scripts/toastr.js"

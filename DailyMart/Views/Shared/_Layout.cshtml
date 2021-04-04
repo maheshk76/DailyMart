@@ -13,9 +13,9 @@
     @Scripts.Render("~/bundles/modernizr")
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIEU6OT3xqCksCetQeNLIPps6-AYrhq-s&region=GB"></script>
-    @*    @Scripts.Render("~/bundles/jquery")
-    *@
+    <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIEU6OT3xqCksCetQeNLIPps6-AYrhq-s&region=GB"></script>-->
+    @*   @Scripts.Render("~/bundles/jquery")*@
+    
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     @Scripts.Render("~/bundles/javascript/js")
     @Scripts.Render("~/bundles/rev-slider/js")
@@ -34,7 +34,7 @@
 
                     <div class="mobile-button"><span></span></div>
                     <div id="logo" class="logo float-left">
-                        <a href="@Url.Action("index", "home")" title="logo">
+                        <a href="@Url.Action("Index", "Home")" title="logo">
                             <img src="~/Content/Products/images/system/logo3.png" alt="image" width="90" height="20" data-retina="Content/Products/images/system/logo3.png" data-width="40" data-height="10">
                         </a>
                     </div><!-- /.logo -->
@@ -42,14 +42,17 @@
                     <div class="nav-wrap">
                         <nav id="mainnav" class="mainnav">
                             <ul class="menu">
-                                <li><a href="@Url.Action("index", "home")">Home</a></li>
+                                <li><a href="@Url.Action("Index", "Home")">Home</a></li>
                                 @if (Request.IsAuthenticated)
                                 {
-                                    <li><a href="@Url.Action("MyOrders","home",new { userId=User.Identity.GetUserId()})">Orders</a></li>
+                                    <li><a href="@Url.Action("MyOrders","Home",new { userId=User.Identity.GetUserId()})">Orders</a></li>
                                 }
-                                <li><a href="@Url.Action("contact", "home")">Contact</a></li>
-                                <li><a href="@Url.Action("about", "home")">About</a></li>
-                               
+                                <li><a href="@Url.Action("Contact", "Home")">Contact</a></li>
+                                <li><a href="@Url.Action("About", "Home")">About</a></li>
+                               @if (User.IsInRole("Admin"))
+                               {
+                                   <li><a href="@Url.Action("DashBoard", "Admin")">Admin</a></li>
+                               }
                             </ul>
 
                         </nav><!-- /.mainnav -->
@@ -58,7 +61,7 @@
                     <ul class="menu-extra">
                         @if (Request.IsAuthenticated)
                         {
-                            <li><a href="@Url.Action("WishList","home",new { userId=User.Identity.GetUserId()})">
+                            <li><a href="@Url.Action("WishList","Home",new { userId=User.Identity.GetUserId()})">
                                 <i class="fa fa-heart"></i></a>
                             </li>
                             <li class="box-cart nav-top-cart-wrapper">
@@ -71,7 +74,7 @@
 
                                     }
                                 }
-                                <a class="icon_cart nav-cart-trigger active" href="@Url.Action("cart", "home")"><span id="cartProductsCount">@count</span></a>
+                                <a class="icon_cart nav-cart-trigger active" href="@Url.Action("cart", "Home")"><span id="cartProductsCount">@count</span></a>
                             </li>
                             
                                 
@@ -85,6 +88,7 @@
 
 
         @RenderBody()
+       
         <div style="bottom:0;" class="main-footer">
             <section class="flat-row mail-chimp">
                 <div class="container">
@@ -108,9 +112,9 @@
                                     </div>
                                 </form>
                                 <ul class="flat-social">
-                                    <li><a href="@Url.Action("Error404", "home")"><i class="fa fa-facebook"></i></a></li>
-                                    <li><a href="@Url.Action("Error404", "home")"><i class="fa fa-twitter"></i></a></li>
-                                    <li><a href="@Url.Action("Error404", "home")"><i class="fa fa-linkedin"></i></a></li>
+                                    <li><a href="@Url.Action("Error404", "Home")"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a href="@Url.Action("Error404", "Home")"><i class="fa fa-twitter"></i></a></li>
+                                    <li><a href="@Url.Action("Error404", "Home")"><i class="fa fa-linkedin"></i></a></li>
                                 </ul><!-- /.flat-social -->
                             </div><!-- /.subscribe -->
                         </div>
@@ -124,10 +128,10 @@
                         <div class="col-md-3">
                             <div class="widget widget-link">
                                 <ul>
-                                    <li><a href="@Url.Action("about", "home")">About Us</a></li>
-                                    <li><a href="@Url.Action("Error404", "home")">Online Store</a></li>
-                                    <li><a href="@Url.Action("Error404", "home")">Blog</a></li>
-                                    <li><a href="@Url.Action("Contact", "home")">Contact Us</a></li>
+                                    <li><a href="@Url.Action("about", "Home")">About Us</a></li>
+                                    <li><a href="@Url.Action("Error404", "Home")">Online Store</a></li>
+                                    <li><a href="@Url.Action("Error404", "Home")">Blog</a></li>
+                                    <li><a href="@Url.Action("Contact", "Home")">Contact Us</a></li>
                                 </ul>
                             </div><!-- /.widget -->
                         </div><!-- /.col-md-3 -->
@@ -135,8 +139,8 @@
                             <div class="widget widget-link link-login">
                                 <ul>
                                     <li><a href="@Url.Action("login", "account")">Login/ Register</a></li>
-                                    @*<li><a href="@Url.Action("Cart", "home")">Your Cart</a></li>
-                                        <li><a href="@Url.Action("MyOrders", "home")">Your checkout</a></li>
+                                    @*<li><a href="@Url.Action("Cart", "Home")">Your Cart</a></li>
+                                        <li><a href="@Url.Action("MyOrders", "Home")">Your checkout</a></li>
                                     *@
                                 </ul>
                             </div><!-- /.widget -->
@@ -144,17 +148,17 @@
                         <div class="col-md-3">
                             <div class="widget widget-link link-faq">
                                 <ul>
-                                    <li><a href="@Url.Action("Error404", "home")">FAQs</a></li>
-                                    <li><a href="@Url.Action("Error404", "home")">Term of service</a></li>
-                                    <li><a href="@Url.Action("Error404", "home")">Privacy Policy</a></li>
-                                    <li><a href="@Url.Action("Error404", "home")">Returns</a></li>
+                                    <li><a href="@Url.Action("Error404", "Home")">FAQs</a></li>
+                                    <li><a href="@Url.Action("Error404", "Home")">Term of service</a></li>
+                                    <li><a href="@Url.Action("Error404", "Home")">Privacy Policy</a></li>
+                                    <li><a href="@Url.Action("Error404", "Home")">Returns</a></li>
                                 </ul>
                             </div><!-- /.widget -->
                         </div><!-- /.col-md-3 -->
                         <div class="col-md-3">
                             <div class="widget widget-brand">
                                 <div class="logo logo-footer">
-                                    <a href="@Url.Action("index", "home")"><img src="~/Content/Products/images/system/logo3.png" alt="image" width="107" height="24"></a>
+                                    <a href="@Url.Action("index", "Home")"><img src="~/Content/Products/images/system/logo3.png" alt="image" width="107" height="24"></a>
                                 </div>
                                 <ul class="flat-contact">
                                     @* <li class="address">304 ,Aster Blossam Aura College Road ,Nadiad</li>

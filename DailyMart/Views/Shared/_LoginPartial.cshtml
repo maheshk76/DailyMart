@@ -7,10 +7,10 @@
             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">  
         </li>
         <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left">
-            <a class="dropdown-item" href="@Url.Action("index","manage")"><li>Profile</li></a>
+            <a class="dropdown-item" href="@Url.Action("Index","Manage")"><li>Profile</li></a>
             <a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()">
                 <li>
-                    @using (Html.BeginForm("LogOff", "account", FormMethod.Post, new { id = "logoutForm" }))
+                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
                     {
                         @Html.AntiForgeryToken()
                     <li title="Logout">
@@ -27,6 +27,6 @@
 else
 {
     @*<ul class="nav navbar-nav navbar-right">*@
-    <li>@Html.ActionLink("Login", "login", "account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    <li>@Html.ActionLink("Login", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
     @*</ul>*@
 }

@@ -14,15 +14,15 @@ namespace DailyMart.Controllers
 
     public class CategoryController : Controller
     {
-        private ApplicationDbContext db;
+        private ApplicationDbContext _context;
         public CategoryController()
         {
-            db = new ApplicationDbContext();
+            _context = new ApplicationDbContext();
         }
         // GET: Category
         public ActionResult Index(string search)
         {
-            var categories = db.Category.ToList();
+            List<Category> categories = _context.Category.Include(x=>x.Products).ToList();
             if (!string.IsNullOrEmpty(search))
             {
                 categories = categories.Where(c => c.Name != null && c.Name.ToLower().Contains(search.ToLower())).ToList();
@@ -33,7 +33,7 @@ namespace DailyMart.Controllers
 
         public ActionResult CategoryTable(string search)
         {
-            var categories = db.Category.ToList();
+            List<Category> categories = _context.Category.Include(x => x.Products).ToList();
             if (!string.IsNullOrEmpty(search))
             {
                 categories = categories.Where(c => c.Name != null && c.Name.ToLower().Contains(search.ToLower())).ToList();
@@ -47,7 +47,7 @@ namespace DailyMart.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Category.Find(id);
+            Category category = _context.Category.Find(id);
             if (category == null)
             {
                 return HttpNotFound();
@@ -85,7 +85,7 @@ namespace DailyMart.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Category.Find(id);
+            Category category = _context.Category.Find(id);
             if (category == null)
             {
                 return HttpNotFound();
@@ -102,8 +102,8 @@ namespace DailyMart.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(category).State = EntityState.Modified;
-                db.SaveChanges();
+                _context.Entry(category).State = EntityState.Modified;
+                _context.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(category);
@@ -116,7 +116,7 @@ namespace DailyMart.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Category.Find(id);
+            Category category = _context.Category.Find(id);
             if (category == null)
             {
                 return HttpNotFound();
@@ -129,11 +129,11 @@ namespace DailyMart.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            //db.Categories.RemoveRange(db.Categories.ToList());
+            //_context.Categories.RemoveRange(_context.Categories.ToList());
 
-            Category category = db.Category.Find(id);
-            db.Category.Remove(category);
-            db.SaveChanges();
+            Category category = _context.Category.Find(id);
+            _context.Category.Remove(category);
+            _context.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -141,7 +141,7 @@ namespace DailyMart.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _context.Dispose();
             }
             base.Dispose(disposing);
         }

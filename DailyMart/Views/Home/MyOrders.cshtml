@@ -6,6 +6,7 @@
 }
 
 <section class="flat-row shop-detail-content">
+
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -64,8 +65,18 @@
                                                     </div>
                                                 </form>
                                             </div>
-                                            <div class="col-md-3 ">
-                                    <span class="text-muted">This order will be deliverd at your default address</span></div>
+                                            <div class="col-md-7 order-md-2 mb-5">
+                                                <br />
+                                                <div>
+                                                    <h4 class="d-flex justify-content-between align-items-center mb-3">
+                                                    <span class="text-muted">Payment Mode :  <span>@item.PaymentType</span></span>
+                                                   </h4>
+                                                </div>
+                                                <button data-id="@item.Id
+                                                        "class="btn btn-primary btn-sm" type="button" id="cancel-order">Cancel Order</button>
+                                                <hr />
+                                                <p class="text-muted">This order will be deliverd at your default address</p>
+                                            </div>
                                         </div>
                                         
                                         <hr />
@@ -183,13 +194,13 @@
                             </div><!-- /.content-inner -->
                             <div class="content-inner">
                                 <div class="container p-5">
-                                    @if (!(Model.PreviousOrders.ToList().Count() > 0))
+                                    @if (!(Model.CancelledOrders.ToList().Count() > 0))
                                     {
                                         <div class="alert alert-danger text-center h5" role="alert">
                                             Can't Find Any Cancelled Orders!
                                         </div>
                                     }
-                                    @foreach (var item in Model.PreviousOrders.ToList())
+                                    @foreach (var item in Model.CancelledOrders.ToList())
                                     {
 
                                         <div class="row">
@@ -241,4 +252,56 @@
         </div>
     </div>
         </div>
+     <div class="margin-top-49 mt-5 p-5">
+          <div class="margin-top-38 mt-1">
+
+</div>
+</div>
 </section><!-- /.shop-detail-content -->
+
+@section Scripts{
+    <script>
+        $("#cancel-order").on("click", function () {
+         swal({
+                        icon: 'warning',
+             text: 'Do you want to cancel this order?',
+                        
+                        buttons: {
+                            OK: "Yes",
+                            No:"Close"
+                        },
+                    }).then((value) => {
+                        switch (value) {
+                            case "OK":
+                                    var orderId = parseInt($(this).attr("data-id"));
+		                            $.ajax({
+                                        url: '@Url.Action("CancelOrder", "Home")',
+
+                                        data: {
+                                            OrderId: orderId
+                                        },
+                                        
+		                            })
+                                    .done(function (response) {
+        	                            console.log(response);
+                                        if (response.Success) {
+                                            swal("Done", response.Message, "success");
+        	                            }
+                                    })
+                                        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                                            swal({
+                                                icon: "error",
+                                                title: "Oops..!",
+                                                text: "Failed to Cancel your order,try after some time.",
+                                                timer: 1500
+                                            });
+                                    });
+                                    break;
+                            case "No":
+                                break;
+                        }
+                    });
+		    
+        });
+    </script>
+    }

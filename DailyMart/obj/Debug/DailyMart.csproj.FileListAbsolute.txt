@@ -242,3 +242,4 @@ C:\Users\Mahesh.Kantariya\Desktop\projectzip\DailyMart\DailyMart\obj\Debug\Daily
 C:\Users\Mahesh.Kantariya\Desktop\projectzip\DailyMart\DailyMart\obj\Debug\DailyMart.Migrations.wishlistadded.resources
 C:\Users\Mahesh.Kantariya\Desktop\projectzip\DailyMart\DailyMart\obj\Debug\DailyMart.Migrations.addwishlist.resources
 C:\Users\Mahesh.Kantariya\Desktop\projectzip\DailyMart\DailyMart\obj\Debug\DailyMart.Migrations.wishlistuseridtypechanged.resources
+C:\Users\Mahesh.Kantariya\Desktop\projectzip\DailyMart\DailyMart\obj\Debug\DailyMart.Migrations.paymenttypefororders.resources

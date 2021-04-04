@@ -8,18 +8,18 @@ using System.Web;
 using System.Web.Mvc;
 using DailyMart.Models;
 
-namespace GroceryShop.Controllers
+namespace DailyMart.Controllers
 {
     public class MessagesController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext _context = new ApplicationDbContext();
 
         // GET: Messages
         [Authorize(Roles = "Admin")]
 
         public ActionResult Index()
         {
-            return View(db.Messages.OrderByDescending(x => x.CreatedOn).ToList());
+            return View(_context.Messages.OrderByDescending(x => x.CreatedOn).ToList());
         }
 
         // GET: Messages/Details/5
@@ -31,14 +31,14 @@ namespace GroceryShop.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Message message = db.Messages.Find(id);
+            Message message = _context.Messages.Find(id);
             if (message == null)
             {
                 return HttpNotFound();
             }
             message.isRead = true;
-            db.Entry(message).State = EntityState.Modified;
-            db.SaveChanges();
+            _context.Entry(message).State = EntityState.Modified;
+            _context.SaveChanges();
             return View(message);
         }
 
@@ -63,8 +63,8 @@ namespace GroceryShop.Controllers
                 message.isRead = false;
                 message.CreatedOn = DateTime.Now;
 
-                db.Messages.Add(message);
-                db.SaveChanges();
+                _context.Messages.Add(message);
+                _context.SaveChanges();
                 result.Data = new { Success = true };
 
             }
@@ -81,9 +81,9 @@ namespace GroceryShop.Controllers
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             result.Data = new { Success = false };
 
-            Message message = db.Messages.Find(ID);
-            db.Messages.Remove(message);
-            db.SaveChanges();
+            Message message = _context.Messages.Find(ID);
+            _context.Messages.Remove(message);
+            _context.SaveChanges();
             result.Data = new { Success = true };
 
 
@@ -99,7 +99,7 @@ namespace GroceryShop.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _context.Dispose();
             }
             base.Dispose(disposing);
         }

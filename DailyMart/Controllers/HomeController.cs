@@ -342,19 +342,20 @@ namespace DailyMart.Controllers
             return result;
         }
         [Authorize]
-        public ActionResult MyOrders(string userId, string status)
+        public ActionResult MyOrders()
         {
+            return View();
+        }
+        public ActionResult Orderlist(string status)
+        {
+            string userId = User.Identity.GetUserId();
             var orders = _context.Orders.Where(x => x.UserId == userId).Include(x => x.OrderItems).ToList();
             OrderViewModel model = new OrderViewModel
             {
-                PendingOrders = orders.Where(x => x.OrderStatus.ToLower().Contains("pending")).OrderByDescending(x => x.OrderDate).ToList(),
-                InProgressOrders = orders.Where(x => x.OrderStatus.ToLower().Contains("inprogress")).OrderByDescending(x => x.OrderDate).ToList(),
-                PreviousOrders = orders.Where(x => x.OrderStatus.ToLower().Contains("delivered")).OrderByDescending(x => x.OrderDate).ToList(),
-                CancelledOrders = orders.Where(x => x.OrderStatus.ToLower().Contains("cancelled")).OrderByDescending(x => x.OrderDate).ToList()
-                
-            };
+                MyOrders = orders.Where(x => x.OrderStatus.ToLower().Contains(status)).OrderByDescending(x => x.OrderDate).ToList()
 
-            return View(model);
+            };
+            return PartialView(model);
         }
         public async Task<JsonResult> CancelOrder(int orderId)
         {

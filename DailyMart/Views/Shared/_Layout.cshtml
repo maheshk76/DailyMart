@@ -46,7 +46,7 @@
                                 <li><a href="@Url.Action("Index", "Home")">Home</a></li>
                                 @if (Request.IsAuthenticated)
                                 {
-                                    <li><a href="@Url.Action("MyOrders","Home",new { userId=User.Identity.GetUserId()})">Orders</a></li>
+                                    <li><a href="@Url.Action("MyOrders","Home")">Orders</a></li>
                                 }
                                 <li><a href="@Url.Action("Contact", "Home")">Contact</a></li>
                                 <li><a href="@Url.Action("About", "Home")">About</a></li>

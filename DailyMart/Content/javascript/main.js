@@ -548,7 +548,6 @@
     };
 
     
-
     var swClick = function () {
         function activeLayout () {
             $(".switcher-container" ).on( "click", "a.sw-light", function() {

@@ -8,10 +8,11 @@ namespace DailyMart.ViewModels
 {
     public class OrderViewModel
     {
-        public List<Order> PendingOrders { get; set; }
+       /* public List<Order> PendingOrders { get; set; }
         public List<Order> InProgressOrders { get; set; }
         public List<Order> PreviousOrders { get; set; }
 
-        public List<Order> CancelledOrders { get; set; }
+        public List<Order> CancelledOrders { get; set; }*/
+        public List<Order> MyOrders { get; internal set; }
     }
 }

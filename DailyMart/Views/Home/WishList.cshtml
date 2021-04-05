@@ -29,7 +29,7 @@
                                 <div class="review-meta">
                                     <h5 class="name">@item.Product.Name</h5>
                                     <div class="flat-star style-x">
-                                       <a data-id="@item.Product.Id" class="like removefromwish" title="Remove from wishlist">
+                                       <a data-id="@item.Product.Id" class="like rmfromwish" title="Remove from wishlist">
                                   <i class="fa fa-heart"></i>
                                     </a>
                                     </div>
@@ -74,5 +74,38 @@
 
 </div>
 <script>
-       
+       $(".rmfromwish").on("click", function () {
+    var productId = parseInt($(this).attr("data-id"));
+
+    $.ajax({
+        url: '/Shared/MakeWishlist/',
+        data: {
+            ProductId: productId,
+            act: 0
+        }
+
+    }).done(function (response) {
+        if (response.Success) {
+            swal({
+                icon: 'success',
+                title: 'Done',
+                text: response.Message,
+                timer: 1500,
+                buttons: {
+                    OK: "OK",
+                },
+            }).then((value) => {
+                switch (value) {
+                    case "OK":
+                        window.location.reload();
+                        break;
+                }
+            });
+        }
+        setTimeout(function () { window.location.reload();}, 1500);
+    })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("FAIL to Remove from wishlist");
+        });
+});
 </script>

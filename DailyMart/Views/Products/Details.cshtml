@@ -1,0 +1,108 @@
+﻿@model DailyMart.Models.Product
+
+@{
+    ViewBag.Title = "Product Detail"+Model.Id;
+    var imageURL = !string.IsNullOrEmpty(Model.ImageURL) ? Model.ImageURL : "/Content/images/system/placeholder-image.png";
+     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+    <div class="container">
+        <div class=" text-center font-weight-bolder h3 mb-3">
+
+            @Html.DisplayFor(model => model.Name)
+        </div>
+        <hr />
+        <div class="row mb-3">
+
+            <div class="col-sm-6 col-12">
+
+
+                <img class="img-thumbnail img-fluid" id="productImage" src="@imageURL" style="height:200px;" />
+                <div class="font-weight-bold">
+                    @Html.DisplayNameFor(model => model.Description)
+                </div>
+                <div>
+                    @Html.DisplayFor(model => model.Description)
+                </div>
+
+            </div>
+            <div class="col-sm-6 col-12">
+                <div>
+
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Category)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Category.Name)
+                            
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.OriginalPrice)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.OriginalPrice)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.SellingPrice)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.SellingPrice)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Stock)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Stock)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.ImageURL)
+
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.ImageURL)
+
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Tags)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Tags)
+                        </dd> 
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CreatedOn)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.CreatedOn)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.UpdatedOn)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.UpdatedOn)
+                        </dd>
+
+                    </dl>
+                </div>
+
+            </div>
+        </div>
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary ml-1" })
+        </p>
+
+    </div>
+
+
+

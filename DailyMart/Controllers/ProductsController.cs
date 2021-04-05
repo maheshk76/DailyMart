@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DailyMart.Models;
+using DailyMart.Services;
 using DailyMart.ViewModels;
 
 namespace DailyMart.Controllers
@@ -29,18 +30,9 @@ namespace DailyMart.Controllers
             {
                 products = products.Where(p => p.Name != null && p.Name.ToLower().Contains(search.ToLower())).ToList();
             }
+            ViewBag.LastUpdate = Convert.ToDateTime(products.OrderByDescending(c => c.UpdatedOn).Select(c => c.UpdatedOn).FirstOrDefault()).TimeAgo();
             return View(products);
         }
-        public ActionResult ProductTable(string search)
-        {
-            var products = _context.Products.ToList();
-            if (!string.IsNullOrEmpty(search))
-            {
-                products = products.Where(p => p.Name != null && p.Name.ToLower().Contains(search.ToLower())).ToList();
-            }
-            return View(products);
-        }
-
         // GET: Products/Details/5
         public ActionResult Details(int? id)
         {
@@ -85,11 +77,11 @@ namespace DailyMart.Controllers
                     Stock = model.stock,
                     Tags = model.Tags,
                     Category = _context.Category.Find(model.CategoryID),
+                    CreatedOn=DateTime.Now,
+                    UpdatedOn=DateTime.Now,
 
                     ImageURL = model.ImageURL
                 };
-                /* newProduct.CreatedOn = DateTime.Now;
-                 newProduct.UpdatedOn = DateTime.Now;*/
                 _context.Products.Add(newProduct);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
@@ -122,7 +114,7 @@ namespace DailyMart.Controllers
             model.CategoryID = product.Category != null ? product.Category.Id : 0;
             model.ImageURL = product.ImageURL;
             model.Tags = product.Tags;
-
+            
             model.AvailableCategories = _context.Category.ToList();
 
             return View(model);
@@ -147,6 +139,7 @@ namespace DailyMart.Controllers
                 existingProduct.CategoryId = model.CategoryID;
                 //existingProduct.Category = _context.Categories.Find(model.CategoryID);
                 existingProduct.Tags = model.Tags;
+                existingProduct.UpdatedOn = DateTime.Now;
                // existingProduct.UpdatedOn = DateTime.Now;
                 //don't update imageURL if its empty
                 if (!string.IsNullOrEmpty(model.ImageURL))
@@ -165,31 +158,19 @@ namespace DailyMart.Controllers
         }
 
         // GET: Products/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Product product = _context.Products.Find(id);
-            if (product == null)
-            {
-                return HttpNotFound();
-            }
-            return View(product);
-        }
-
-        // POST: Products/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+       
+        [HttpPost]
+        public JsonResult Delete(int id)
         {
             Product product = _context.Products.Find(id);
             _context.Products.Remove(product);
             _context.SaveChanges();
-            return RedirectToAction("Index");
+            JsonResult result = new JsonResult
+            {
+                Data = new { Success = true, Message = "Products is deleted sucessfully" }
+            };
+            return result;
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -57,9 +57,10 @@ namespace DailyMart.Controllers
         {
             ApplicationUser user = new ApplicationUser();
             user = UserManager.FindById(User.Identity.GetUserId());
-            EditViewModel viewmodel = new EditViewModel();
-            
-            viewmodel.User = user;
+            EditViewModel viewmodel = new EditViewModel
+            {
+                User = user
+            };
             var address= _context.Address.SingleOrDefault(a => a.UserId == user.Id);
             if (address == null)
             {

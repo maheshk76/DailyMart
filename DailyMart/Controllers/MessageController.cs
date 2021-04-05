@@ -12,7 +12,7 @@ namespace DailyMart.Controllers
 {
     public class MessagesController : Controller
     {
-        private ApplicationDbContext _context = new ApplicationDbContext();
+        private readonly ApplicationDbContext _context = new ApplicationDbContext();
 
         // GET: Messages
         [Authorize(Roles = "Admin")]
@@ -55,9 +55,11 @@ namespace DailyMart.Controllers
         [ValidateAntiForgeryToken]
         public JsonResult Create(Message message)
         {
-            JsonResult result = new JsonResult();
-            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            result.Data = new { Success = false };
+            JsonResult result = new JsonResult
+            {
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                Data = new { Success = false }
+            };
             if (ModelState.IsValid)
             {
                 message.isRead = false;
@@ -77,9 +79,11 @@ namespace DailyMart.Controllers
 
         public JsonResult Delete(int ID)
         {
-            JsonResult result = new JsonResult();
-            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            result.Data = new { Success = false };
+            JsonResult result = new JsonResult
+            {
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                Data = new { Success = false }
+            };
 
             Message message = _context.Messages.Find(ID);
             _context.Messages.Remove(message);

@@ -1,0 +1,176 @@
+﻿@model IEnumerable<DailyMart.Models.Product>
+
+@{
+    ViewBag.Title = "Products";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<label>
+    @Html.ActionLink("Create New", "Create",null, new { @class = "btn btn-primary ml-4"})
+</label>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                       <th>
+                            @Html.DisplayNameFor(model => model.Stock)
+                        </th>
+                        
+                        <th>
+                            @Html.DisplayNameFor(model => model.ImageURL)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Name)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Category)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Description)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.OriginalPrice)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SellingPrice)
+                        </th>
+                        
+                        <th>
+                            @Html.DisplayNameFor(model => model.Tags)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CreatedOn)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.UpdatedOn)
+                        </th>
+                        <th>
+                            Actions
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @if (Model.Count() == 0)
+                    {
+                        <tr>
+                            <td>
+                                No Product Found!
+                            </td>
+
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var item in Model)
+                        {
+
+                <tr>
+                   @if (item.Stock <20)
+                    {
+                    <td style="background-color:lightcoral">
+                        @Html.DisplayFor(modelItem => item.Stock)
+                    </td>
+                    }
+                    else
+                    {
+                         <td>
+                        @Html.DisplayFor(modelItem => item.Stock)
+                    </td>
+                    }
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.ImageURL)*@
+                        <img width=100 height=100 src="@item.ImageURL" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.Name)
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OriginalPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SellingPrice)
+                    </td>
+                    
+                    
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Tags)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedOn)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UpdatedOn)
+                    </td>
+                    <td class="text-center">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary btn-block mb-1" })
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-primary btn-block mb-1" })
+                     <button data-id="@item.Id" class="btn btn-primary btn-block mb-1 del-product" type="button">Delete</button>
+                    </td>
+                </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+     <div class="card-footer small text-muted">Last update : <b>@ViewBag.LastUpdate</b></div>
+</div>
+@section Scripts{
+<script>
+    $(".del-product").on("click", function () {
+         swal({
+                        icon: 'warning',
+             text: 'Are you sure want to delete this product?',
+                        
+                        buttons: {
+                            OK: "Yes",
+                            No:"Cancel"
+                        },
+                    }).then((value) => {
+                        switch (value) {
+                            case "OK":
+                                var id = parseInt($(this).attr("data-id"));
+		                            $.ajax({
+                                        url: '@Url.Action("Delete", "Products")',
+                                        type:"POST",
+                                        data: {
+                                            Id: id
+                                        },
+                                        
+		                            })
+                                    .done(function (response) {
+        	                            console.log(response);
+                                        if (response.Success) {
+                                            swal("Done", response.Message, "success");
+                                            setTimeout(function () { window.location.reload(); }, 2000);
+        	                            }
+                                    })
+                                        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                                            swal({
+                                                icon: "error",
+                                                title: "Oops..!",
+                                                text: "Failed to delete product,try after some time.",
+                                                timer: 1500
+                                            });
+                                    });
+                                    break;
+                            case "No":
+                                break;
+                        }
+                    });
+		    
+        });
+</script>
+}

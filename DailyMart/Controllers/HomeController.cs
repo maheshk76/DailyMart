@@ -370,7 +370,7 @@ namespace DailyMart.Controllers
                 orderInDb.OrderStatus = "Cancelled";
                 _context.SaveChanges();
                 result.Data = new { Success = true, Message = "Your order is cancelled with OrderId :" + orderId };
-                var callbackUrl = Url.Action("MyOrders", "Home", new { userId = userId }, protocol: Request.Url.Scheme);
+                var callbackUrl = Url.Action("MyOrders", "Home",null, protocol: Request.Url.Scheme);
                 string body = "<html>Your order (" + orderId + ") is <b>cancelled</b> on " + DateTime.Now + " <br/>Manage your orders here <a href=\"" + callbackUrl + "\">MyOrders</a></html>";
                 await UserManager.SendEmailAsync(userId, "Order Cancelled", body);
                 return result;

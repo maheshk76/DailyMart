@@ -26,12 +26,11 @@ namespace DailyMart.Controllers
                 var file = Request.Files[0];
 
                 var fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
-
-                var path = Path.Combine(Server.MapPath("~/content/images/"), fileName);
+                var path = Path.Combine(Server.MapPath("~/content/products/images/"), fileName);
 
                 file.SaveAs(path);
 
-                result.Data = new { Success = true, ImageURL = string.Format("/content/images/{0}", fileName) };
+                result.Data = new { Success = true, ImageURL = string.Format("/content/products/images/{0}", fileName) };
 
 
             }

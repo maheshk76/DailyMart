@@ -30,14 +30,16 @@ namespace DailyMart
             mess.From = new MailAddress(ExternalLoginKeys.EmailKeys.Email,ExternalLoginKeys.EmailKeys.Name);
             mess.BodyEncoding = System.Text.Encoding.UTF8;
             mess.IsBodyHtml = true;
-            SmtpClient client = new SmtpClient();
-            client.Port = 587;
-            client.Host = "smtp.gmail.com";
-            client.Timeout = 10000;
-            client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            client.UseDefaultCredentials = false;
-            client.Credentials = new NetworkCredential(ExternalLoginKeys.EmailKeys.Email, ExternalLoginKeys.EmailKeys.Password);
-            client.EnableSsl = true;
+            SmtpClient client = new SmtpClient
+            {
+                Port = 587,
+                Host = "smtp.gmail.com",
+                Timeout = 10000,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(ExternalLoginKeys.EmailKeys.Email, ExternalLoginKeys.EmailKeys.Password),
+                EnableSsl = true
+            };
             return client.SendMailAsync(mess);
            // return Task.FromResult(0);
         }

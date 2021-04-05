@@ -6,8 +6,19 @@
 
 <div class="container w-50">
     <div class="content-inner active" style="display: block;">
+        
+            
+        
         <div class="inner max-width-83 padding-top-33">
-
+            @if (Session["LastRemoved"] != null)
+                    {
+                        Item LastProduct= (Item)Session["LastRemoved"];
+                        <div role="alert" class="alert alert-primary alert-dismissible fade show" style="border:1px dotted black;opacity:1">
+                                <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <button  class="btn btn-primary btn-sm pull-right add-again" data-id="@LastProduct.Product.Id" type="button">Add again</button>
+                                <p>You just removed <strong>@LastProduct.Product.Name</strong> from your cart </p>
+                        </div>
+                    }
             @if (Session["cart"] == null)
             {
                 <ol class="review-list">
@@ -16,14 +27,14 @@
                     </li>
                 </ol>
 
-            }
-            else
-            {
-                List<Item>cart = (List<Item>)Session["cart"];
+                        }
+                        else
+                        {
+                            List<Item>cart = (List<Item>)Session["cart"];
 
-                var count = cart.Count();
-                if (count == 0)
-                {
+                            var count = cart.Count();
+                            if (count == 0)
+                            {
                     <ol class="review-list">
                         <li class="h4 alert alert-danger text-center">
                             <strong>Your Cart Is Empty!</strong>
@@ -32,13 +43,14 @@
                 }
                 else
                 {
-
+                    
+                    
                     <ol class="review-list">
 
                         @foreach (Item item in (List<Item>)Session["cart"])
                         {
-                            int lineTotal = Convert.ToInt32(item.Quantity * item.Product.SellingPrice);
-                            Total = Convert.ToInt32(@Total + lineTotal);
+                int lineTotal = Convert.ToInt32(item.Quantity * item.Product.SellingPrice);
+                Total = Convert.ToInt32(@Total + lineTotal);
                         <li class="review border-bottom" style="padding-top:25px;padding-bottom:25px;">
                             <div class="thumb">
                                 <img src="@item.Product.ImageURL" alt="Image">
@@ -104,6 +116,28 @@
 
 </div>
 <script>
+    $(".add-again").on("click", function () {
+        var productId = parseInt($(this).attr("data-id"));
+    $.ajax({
+        url: '/Shared/AddToCart/',
+
+        data: {
+            ProductId: productId,
+            quantity: 1
+        }
+    })
+        .done(function (response) {
+            console.log(response);
+            if (response.Success) {
+                $("#cartProductsCount").html(response.CartLength);
+            }
+            swal("Done", "Product Added To Cart", "success");
+            setTimeout(function () { window.location.reload(); }, 2000);
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("FAIL to Add Product In Cart");
+        });
+    });
     $(".removeFromCartbtn").click(function () {
         debugger;
 		var id = parseInt($(this).attr("data-id"));

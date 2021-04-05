@@ -123,6 +123,7 @@ namespace DailyMart.Controllers
         }
         public JsonResult AddToCart(int productId, int quantity)
         {
+            Session["LastRemoved"] = null;
             JsonResult result = new JsonResult();
             var itemCount = 0;
             var q = 0;
@@ -211,6 +212,7 @@ namespace DailyMart.Controllers
                 if (item.Product.Id == productId)
                 {
                     cart.Remove(item);
+                    Session["LastRemoved"] = item;
                     break;
                 }
             }

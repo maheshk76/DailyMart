@@ -85,7 +85,7 @@
     <script>
         $(document).ready(function () {
         $(".filterBtn").hide();
-    $("#amount").val("$" +@Model.MinimumPrice + ".00" + " - " + "$" + @ViewBag.MaximumPrice + ".00");
+    $("#amount").val("Rs" +@Model.MinimumPrice + ".00" + " - " + "Rs" + @ViewBag.MaximumPrice + ".00");
 	var callTimeout;
 	var priceSlider = $("#slide-range").slider({
 		range: true,
@@ -96,7 +96,7 @@
 			var minPrice = ui.values[0];
 			var maxPrice = ui.values[1];
 
-			$("#amount").val("$" + minPrice + ".00" + " - " + "$" + maxPrice + ".00");
+			$("#amount").val("Rs" + minPrice + ".00" + " - " + "Rs" + maxPrice + ".00");
 
 			clearTimeout(callTimeout);
 			callTimeout = setTimeout(PriceRangeChange, 800);

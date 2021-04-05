@@ -22,7 +22,8 @@ namespace DailyMart.Controllers
         {
             if (context.HttpContext.User.Identity.IsAuthenticated)
             {
-                context.Result = new RedirectResult(url: "/Account/LoggedIn");
+                    context.Result = new RedirectResult(url: "/Account/LoggedIn");
+                
                 base.OnActionExecuting(context);
             }
 

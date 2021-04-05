@@ -48,10 +48,14 @@
                                                                 <small class="text-muted">@item1.Product.SellingPrice Rs.</small>
                                                             </div>
                                                             <span class="text-muted">Qty-&nbsp;@item1.Quantity</span>
+                                                            
                                                         </li>
+                                                        
 
                                                     }
+                                                    
                                                     <li class="list-group-item d-flex justify-content-between">
+                                                        
                                                         <span>Total (INR)</span>
                                                         <strong>@item.Amount Rs.</strong>
                                                     </li>
@@ -224,6 +228,7 @@
                                                         </li>
 
                                                     }
+                                                    
                                                     <li class="list-group-item d-flex justify-content-between">
                                                         <span>Total (INR)</span>
                                                         <strong>@item.Amount Rs.</strong>
@@ -263,7 +268,7 @@
     <script>
         $("#cancel-order").on("click", function () {
          swal({
-                        icon: 'warning',
+                        icon: 'info',
              text: 'Do you want to cancel this order?',
                         
                         buttons: {
@@ -273,20 +278,20 @@
                     }).then((value) => {
                         switch (value) {
                             case "OK":
-                                    var orderId = parseInt($(this).attr("data-id"));
-		                            $.ajax({
-                                        url: '@Url.Action("CancelOrder", "Home")',
-
-                                        data: {
-                                            OrderId: orderId
-                                        },
-                                        
-		                            })
+                                var orderId = parseInt($(this).attr("data-id"));
+                                $.ajax({
+                                    url: '@Url.Action("CancelOrder", "Home")',
+                                    data: {
+                                        OrderId: orderId
+                                    },
+                                })
                                     .done(function (response) {
-        	                            console.log(response);
+                                        console.log(response);
                                         if (response.Success) {
                                             swal("Done", response.Message, "success");
-        	                            }
+                                        }
+                                        setTimeout(function() {window.location.reload();
+                                    }, 2000);
                                     })
                                         .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                                             swal({

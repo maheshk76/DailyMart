@@ -96,12 +96,13 @@
 
                 <div class="col-md-7 order-md-1">
                     <h3 class="mb-3">Address</h3>
-                    <a href="@Url.Action("Edit", "Manage")" class=" bg-accent" style="font-weight:300!important;">Edit Address</a>
+                    
                     <form class="needs-validation" id="orderModel">
                         
                         <input type="hidden" value="@Total" name="TotalAmount" />
                           @if (addr != null)
                           {
+                              <a href="@Url.Action("Edit", "Manage")" class=" bg-accent" style="font-weight:300!important;">Edit Address</a>
                                     <p><label for="AddressLine">AddressLine : </label>
                                     <span>@addr.AddressLine</span></p>
                                     <p><label for="City">City : </label>
@@ -166,6 +167,9 @@
                 </div>
         }
     </div>
+     <div class="margin-top-49 mt-5 p-5">
+
+</div>
 </div>
 
 

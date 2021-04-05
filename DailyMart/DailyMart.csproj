@@ -271,6 +271,7 @@
     <Compile Include="ViewModels\WishlistViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AccessDenied.html" />
     <Content Include="Content\Admin\css\sb-admin.css" />
     <Content Include="Content\Admin\css\sb-admin.min.css" />
     <Content Include="Content\Admin\js\demo\chart-area-demo.js" />

@@ -1,4 +1,5 @@
 ﻿$(document).ready(function () {
+    
 $(".addTocartBtn").on("click", function () {
     var productId = parseInt($(this).attr("data-id"));
     $.ajax({
@@ -45,12 +46,13 @@ $(".addTowish").on("click", function () {
                 }).then((value) => {
                     switch (value) {
                         case "OK":
-                            window.location.reload();
+                            //refreshProduct();
+                            //window.location.reload();
                             break;
                     }
                 });
             }
-            setTimeout(function () { window.location.reload() }, 2500);
+            setTimeout(function () { refreshProduct(); /*window.location.reload()*/ }, 1500);
         })
         .fail(function (XMLHttpRequest, textStatus, errorThrown) {
             alert("FAIL to Add Product to wishlist");
@@ -79,16 +81,36 @@ $(".removefromwish").on("click", function () {
             }).then((value) => {
                 switch (value) {
                     case "OK":
-                        window.location.reload();
+                        //refreshProduct();
                         break;
                 }
             });
         }
-        setTimeout(function () { window.location.reload() }, 2500);
+        setTimeout(function () { refreshProduct(); }, 1500);
     })
         .fail(function (XMLHttpRequest, textStatus, errorThrown) {
             alert("FAIL to Remove from wishlist");
         });
 });
-
+    function refreshProduct() {
+        showLoader();
+        $.ajax({
+            url: '/Home/Products/',
+            data: {
+                search: $("#SearchTerm").val(),
+                sortBy: $("#SortBy").val(),
+                categoryID: $("#CategoryID").val()
+            }
+        })
+            .done(function (response) {
+                $("#productsDiv").html(response);
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            })
+            .always(function () {
+                console.log("Refreshing Product list");
+                hideLoader();
+            });
+    }
 });

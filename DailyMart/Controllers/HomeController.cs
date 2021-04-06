@@ -336,7 +336,7 @@ namespace DailyMart.Controllers
                 result.Data = new { Success = true, Message = "Product Updated to cart successfully" };
 
             }
-            var callbackUrl = Url.Action("MyOrders", "Home", new { userId = user.Id}, protocol: Request.Url.Scheme);
+            var callbackUrl = Url.Action("MyOrders", "Home", null, protocol: Request.Url.Scheme);
             string body = "<html>Your order has been placed with Order Id:" + newOrder.Id+ "  <br/>Manage your orders here <a href=\"" + callbackUrl + "\">MyOrders</a></html>";
             await UserManager.SendEmailAsync(user.Id,"Order Placed",body);
             return result;

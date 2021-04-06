@@ -7,7 +7,7 @@
 
 
 <label>
-    @Html.ActionLink("Create New", "Create",null, new { @class = "btn btn-primary ml-4"})
+    @Html.ActionLink("Add New", "Create",null, new { @class = "btn btn-primary ml-4"})
 </label>
 
 <div class="card mb-3">
@@ -114,9 +114,10 @@
                         @Html.DisplayFor(modelItem => item.UpdatedOn)
                     </td>
                     <td class="text-center">
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary btn-block mb-1" })
-                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-primary btn-block mb-1" })
-                     <button data-id="@item.Id" class="btn btn-primary btn-block mb-1 del-product" type="button">Delete</button>
+                        <a href="@Url.Action("Edit","Products",new { id = item.Id })" class="btn btn-outline-primary btn-block mb-1"><i class="fa fa-pencil-ruler"></i></a>
+                        <a href="@Url.Action("Details","Products",new { id = item.Id })" class="btn btn-outline-primary btn-block mb-1"><i class="fa fa-info-circle"></i></a>
+                        
+                     <button data-id="@item.Id" class="btn btn-outline-danger btn-block mb-1 del-product" type="button"><i class="fa fa-trash-alt"></i></button>
                     </td>
                 </tr>
                         }

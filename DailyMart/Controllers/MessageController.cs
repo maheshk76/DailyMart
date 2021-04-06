@@ -10,7 +10,7 @@ using DailyMart.Models;
 
 namespace DailyMart.Controllers
 {
-    public class MessagesController : Controller
+    public class MessageController : Controller
     {
         private readonly ApplicationDbContext _context = new ApplicationDbContext();
 
@@ -21,7 +21,10 @@ namespace DailyMart.Controllers
         {
             return View(_context.Messages.OrderByDescending(x => x.CreatedOn).ToList());
         }
-
+        public int GetMessages()
+        {
+            return _context.Messages.Where(m=>m.isRead==false).Count();
+        }
         // GET: Messages/Details/5
         [Authorize(Roles = "Admin")]
 
@@ -43,23 +46,17 @@ namespace DailyMart.Controllers
         }
 
 
-        public ActionResult CreateForm()
+        public ActionResult Send()
         {
-            return PartialView();
+            return View();
         }
-
         // POST: Messages/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public JsonResult Create(Message message)
+        public ActionResult Send(Message message)
         {
-            JsonResult result = new JsonResult
-            {
-                JsonRequestBehavior = JsonRequestBehavior.AllowGet,
-                Data = new { Success = false }
-            };
             if (ModelState.IsValid)
             {
                 message.isRead = false;
@@ -67,11 +64,12 @@ namespace DailyMart.Controllers
 
                 _context.Messages.Add(message);
                 _context.SaveChanges();
-                result.Data = new { Success = true };
 
             }
-
-            return result;
+            if (User.IsInRole("Admin"))
+                return RedirectToAction("Index");
+            else
+                return RedirectToAction("Index", "Home");
         }
 
 
@@ -84,14 +82,10 @@ namespace DailyMart.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet,
                 Data = new { Success = false }
             };
-
             Message message = _context.Messages.Find(ID);
             _context.Messages.Remove(message);
             _context.SaveChanges();
-            result.Data = new { Success = true };
-
-
-
+            result.Data = new { Success = true ,Message= "Message deleted Successfully" };
             return result;
         }
 

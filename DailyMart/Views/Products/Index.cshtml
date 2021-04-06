@@ -5,11 +5,18 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-
-<label>
+<div class="row">
+   
+<label class="col-md-2">
     @Html.ActionLink("Add New", "Create",null, new { @class = "btn btn-primary ml-4"})
 </label>
-
+ <label class="col-md-2">
+    @Html.DropDownList("Categories",new SelectList( ViewBag.AllCategories as List<SelectListItem>, "Value", "Text"),"--Select Category--", new { @onchange="getProducts(this.value)",@class = "form-control" })
+   </label>
+    <label class="col-md-1">
+        @Html.ActionLink("Reset", "Index", null, new { @class = "btn btn-primary btn-block mb-1" })
+    </label>
+    </div>
 <div class="card mb-3">
     <div class="card-body">
         <div class="table-responsive">
@@ -72,8 +79,8 @@
                 <tr>
                    @if (item.Stock <20)
                     {
-                    <td style="background-color:lightcoral">
-                        @Html.DisplayFor(modelItem => item.Stock)
+                    <td style="color:red">
+                        <b>@Html.DisplayFor(modelItem => item.Stock)</b>
                     </td>
                     }
                     else
@@ -130,6 +137,9 @@
 </div>
 @section Scripts{
 <script>
+    function getProducts(val) {
+        window.location.href = window.location.pathname+"?category=" + val;
+    }
     $(".del-product").on("click", function () {
          swal({
                         icon: 'warning',

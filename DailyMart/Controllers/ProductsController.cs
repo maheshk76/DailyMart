@@ -21,15 +21,22 @@ namespace DailyMart.Controllers
         {
             _context = new ApplicationDbContext();
         }
-
         // GET: Products
-        public ActionResult Index(string search)
+        public ActionResult Index(string category)
         {
             var products = _context.Products.ToList();
-            if (!string.IsNullOrEmpty(search))
+            if (!string.IsNullOrEmpty(category))
             {
-                products = products.Where(p => p.Name != null && p.Name.ToLower().Contains(search.ToLower())).ToList();
+                products = products.Where(p => p.Category.Name != null && p.Category.Name.ToLower().Contains(category.ToLower())).ToList();
             }
+            List<SelectListItem> categories = _context.Category.Select(c => new SelectListItem
+            {
+                Value = c.Name,
+                Text = c.Name,
+                Selected = false
+
+            }).ToList();
+            ViewBag.AllCategories = categories;
             ViewBag.LastUpdate = Convert.ToDateTime(products.OrderByDescending(c => c.UpdatedOn).Select(c => c.UpdatedOn).FirstOrDefault()).TimeAgo();
             return View(products);
         }

@@ -269,15 +269,12 @@ namespace DailyMart.Controllers
            
             return View(model);
         }
-        public async Task<JsonResult> PlaceOrder(string orderdata)
+        [HttpPost]
+        public async Task<JsonResult> PlaceOrder(OrderData orderdata)
         {
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            var addrl = Request.QueryString["AddressLine"];
             
-            var data = orderdata.Split('&');
-            for(int i = 0; i < data.Length; i++)
-            {
-                data[i] = data[i].Split('=')[1];
-            }
             JsonResult result = new JsonResult
             {
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
@@ -287,25 +284,22 @@ namespace DailyMart.Controllers
                 UserId = User.Identity.GetUserId(),
                 OrderDate = DateTime.Now,
                 OrderStatus = "Pending",
-                Amount = Convert.ToInt32(data[0])
+                Amount = orderdata.Amount,
+                PaymentType=orderdata.PaymentType
             };
-            if (data[1] == "true")
+            if (orderdata.NewAddress)
             {
                 Address address = new Address
                 {
                     UserId = User.Identity.GetUserId(),
-                    AddressLine = data[2],
-                    City = data[3],
-                    State = data[4],
-                    ZipCode = data[5]
+                    AddressLine = orderdata.AddressLine,
+                    City = orderdata.City,
+                    State = orderdata.State,
+                    ZipCode = orderdata.ZipCode
                 };
                 _context.Address.Add(address);
                 _context.SaveChanges();
-                newOrder.PaymentType = data[6];
-            }
-            else
-            {
-                newOrder.PaymentType = data[2];
+                
             }
             if (Session["cart"] != null)
             {
@@ -333,7 +327,7 @@ namespace DailyMart.Controllers
                 _context.Orders.Add(newOrder);
                 _context.SaveChanges();
                 Session["cart"] = null;
-                result.Data = new { Success = true, Message = "Product Updated to cart successfully" };
+                result.Data = new { Success = true, Message = "Your order has been placed successfully" };
 
             }
             var callbackUrl = Url.Action("MyOrders", "Home", null, protocol: Request.Url.Scheme);

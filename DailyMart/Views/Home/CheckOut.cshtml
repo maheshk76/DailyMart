@@ -99,7 +99,7 @@
                     
                     <form class="needs-validation" id="orderModel">
                         
-                        <input type="hidden" value="@Total" name="TotalAmount" />
+                        <input type="hidden" value="@Total" id="TotalAmount" name="TotalAmount" />
                           @if (addr != null)
                           {
                               <a href="@Url.Action("Edit", "Manage")" class=" bg-accent" style="font-weight:300!important;">Edit Address</a>
@@ -181,19 +181,40 @@
         $(".address-bar").fadeIn();
     });
     $("#placeOrderBtn").click(function () {
+        
         if (validAddress()) {
+            
+            var OData = {
+                Amount: $("#TotalAmount").val(),
+                PaymentType: $(':radio:checked').val(),
+                NewAddress: $("#newaddress").val(),
+                AddressLine: $("#AddressLine").val(),
+                City: $("#City").val(),
+                State: $("#State").val(),
+                ZipCode: $("#Zipcode").val()
+            };
+            console.log(OData);
+            alert(JSON.stringify(OData));
             $.ajax({
-                url: '@Url.Action("PlaceOrder", "Home")',
-                data: { orderdata: $("#orderModel").serialize() }
+                url: "/Home/PlaceOrder",
+                data: JSON.stringify(OData),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
             })
                 .done(function (response) {
+                    if (response.Success) {
 
-                    window.location.replace('@Url.Action("MyOrders", "Home",new { userId=User.Identity.GetUserId()})');
+                        swal("Done", response.Message, "success");
+                    }
+                    setTimeout(function () {
+                        window.location.href = "/Home/MyOrders";
+                    }, 2000);
 
                 })
                 .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                     swal("Error", "Please Try Again!", "warning");
-
+                    alert(XMLHttpRequest.responseText);
                 });
         }
         else {

@@ -6,7 +6,7 @@
                                     @if (! (Model.MyOrders.ToList().Count() > 0))
                                     {
                                     <div class="alert alert-danger text-center h5" role="alert">
-                                        Can't Find Any Pending Orders!
+                                        Can't Find any Orders!
                                     </div>
                                     }
                                     @foreach (var item in Model.MyOrders.ToList())
@@ -79,10 +79,10 @@
     $(".cancel-order").on("click", function () {
             swal({
                 icon: 'info',
-                text: 'Do you want to cancel this order?',
+                text: 'Are you sure you want to cancel this Order?',
 
                 buttons: {
-                    OK: "Yes",
+                    OK: "Yes,Cancel this Order",
                     No: "Close"
                 },
             }).then((value) => {

@@ -58,8 +58,8 @@
                                 @Html.DisplayFor(modelItem => item.Subject)
                             </td>
                             <td class="text-center">
-                                <a href="@Url.Action("Details","Message",new { id = item.ID })" class="btn btn-outline-primary "><i class="fa fa-book-open"></i></a> | 
-                                <button class="btn btn-outline-danger deleteMsgBtn" data-id="@item.ID"><i class="fa fa-trash-alt"></i></button>
+                                <a href="@Url.Action("Details","Message",new { id = item.ID })" class="btn btn-outline-primary " title="Read"><i class="fa fa-book-open"></i></a> | 
+                                <button class="btn btn-outline-danger deleteMsgBtn" data-id="@item.ID"><i class="fa fa-trash-alt" title="Remove"></i></button>
                             </td>
                         </tr>
                         }

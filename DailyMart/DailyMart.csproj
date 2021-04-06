@@ -270,7 +270,6 @@
     <Compile Include="ViewModels\WishlistViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AccessDenied.html" />
     <Content Include="Content\Admin\css\sb-admin.css" />
     <Content Include="Content\Admin\css\sb-admin.min.css" />
     <Content Include="Content\Admin\js\demo\chart-area-demo.js" />
@@ -2277,10 +2276,11 @@
     <Content Include="Views\Message\Send.cshtml" />
     <Content Include="Views\Message\Details.cshtml" />
     <Content Include="Views\Message\Index.cshtml" />
+    <Content Include="Views\Order\Index.cshtml" />
+    <Content Include="Views\Order\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Order\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -1,0 +1,93 @@
+﻿@model IEnumerable<DailyMart.Models.Order>
+
+@{
+    ViewBag.Title = "Orders";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+    <div class="btn-toolbar ml-4" role="toolbar" aria-label="Toolbar with button groups">
+        <div class="btn-group mr-2" role="group" aria-label="First group">
+            @*<button type="button" class="btn btn-secondary"></button>*@
+            @Html.ActionLink("Pending", "Index", new { status = "Pending" }, new { @class = "btn btn-primary btn-block mb-1" })
+
+
+        </div>
+        <div class="btn-group mr-2" role="group" aria-label="Second group">
+            @*<button type="button" class="btn btn-secondary">5</button>*@
+            @Html.ActionLink("In Progress", "Index", new { status = "InProgress" }, new { @class = "btn btn-primary btn-block mb-1" })
+
+        </div>
+        <div class="btn-group mr-2" role="group" aria-label="Third group">
+            @*<button type="button" class="btn btn-secondary">8</button>*@
+            @Html.ActionLink("Delivered", "Index", new { status = "Delivered" }, new { @class = "btn btn-primary btn-block mb-1" })
+
+        </div>
+        <div class="btn-group mr-2" role="group" aria-label="Third group">
+            @*<button type="button" class="btn btn-secondary">8</button>*@
+            @Html.ActionLink("Cancelled", "Index", new { status = "Cancelled" }, new { @class = "btn btn-primary btn-block mb-1" })
+
+        </div>
+        <div class="btn-group" role="group" aria-label="Fourth group">
+            @*<button type="button" class="btn btn-secondary">8</button>*@
+            @Html.ActionLink("Reset", "Index", null, new { @class = "btn btn-primary btn-block mb-1" })
+
+        </div>
+    </div>
+    <div class="card">
+      
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UserId)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.OrderDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Amount)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.OrderStatus)
+                            </th>
+                            <th> Actions </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @if (Model.Count() == 0)
+                        {
+                            <tr> <td> No Product Found! </td> </tr>
+                        }
+                        else
+                        {
+                            foreach (var item in Model)
+                            {
+
+                            <tr>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UserId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OrderDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Amount)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OrderStatus)
+                                </td>
+                                <td class="text-center">
+                                    <a href="@Url.Action("Details","Order",new { id = item.Id })" class="btn btn-outline-primary  mb-1" title="More"><i class="fa fa-info-circle"></i></a>
+                                </td>
+                            </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+

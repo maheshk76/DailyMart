@@ -50,10 +50,7 @@
                                 }
                                 <li><a href="@Url.Action("Contact", "Home")">Contact</a></li>
                                 <li><a href="@Url.Action("About", "Home")">About</a></li>
-                               @if (User.IsInRole("Admin"))
-                               {
-                                   <li><a href="@Url.Action("DashBoard", "Admin")">Admin</a></li>
-                               }
+                               
                             </ul>
 
                         </nav><!-- /.mainnav -->

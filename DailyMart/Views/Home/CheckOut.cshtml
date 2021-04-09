@@ -161,7 +161,7 @@
                         </div>
                         <hr class="mb-4">
                         <div class="mt-5">
-                        <button class="themesflat-button bg-accent" id="placeOrderBtn">Place Order</button>
+                        <button class="themesflat-button bg-accent" id="placeOrderBtn" type="button">Place Order</button>
                             </div>
                     </form>
                 </div>
@@ -203,13 +203,15 @@
                 dataType: "json",
             })
                 .done(function (response) {
+                    alert(JSON.stringify(response));
                     if (response.Success) {
-
-                        swal("Done", response.Message, "success");
+                        alert("csdf");
+                        setTimeout(function () { window.location.href = "/Home/OrderPlaced?orderId=" + response.OrderId; }, 2000);
+                        //swal("Done", response.Message, "success");
                     }
-                    setTimeout(function () {
+                   @* setTimeout(function () {
                         window.location.href = "/Home/MyOrders";
-                    }, 2000);
+                    }, 2000);*@
 
                 })
                 .fail(function (XMLHttpRequest, textStatus, errorThrown) {

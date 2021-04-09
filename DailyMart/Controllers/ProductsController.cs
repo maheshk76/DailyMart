@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using DailyMart.Models;
 using DailyMart.Services;
 using DailyMart.ViewModels;
+using NLog;
 
 namespace DailyMart.Controllers
 {
@@ -17,6 +18,7 @@ namespace DailyMart.Controllers
     public class ProductsController : Controller
     {
         private readonly ApplicationDbContext _context;
+      //  private static Logger _logger = LogManager.GetCurrentClassLogger();
         public ProductsController()
         {
             _context = new ApplicationDbContext();
@@ -73,28 +75,29 @@ namespace DailyMart.Controllers
 
         public ActionResult Create(NewProductViewModel model)
         {
-            if (ModelState.IsValid)
-            {
-                var newProduct = new Product
+                if (ModelState.IsValid)
                 {
-                    Name = model.Name,
-                    Description = model.Description,
-                    OriginalPrice = model.OriginalPrice,
-                    SellingPrice = model.SellingPrice,
-                    Stock = model.stock,
-                    Tags = model.Tags,
-                    Category = _context.Category.Find(model.CategoryID),
-                    CreatedOn=DateTime.Now,
-                    UpdatedOn=DateTime.Now,
+                    var newProduct = new Product
+                    {
+                        Name = model.Name,
+                        Description = model.Description,
+                        OriginalPrice = model.OriginalPrice,
+                        SellingPrice = model.SellingPrice,
+                        Stock = model.stock,
+                        Tags = model.Tags,
+                        Category = _context.Category.Find(model.CategoryID),
+                        CreatedOn = DateTime.Now,
+                        UpdatedOn = DateTime.Now,
 
-                    ImageURL = model.ImageURL
-                };
-                _context.Products.Add(newProduct);
-                _context.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                        ImageURL = model.ImageURL
+                    };
+                    _context.Products.Add(newProduct);
+                    _context.SaveChanges();
+                    return RedirectToAction("Index");
+                }
 
-            return View(model);
+                return View(model);
+            
         }
 
         // GET: Products/Edit/5

@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "OrderPlaced";
+     Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container w-50">
+    <div class="content-inner active" style="display: block;">
+        <div class="inner max-width-83 padding-top-33">
+
+            <br />
+            <div class="alert alert-success" role="alert">
+                <h3 class="alert-heading">Info</h3>
+                <br />
+                <h2>Your Order has been Placed.</h2>
+                <h3>Order Id : #@ViewBag.OrderId</h3>
+                <hr />
+                <p>Manage your orders <strong><a href="@Url.Action("MyOrders","Home")" class="btn-sm " type="button">My Orders</a></strong></p>
+            </div>
+<div class="margin-top-49 mt-5 p-5">
+
+</div>
+            <br />
+            <hr />
+            </div>
+        </div>
+    </div>
+
+
+

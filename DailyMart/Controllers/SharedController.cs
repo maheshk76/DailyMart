@@ -251,7 +251,10 @@ namespace DailyMart.Controllers
                 return result;
             }
         }
-
+        public ActionResult Error()
+        {
+            return View();
+        }
     }
 
 

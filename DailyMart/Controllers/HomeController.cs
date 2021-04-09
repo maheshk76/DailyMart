@@ -231,6 +231,11 @@ namespace DailyMart.Controllers
             ViewBag.InWish = InWish;
             return View(product);
         }
+        public ActionResult OrderPlaced(int orderId)
+        {
+            ViewBag.OrderId = orderId;
+            return View();
+        }
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -299,6 +304,7 @@ namespace DailyMart.Controllers
                 };
                 _context.Address.Add(address);
                 _context.SaveChanges();
+               
                 
             }
             if (Session["cart"] != null)
@@ -327,7 +333,7 @@ namespace DailyMart.Controllers
                 _context.Orders.Add(newOrder);
                 _context.SaveChanges();
                 Session["cart"] = null;
-                result.Data = new { Success = true, Message = "Your order has been placed successfully" };
+                result.Data = new { Success = true, Message = "Your order has been placed successfully",OrderId=newOrder.Id };
 
             }
             var callbackUrl = Url.Action("MyOrders", "Home", null, protocol: Request.Url.Scheme);

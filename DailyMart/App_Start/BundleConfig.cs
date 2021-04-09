@@ -23,8 +23,8 @@ namespace DailyMart
                       "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/bootstrap.css"
+                      ));
 
             //Extra styles
             bundles.Add(new StyleBundle("~/Content/stylesheets/css").Include(
@@ -34,7 +34,8 @@ namespace DailyMart
                 "~/Content/stylesheets/colors/color3.css",
                 "~/Content/stylesheets/animate.css",
                 "~/Content/toastr.css",
-                "~/Content/sweetalert/sweet-alert.css"
+                "~/Content/sweetalert/sweet-alert.css",
+                "~/Content/site.css"
                 ));
 
 

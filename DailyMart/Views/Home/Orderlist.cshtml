@@ -12,60 +12,130 @@
                                     @foreach (var item in Model.MyOrders.ToList())
                                     {
 
-                                        <div class="row">
-                                            <div class="col-md-4 order-md-2 mb-4">
-                                                <h4 class="d-flex justify-content-between align-items-center mb-3">
-                                                    <span class="text-muted">Products</span>
-                                                    <span class="badge badge-secondary badge-pill">@item.OrderItems.Count()</span>
-                                                </h4>
-                                                <ul class="list-group mb-3">
-                                                    @foreach (OrderItem item1 in (List<OrderItem>)@item.OrderItems)
-                                                    {
-                                                        <li class="list-group-item d-flex justify-content-between lh-condensed">
-
-                                                            <div>
-                                                                <img src="@item1.Product.ImageURL" class="rounded" alt="..." style="width:50px;height:50px;">
-
-                                                                <h6 class="my-0">@item1.Product.Name</h6>
-                                                                <small class="text-muted">@item1.Product.SellingPrice Rs.</small>
-                                                            </div>
-                                                            <span class="text-muted">Qty-&nbsp;@item1.Quantity</span>
-                                                            
-                                                        </li>
-                                                    }
-                                                    
-                                                    <li class="list-group-item d-flex justify-content-between">
-                                                        <span>Total (INR)</span>
-                                                        <strong>@item.Amount Rs.</strong>
-                                                    </li>
-                                                </ul>
-
-                                                <form class="card p-2">
-                                                    <div class="form-group">
-                                                        <label for="status">Status</label>
-                                                        <input type="text" class="form-control" readonly value="@item.OrderStatus">
-
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            @if (item.OrderStatus == "Pending")
+                                <div class="row">
+                                    <div class="col-md-4 order-md-2 mb-4">
+                                        <h4 class=" d-flex justify-content-between align-items-center mb-3">
+                                            <span class="text-muted">Products <span>(@item.OrderItems.Count())</span></span>
+                                            <span class=" text-muted">OrderId : #@item.Id</span>
+                                        </h4>
+                                        <ul class="list-group mb-3">
+                                            <li class="list-group-item d-flex justify-content-between">
+                                                <span>OrderDate</span>
+                                                <strong>@item.OrderDate.ToString("dd-MM-yyyy")</strong>
+                                            </li>
+                                            @foreach (OrderItem item1 in (List<OrderItem>)@item.OrderItems)
                                             {
-                                            <div class="col-md-7 order-md-2 mb-5">
-                                                <br />
-                                                <div>
-                                                    <h4 class="d-flex justify-content-between align-items-center mb-3">
-                                                    <span class="text-muted">Payment Mode :  <span>@item.PaymentType</span></span>
-                                                   </h4>
-                                                </div>
-                                                <button data-id="@item.Id
-                                                        "class="btn-sm cancel-order" type="button">Cancel Order</button>
-                                                <hr />
-                                                <p class="text-muted">This order will be deliverd at your default address</p>
-                                            </div>
+                                                <li class="list-group-item d-flex justify-content-between lh-condensed">
+
+                                                    <div>
+                                                        <img src="@item1.Product.ImageURL" class="rounded" alt="..." style="width:50px;height:50px;">
+
+                                                        <h6 class="my-0">@item1.Product.Name</h6>
+                                                        <small class="text-muted">@item1.Product.SellingPrice Rs.</small>
+                                                    </div>
+                                                    <span class="text-muted">Qty-&nbsp;@item1.Quantity</span>
+
+                                                </li>
                                             }
-                                        </div>
+
+                                            <li class="list-group-item d-flex justify-content-between">
+                                                <span>Total (INR)</span>
+                                                <strong>@item.Amount Rs.</strong>
+                                            </li>
+                                            
+                                        </ul>
+
+                                        <form class="card p-2">
+                                            <div class="form-group">
+                                                <label for="status">Status</label>
+                                                <input type="text" class="form-control" readonly value="@item.OrderStatus">
+
+                                            </div>
+                                        </form>
                                         
-                                        <hr />
+                                    </div>
+                                    <div class="col-md-8">
+                                                @if (item.OrderStatus == "Pending")
+                                                {
+                                            <h4 class="d-flex justify-content-between align-items-center ml-3 mb-3">
+                                                    <span class="text-muted">Tracking Details</span>
+                                             </h4> 
+                                            <div class="col-md-11  tracker ml-3">
+                                                
+                                                <ul class="bs4-order-tracking">
+                                                    <li class="step active"><div><i class="fa fa-user"></i></div> Order Placed </li>
+                                                    <li class="step"> <div><i class="fa fa-truck"></i></div> In transit</li>
+                                                    <li class="step"><div><i class="fa fa-circle-o-notch"></i></div> Out for delivery</li>
+                                                    <li class="step "> <div><i class="fa fa-check-circle"></i></div> Delivered </li>
+                                                </ul>
+                                            </div>
+                                            <hr />
+                                                }
+                                                   @if (item.OrderStatus == "InProgress")
+                                                {
+                                            <h4 class="d-flex justify-content-between align-items-center ml-3 mb-3">
+                                                    <span class="text-muted">Tracking Details</span>
+                                             </h4> 
+                                            <div class="col-md-11  tracker ml-3">
+                                                
+                                                <ul class="bs4-order-tracking">
+                                                    <li class="step active"><div><i class="fa fa-user"></i></div> Order Placed </li>
+                                                    <li class="step active"> <div><i class="fa fa-truck"></i></div> In transit</li>
+                                                    <li class="step"><div><i class="fa fa-circle-o-notch"></i></div> Out for delivery</li>
+                                                    <li class="step "> <div><i class="fa fa-check-circle"></i></div> Delivered </li>
+                                                </ul>
+                                            </div>
+                                            <hr />
+                                                }
+                                                      @if (item.OrderStatus == "Delivered")
+                                                {
+                                            <h4 class="d-flex justify-content-between align-items-center ml-3 mb-3">
+                                                    <span class="text-muted">Tracking Details</span>
+                                             </h4> 
+                                            <div class="col-md-11  tracker ml-3">
+                                                
+                                                <ul class="bs4-order-tracking">
+                                                    <li class="step active"><div><i class="fa fa-user"></i></div> Order Placed </li>
+                                                    <li class="step active"> <div><i class="fa fa-truck"></i></div> In transit</li>
+                                                    <li class="step active"><div><i class="fa fa-circle-o-notch"></i></div> Out for delivery</li>
+                                                    <li class="step active"> <div><i class="fa fa-check-circle"></i></div> Delivered </li>
+                                                    
+                                                </ul>
+                                            </div>
+                                            <hr />
+                                                }
+                                                              @if (item.OrderStatus == "Cancelled")
+                                                {
+                                            <h4 class="d-flex justify-content-between align-items-center ml-3 mb-3">
+                                                    <span class="text-muted">Tracking Details</span>
+                                             </h4> 
+                                            <div class="col-md-11  tracker ml-3">
+                                                
+                                                <ul class="bs4-order-tracking">
+                                                    <li class="step active"><div><i class="fa fa-user"></i></div> Order Placed </li>
+                                                    <li class="step active"> <div><i class="fa fa-check-circle-o"></i></div> Cancelled </li>
+                                                    
+                                                </ul>
+                                            </div>
+                                            <hr />
+                                                }
+                                            <div class="col-md-12"><br />
+                                                <div>
+                                                    <h4 class="d-flex justify-content-between align-items-center mb-2">
+                                                        <span class="text-muted">Payment Mode :  <span>@item.PaymentType</span></span>
+                                                    </h4>
+                                                </div>
+                                                <hr />
+                                                @if (item.OrderStatus == "Pending")
+                                                {
+                                                <button data-id="@item.Id" class="btn-sm cancel-order" type="button">Cancel Order</button>
+                                                }
+                                            </div>
+                                         </div>
+                                </div>
+                                        
+                                <div class="mb-4 mt-4 o-separator"></div>
+                                       
                                     }
 
                                 </div>
@@ -75,6 +145,9 @@
 
 </div>
 </div>
+    <style>
+        
+    </style>
 <script>
     $(".cancel-order").on("click", function () {
             swal({
@@ -99,6 +172,9 @@
                                 console.log(response);
                                 if (response.Success) {
                                     swal("Done", response.Message, "success");
+                                }
+                                else {
+                                     swal("Done", response.Message, "info");
                                 }
                                 setTimeout(function () {
                                     window.location.reload();

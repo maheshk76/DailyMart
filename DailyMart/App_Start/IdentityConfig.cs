@@ -27,7 +27,7 @@ namespace DailyMart
             mess.To.Add(message.Destination);
             mess.Subject = message.Subject;
             mess.Body = message.Body;
-            mess.From = new MailAddress(ExternalLoginKeys.EmailKeys.Email,ExternalLoginKeys.EmailKeys.Name);
+            mess.From = new MailAddress(address: ExternalLoginKeys.EmailKeys.Email, ExternalLoginKeys.EmailKeys.Name);
             mess.BodyEncoding = System.Text.Encoding.UTF8;
             mess.IsBodyHtml = true;
             SmtpClient client = new SmtpClient

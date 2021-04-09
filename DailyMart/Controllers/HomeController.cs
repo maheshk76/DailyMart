@@ -362,11 +362,22 @@ namespace DailyMart.Controllers
             try
             {
                 string userId = User.Identity.GetUserId();
+                
                 JsonResult result = new JsonResult()
                 {
                     JsonRequestBehavior = JsonRequestBehavior.AllowGet
                 };
                 var orderInDb = _context.Orders.FirstOrDefault(o => o.Id == orderId && o.UserId == userId);
+                if (orderInDb.OrderStatus == "Cancelled")
+                {
+                    result.Data = new { Suceess = false, Message = "This Order has alreay been cancelled" };
+                    return result;
+                }
+                else if (orderInDb.OrderStatus == "Delivered" || orderInDb.OrderStatus == "InProgress")
+                {
+                    result.Data = new { Suceess = false, Message = "Can't cancel this order" };
+                    return result;
+                }
                 orderInDb.OrderStatus = "Cancelled";
                 _context.SaveChanges();
                 result.Data = new { Success = true, Message = "Your order is cancelled with OrderId :" + orderId };

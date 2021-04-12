@@ -138,6 +138,7 @@ namespace DailyMart.Controllers
             var userId = User.Identity.GetUserId();
             var store = new UserStore<ApplicationUser>(new ApplicationDbContext());
             var manager = new UserManager<ApplicationUser>(store);
+            
             ViewBag.Username = manager.FindById(userId).Name;
             var model = new IndexViewModel
             {

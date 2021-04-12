@@ -12,7 +12,7 @@
                     <tr>
                         <th>@Html.DisplayNameFor(model => model.Name)</th>
                         
-                       <th>@Html.DisplayNameFor(model => model.Description)</th>
+                       <th style="width:790px;">@Html.DisplayNameFor(model => model.Description)</th>
                         <th>@Html.DisplayNameFor(model => model.CreatedOn)</th>
                         <th>@Html.DisplayNameFor(model => model.UpdateOn)</th>
                         <th>Products</th>
@@ -38,7 +38,7 @@
                                 <td>@item.Products.Count()</td>
                                 <td>
                                     <a href="@Url.Action("CategoryForm","Category",new { id = item.Id })" class="btn btn-outline-primary "><i class="fa fa-pencil-alt"></i></a> | 
-                                    <button data-id="@item.Id" class="btn btn-outline-danger " type="button" id="del-category"><i class="fa fa-trash-alt"></i></button>
+                                    <button data-id="@item.Id" class="btn btn-outline-danger del-category" type="button" id="del-category"><i class="fa fa-trash-alt"></i></button>
                                 </td>
                             </tr>
                         }
@@ -50,7 +50,7 @@
     <div class="card-footer small text-muted">Last update : <b>@ViewBag.LastUpdate</b></div>
 </div>
 <script>
-    $("#del-category").on("click", function () {
+    $(".del-category").on("click", function () {
          swal({
                         icon: 'warning',
              text: 'Are you sure want to delete this category?',

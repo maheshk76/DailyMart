@@ -16,12 +16,13 @@ using Microsoft.AspNet.Identity.EntityFramework;
 namespace DailyMart.Controllers
 {
 
-    public class IsAuthenticatedAttribute : ActionFilterAttribute
+    /*public class IsAuthenticatedAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             if (context.HttpContext.User.Identity.IsAuthenticated)
             {
+                
                     context.Result = new RedirectResult(url: "/Account/LoggedIn");
                 
                 base.OnActionExecuting(context);
@@ -29,7 +30,7 @@ namespace DailyMart.Controllers
 
                
         }
-    }
+    }*/
     [Authorize]
     public class AccountController : Controller
     {
@@ -77,7 +78,6 @@ namespace DailyMart.Controllers
         //
         // GET: /Account/Login
         [AllowAnonymous]
-        [IsAuthenticatedAttribute]
 
         public ActionResult Login(string returnUrl)
         {
@@ -100,10 +100,14 @@ namespace DailyMart.Controllers
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            
             switch (result)
             {
                 case SignInStatus.Success:
-                    
+                    var user = await UserManager.FindByEmailAsync(model.Email);
+                    if(UserManager.IsInRole(user.Id, "Admin")){
+                        return RedirectToAction("DashBoard", "Admin");
+                    }
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -163,7 +167,6 @@ namespace DailyMart.Controllers
         
         // GET: /Account/Register
         [AllowAnonymous]
-        [IsAuthenticatedAttribute]
         public ActionResult Register()
         {
             return View();
@@ -231,7 +234,6 @@ namespace DailyMart.Controllers
         //
         // GET: /Account/ForgotPassword
         [AllowAnonymous]
-        [IsAuthenticatedAttribute]
         public ActionResult ForgotPassword()
         {
             return View();

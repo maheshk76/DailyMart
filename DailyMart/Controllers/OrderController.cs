@@ -62,8 +62,14 @@ namespace DailyMart.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.AvailableStatuses = new List<string>() { "Pending", "InProgress", "Delivered" };
-
+            if (order.OrderStatus == "Cancelled")
+            {
+                ViewBag.AvailableStatuses = new List<string>() { order.OrderStatus };
+            }
+            else
+            {
+                ViewBag.AvailableStatuses = new List<string>() { "Pending", "InProgress", "Delivered" };
+            }
             return View(order);
         }
         public JsonResult ChangeStatus(string status, int ID)

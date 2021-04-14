@@ -15,7 +15,7 @@
                         Item LastProduct= (Item)Session["LastRemoved"];
                         <div role="alert" class="alert alert-primary alert-dismissible fade show" style="border:1px dotted black;opacity:1">
                                 <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                <button  class="btn btn-primary btn-sm pull-right add-again" data-id="@LastProduct.Product.Id" type="button">Add again</button>
+                                <button  class="btn btn-sm pull-right add-again" data-id="@LastProduct.Product.Id" type="button">Add again</button>
                                 <p>You just removed <strong>@LastProduct.Product.Name</strong> from your cart </p>
                         </div>
                     }
@@ -154,8 +154,9 @@
         	console.log(response);
             if (response.Success) {
               $("#cartProductsCount").html(response.CartLength);
-        	}
-            window.location.href = '@Url.Action("Cart", "Home")';
+            }
+            setTimeout(function () { window.location.reload();}, 2000);
+            
 
 
         })

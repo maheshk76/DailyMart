@@ -1216,6 +1216,8 @@
 /* Style3 */
 .product.style3 .product-item {
 	margin-bottom: 48.3px;
+	height:300px;
+	padding:0px 10px 0px 10px;
 }
 
 .product.style3 .product-item .product-title {

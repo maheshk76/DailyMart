@@ -1,11 +1,13 @@
 ﻿using DailyMart;
 using DailyMart.Models;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -72,7 +74,7 @@ namespace DailyMart.Controllers
             }
             return View(order);
         }
-        public JsonResult ChangeStatus(string status, int ID)
+        public async Task<JsonResult> ChangeStatus(string status, int ID)
         {
             JsonResult result = new JsonResult
             {
@@ -87,7 +89,10 @@ namespace DailyMart.Controllers
 
 
             result.Data = new { Success = db.SaveChanges() > 0 };
-
+           
+            var callbackUrl = Url.Action("MyOrders", "Home", null, protocol: Request.Url.Scheme);
+            string body = "<html>Your order is " + status + "  <br/>Manage your orders here <a href=\"" + callbackUrl + "\">MyOrders</a></html>";
+            await UserManager.SendEmailAsync(order.UserId, "Order Placed", body);
             return result;
         }
     }

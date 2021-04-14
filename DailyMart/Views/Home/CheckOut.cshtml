@@ -194,7 +194,6 @@
                 ZipCode: $("#Zipcode").val()
             };
             console.log(OData);
-            alert(JSON.stringify(OData));
             $.ajax({
                 url: "/Home/PlaceOrder",
                 data: JSON.stringify(OData),
@@ -203,9 +202,7 @@
                 dataType: "json",
             })
                 .done(function (response) {
-                    alert(JSON.stringify(response));
                     if (response.Success) {
-                        alert("csdf");
                         setTimeout(function () { window.location.href = "/Home/OrderPlaced?orderId=" + response.OrderId; }, 2000);
                         //swal("Done", response.Message, "success");
                     }

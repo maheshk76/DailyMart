@@ -161,6 +161,7 @@ namespace DailyMart.Controllers
                 return RedirectToAction("Index");
 
             }
+            model.AvailableCategories = _context.Category.ToList();
 
 
             return View(model);

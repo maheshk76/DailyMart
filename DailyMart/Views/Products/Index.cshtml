@@ -11,7 +11,7 @@
     @Html.ActionLink("Add New", "Create",null, new { @class = "btn btn-primary ml-4"})
 </label>
  <label class="col-md-2">
-    @Html.DropDownList("Categories",new SelectList( ViewBag.AllCategories as List<SelectListItem>, "Value", "Text"),"--Select Category--", new { @onchange="getProducts(this.value)",@class = "form-control" })
+    @Html.DropDownList("Categories",new SelectList( ViewBag.AllCategories as List<SelectListItem>, "Value", "Text"),"--Search Category--", new { @onchange="getProducts(this.value)",@class = "form-control" })
    </label>
     <label class="col-md-1">
         @Html.ActionLink("Reset", "Index", null, new { @class = "btn btn-primary btn-block mb-1" })
@@ -23,13 +23,14 @@
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ImageURL)
+                        </th>
                        <th>
                             @Html.DisplayNameFor(model => model.Stock)
                         </th>
                         
-                        <th>
-                            @Html.DisplayNameFor(model => model.ImageURL)
-                        </th>
+                        
                         <th>
                             @Html.DisplayNameFor(model => model.Name)
                         </th>
@@ -77,6 +78,10 @@
                         {
 
                 <tr>
+                     <td>
+                        @*@Html.DisplayFor(modelItem => item.ImageURL)*@
+                        <img width=100 height=100 src="@item.ImageURL" />
+                    </td>
                    @if (item.Stock <20)
                     {
                     <td style="color:red">
@@ -89,10 +94,7 @@
                         @Html.DisplayFor(modelItem => item.Stock)
                     </td>
                     }
-                    <td>
-                        @*@Html.DisplayFor(modelItem => item.ImageURL)*@
-                        <img width=100 height=100 src="@item.ImageURL" />
-                    </td>
+                   
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>

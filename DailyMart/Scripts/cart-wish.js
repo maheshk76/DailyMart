@@ -2,12 +2,13 @@
     
 $(".addTocartBtn").on("click", function () {
     var productId = parseInt($(this).attr("data-id"));
+    var quantity = parseInt($(this).attr("data-quantity"));
     $.ajax({
-        url: 'Shared/AddToCart/',
+        url: '/Shared/AddToCart/',
 
         data: {
             ProductId: productId,
-            quantity: 1
+            quantity: quantity
         }
     })
         .done(function (response) {

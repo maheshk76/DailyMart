@@ -9,7 +9,7 @@
                 <div class="sidebar slidebar-shop">
                     <div class="widget widget_tag filterBtn">
                         <h5 class="widget-title">
-                            <a href="@Url.Action("Index", "Home",new { reset = 1 })" class="themesflat-button bg-accent" style="font-weight:500!important;">Reset Filters</a>
+                            <button  class="resetbtn" style="font-weight:500!important;">Reset Filters</button>
 
                         </h5>
 
@@ -84,7 +84,6 @@
 @section Scripts{
     <script>
         $(document).ready(function () {
-        $(".filterBtn").hide();
     $("#amount").val("Rs" +@Model.MinimumPrice + ".00" + " - " + "Rs" + @ViewBag.MaximumPrice + ".00");
 	var callTimeout;
 	var priceSlider = $("#slide-range").slider({
@@ -102,22 +101,34 @@
 			callTimeout = setTimeout(PriceRangeChange, 800);
 		}
 	});
-        $(".filterBtn").click(function () {
-            setTimeout(function () { $(".filterBtn").hide(); }, 2000);
-
-        });
 	$(".dataLink").click(function () {
 		var url = $(this).attr("data-href");
-        ShowHideBtn();
 		if (url != "" || url != undefined) {
 			GetData(url);
 		}
 	});
 
-
+            $(".resetbtn").click(function () {
+                $.ajax({
+			    url:'@Url.Action("Index", "Home")',
+                data: {
+                    reset:1
+                }
+		    })
+           .done(function (response) {
+               console.log("Resetting Filters");
+               window.location.reload();
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        	    console.log("Failed to Reset");
+            })
+		    .always(function(){
+                console.log("Reset");
+                hideLoader();
+		    });
+            });
         $("#searchTxt").change(function () {
             showLoader();
-            ShowHideBtn();
             var searchValue = $("#searchTxt").val();
             $.ajax({
 			    url:'@Url.Action("Products", "Home")',
@@ -135,7 +146,6 @@
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
         	    console.log("fail search");
-        	    alert("FAIL");
             })
 		    .always(function(){
                 console.log("always");
@@ -176,7 +186,6 @@
         }
 
         function PriceRangeChange() {
-            ShowHideBtn();
             showLoader();
             console.log("show");
 		$.ajax({
@@ -199,10 +208,6 @@
 			console.log("always");
             hideLoader();
 		});
-        }
-        function ShowHideBtn() {
-            $(".filterBtn").show();
-
         }
         
         });

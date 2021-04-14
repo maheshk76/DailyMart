@@ -138,7 +138,7 @@ namespace DailyMart.Controllers
 
             return View(model);
         }
-        public ActionResult Products(string search, int? categoryID, int? page, int? minimumPrice, int? maximumPrice, int? sortBy, List<Product> products = null)
+        public ActionResult Products(string search, int? categoryID, int? page, int? minimumPrice, int? maximumPrice, int? sortBy,bool Related=false, List<Product> products = null)
         {
 
             ViewBag.Search = search;
@@ -187,13 +187,15 @@ namespace DailyMart.Controllers
                     }
                 }
             }
-            TempData["products"] = products;
             TempData["search"] = search;
             TempData["SortBy"] = sortBy;
             TempData["MinimumPrice"] = minimumPrice;
-
-            TempData["categoryID"] = categoryID;
-            IPagedList<Product> pr = products.ToPagedList(page ?? 1, 12);
+            if (!Related)
+            {
+                TempData["categoryID"] = categoryID;
+                TempData["products"] = products;
+            }
+                IPagedList<Product> pr = products.ToPagedList(page ?? 1, 12);
             
                 if (Request.IsAuthenticated)
                 {

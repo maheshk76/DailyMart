@@ -234,8 +234,8 @@
                     newVal = 0;
                 }
             }
-
-            $(this).parent().find('.quantity-number').val(newVal);
+            $(this).parent().find('.quantity-number').attr("value", newVal);
+            $(this).parent().parent().find(".addTocartBtn").attr("data-quantity", newVal);
         });
     };
 

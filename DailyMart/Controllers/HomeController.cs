@@ -174,7 +174,7 @@ namespace DailyMart.Controllers
                     switch (sortBy.Value)
                     {
                         case 2:
-                            products = products.OrderByDescending(x => x.Id).ToList();
+                            products = products.OrderByDescending(x => x.Stock).ToList();
                             break;
                         case 3:
                             products = products.OrderBy(x => x.SellingPrice).ToList();
@@ -183,6 +183,7 @@ namespace DailyMart.Controllers
                             products = products.OrderByDescending(x => x.SellingPrice).ToList();
                             break;
                         default:
+                            products = products.OrderByDescending(x => x.UpdatedOn).ToList();
                             break;
                     }
                 }

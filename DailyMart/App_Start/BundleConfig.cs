@@ -56,15 +56,17 @@ namespace DailyMart
                     "~/Content/javascript/gmap3.min.js",
                     "~/Content/javascript/jquery.cookie.js",
                     "~/Content/javascript/main.js",
-                    "~/Content/javascript/rev-slider.js",
                     "~/Content/javascript/jquery-ui.js",
                     "~/Content/javascript/jquery-countTo.js",
                     "~/Content/javascript/jquery.countdown.js",
+                    
                     "~/Scripts/toastr.js"
 
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/rev-slider/js").Include(
+
+                "~/Content/javascript/rev-slider.js",
                 "~/Content/rev-slider/js/jquery.themepunch.tools.min.js",
     "~/Content/rev-slider/js/jquery.themepunch.revolution.min.js",
     "~/Content/javascript/rev-slider.js",

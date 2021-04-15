@@ -2063,16 +2063,9 @@
     <Content Include="Content\Products\images\image %288%29.jpg" />
     <Content Include="Content\Products\images\image %288%29.png" />
     <Content Include="Content\Products\images\image %289%29.jpg" />
-    <Content Include="Content\Products\images\system\logo%402x.png" />
-    <Content Include="Content\Products\images\system\logo.png" />
-    <Content Include="Content\Products\images\system\logo1.png" />
-    <Content Include="Content\Products\images\system\logo1x.png" />
-    <Content Include="Content\Products\images\system\logo2x.png" />
-    <Content Include="Content\Products\images\system\LogoMakr_0F49XP.png" />
-    <Content Include="Content\Products\images\system\logo3.png" />
-    <Content Include="Content\Products\images\system\placeholder-image.png" />
-    <Content Include="Content\Products\images\system\logo2.jpeg" />
-    <Content Include="Content\Products\images\system\wordpress-version.png" />
+    <Content Include="Content\systemlogo\logo3.png" />
+    <Content Include="Content\systemlogo\placeholder-image.png" />
+    <Content Include="Content\systemlogo\logo2.jpeg" />
     <Content Include="Content\rev-slider\assets\coloredbg.png" />
     <Content Include="Content\rev-slider\assets\gridtile.png" />
     <Content Include="Content\rev-slider\assets\gridtile_3x3.png" />
@@ -2368,6 +2361,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Products\images\system\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

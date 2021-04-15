@@ -10,12 +10,7 @@ $(document).ready(function() {
                '<div class="selector-box">'+
                     '<div class="clearfix"></div>'+
                     '<div class="sw-odd">'+
-                    '<div class="sw-image">'+
-                        '<a href="#">'+
-                            '<img src="images/wordpress-version.png" alt="img"/>'+
-                        '</a>'+
-                        '<button name="button" type="submit" class="flat-button sw-buy">Buy Now</button>'+
-                    '</div>'+
+                    
                     '<h3>SCHEME COLOR</h3>'+
                     '<div class="ws-colors">'+
                         '<a href="#color1" class="styleswitch" id="color1">'+

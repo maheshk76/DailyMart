@@ -2649,18 +2649,18 @@ article .more-link a:hover:after {
     margin: -30px 0 0 -30px;
 }
 
-.loader:before,
-.loader:after {
-    position: absolute;
-    display: inline-block;
-    width: 60px;
-    height: 60px;
-    content: "";
-    -webkit-animation: preloader-wave 1.6s linear infinite;
-        animation: preloader-wave 1.6s linear infinite; 
-    border-radius: 50%;
-    background: #f63440;
-}
+	.loader:before,
+	.loader:after {
+		position: absolute;
+		display: inline-block;
+		width: 60px;
+		height: 60px;
+		content: "";
+		-webkit-animation: preloader-wave 1.6s linear infinite;
+		animation: preloader-wave 1.6s linear infinite;
+		border-radius: 50%;
+		background: #f8b334;
+	}
 
 .loader:after {
     -webkit-animation-delay: -.8s;

@@ -351,6 +351,7 @@
     <Compile Include="Services\TimeService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\Item.cs" />
+    <Compile Include="ViewModels\OrderDetailViewModel.cs" />
     <Compile Include="ViewModels\OrderViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
     <Compile Include="ViewModels\WishlistViewModel.cs" />

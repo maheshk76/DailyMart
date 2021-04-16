@@ -1,139 +1,53 @@
-﻿@model DailyMart.Models.Order
+﻿@model DailyMart.ViewModels.OrderDetailViewModel
 @using DailyMart.Models
-@{ 
-    ViewBag.Title = "Order Detail"+Model.Id;
+@{
+    ViewBag.Title = "Order Detail" + Model.Order.Id;
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+<div class="container mt-5">
 
 
-    @*<div class="container-fluid">
-        <div class="text-center">
-            <h2>Products Details</h2>
-            <hr class="w-50 text-dark" />
-        </div>
-
-        <div class="row">
-            @foreach (OrderItem item in (List<OrderItem>)Model.OrderItems)
-            {
-
-
-
-
-                <div class="col-2">
-                    <img src="@item.Product.ImageURL" class="rounded img-thumbnail" alt="..." style="width:175px;height:175px;">
-                </div>
-                <div class="col-4">
-
-                    <div class="text-secondary h6"><b>Name-</b></div> <div class=" h3">@item.Product.Name</div>
-
-                    <div class="text-secondary h6"><b>Quantity-</b></div> <div class=" h3">@item.Quantity</div>
-
-
-                </div>
-
-
-
-            }
-        </div>
-        </div>
-    <div class="container">
-        <div class="text-center">
-            <h2>Customer and Address Details</h2>
-            <hr class="w-50 text-dark" />
-        </div>
-        <div class="row">
-            <div class="col-6">
-                <table class="table">
-
-                    <tbody>
-                        <tr>
-                            <th scope="row">Name</th>
-                            <td>
-                                @Html.DisplayFor(model => model.FirstName)&nbsp;@Html.DisplayFor(model => model.LastName)
-
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <th scope="row">Contact Number</th>
-                            <td>
-                                @Html.DisplayFor(model => model.PhoneNumber)
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <th scope="row">Total Price</th>
-                            <td>
-                                @Html.DisplayFor(model => model.TotalAmount)
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <th scope="row">Payment Method</th>
-                            <td>
-                                @Html.DisplayFor(model => model.PaymentType)
-                            </td>
-
-                        </tr>
-                    </tbody>
-                </table>
+    <div class="row">
+        <div class="col-md-6 order-md-2 ml-3">
+            <h4 class="mb-3 text-muted">Customer Details and Billing Address</h4>
+            <div class="mb-3">
+                <label for="firstName">Customer Name</label>
+                <input type="text" class="form-control" readonly value="@Model.User.Name">
             </div>
-            <div class="col-6">
-               
-                <table class="table mx-5">
-
-                    <tbody>
-                        <tr>
-                            <th scope="row">Address1</th>
-                            <td>
-                                @Html.DisplayFor(model => model.Address1)
-
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <th scope="row">Address2</th>
-                            <td>
-                                @Html.DisplayFor(model => model.Address2)
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <th scope="row">City</th>
-
-                            <td>
-                                @Html.DisplayFor(model => model.City)
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <th scope="row">Zip</th>
-
-                            <td>
-                                @Html.DisplayFor(model => model.ZipCode)
-                            </td>
-
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="mb-3">
+                <label for="contact">Contact Number</label>
+                <input class="form-control" readonly value="@Model.User.PhoneNumber">
             </div>
+            <div class="mb-3">
+                <label for="address">AddressLine</label>
+                <input type="text" class="form-control" readonly value="@Model.Address.AddressLine">
+            </div>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label for="city">City</label>
+                    <input type="text" class="form-control" readonly value="@Model.Address.City">
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="zip">Zip</label>
+                    <input type="text" class="form-control" readonly value="@Model.Address.ZipCode">
+
+                </div>
+            </div>
+            <hr class="mb-4">
         </div>
+        <div class="col-md-4 order-md-1 mb-3 mr-5">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-muted">Products</span>
+                <span class="badge badge-secondary badge-pill">@Model.Order.OrderItems.Count</span>
+            </h4>
+            <ul class="list-group mb-3">
 
-    </div>*@
-
-   
-    <div class="container">
-
-
-        <div class="row">
-            <div class="col-md-4 order-md-2 mb-4">
-                <h4 class="d-flex justify-content-between align-items-center mb-3">
-                    <span class="text-muted">Products</span>
-                    <span class="badge badge-secondary badge-pill">@Model.OrderItems.Count</span>
-                </h4>
-                <ul class="list-group mb-3">
-                    @foreach (OrderItem item in (List<OrderItem>)Model.OrderItems)
-                    {
+                @foreach (OrderItem item in (List<OrderItem>)Model.Order.OrderItems)
+                {
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>OrderDate</span>
+                        <strong>@item.Order.OrderDate.ToString("dd-MM-yyyy")</strong>
+                    </li>
                     <li class="list-group-item d-flex justify-content-between lh-condensed">
 
                         <div>
@@ -144,48 +58,48 @@
                         </div>
                         <span class="text-muted">Qty-&nbsp;@item.Quantity</span>
                     </li>
-                       
-                    }
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span>Total (INR)</span>
-                        <strong>@Model.Amount Rs.</strong>
-                    </li>
-                </ul>
 
-                <form class="card p-2">
-                    <div class="form-group">
-                        <label for="status">Status</label>
-                        <select class="form-control" name="Status" id="changeStatus">
-                            @foreach (var availableStatus in ViewBag.AvailableStatuses)
-                            {
-                                var isSelectedStatus = availableStatus == Model.OrderStatus;
+                }
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Total (INR)</span>
+                    <strong>@Model.Order.Amount Rs.</strong>
+                </li>
+            </ul>
 
-                                <option @(isSelectedStatus ? "selected" : string.Empty)>@availableStatus</option>
-                            }
+            <form class="card p-2">
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select class="form-control" name="Status" id="changeStatus">
+                        @foreach (var availableStatus in ViewBag.AvailableStatuses)
+                        {
+                            var isSelectedStatus = availableStatus == Model.Order.OrderStatus;
 
-                        </select>
-                    </div>
-                </form>
-            </div>
+                            <option @(isSelectedStatus ? "selected" : string.Empty)>@availableStatus</option>
+                        }
+
+                    </select>
+                </div>
+            </form>
         </div>
-
-        <div class="container">
-            <p>
-                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary" })
-            </p>
-        </div>
-
 
     </div>
-           
-           
-    <script>
+    <div class="container">
+        <p>
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary" })
+        </p>
+    </div>
+
+
+</div>
+
+
+<script>
 	$("#changeStatus").change(function () {
 		$.ajax({
 			url: '@Url.Action("ChangeStatus", "Order")',
 			data: {
 				status: $("#changeStatus").val(),
-				ID: '@Model.Id'
+				ID: '@Model.Order.Id'
 			}
 		})
         .done(function (response) {
@@ -201,4 +115,4 @@
         	alert("FAIL");
         });
 	});
-    </script>
+</script>

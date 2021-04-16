@@ -1,5 +1,6 @@
 ﻿using DailyMart;
 using DailyMart.Models;
+using DailyMart.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
@@ -59,20 +60,26 @@ namespace DailyMart.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Order order = db.Orders.Find(id);
-            if (order == null)
+            string userId = db.Orders.Where(o => o.Id == id).Select(o => o.UserId).FirstOrDefault();
+            OrderDetailViewModel model = new OrderDetailViewModel()
+            {
+                Order = db.Orders.Find(id),
+                User = UserManager.FindById(userId),
+                Address = db.Address.FirstOrDefault(o => o.UserId == userId)
+            };
+            if (model.Order == null)
             {
                 return HttpNotFound();
             }
-            if (order.OrderStatus == "Cancelled")
+            if (model.Order.OrderStatus == "Cancelled")
             {
-                ViewBag.AvailableStatuses = new List<string>() { order.OrderStatus };
+                ViewBag.AvailableStatuses = new List<string>() { model.Order.OrderStatus };
             }
             else
             {
                 ViewBag.AvailableStatuses = new List<string>() { "Pending", "InProgress", "Delivered" };
             }
-            return View(order);
+            return View(model);
         }
         public async Task<JsonResult> ChangeStatus(string status, int ID)
         {

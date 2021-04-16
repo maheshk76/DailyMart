@@ -54,7 +54,7 @@ namespace DailyMart
             //app.UseTwitterAuthentication(
             //   consumerKey: "",
             //   consumerSecret: "");
-
+            
             app.UseFacebookAuthentication(
                appId: ExternalLoginKeys.Facebook.Id,
                appSecret: ExternalLoginKeys.Facebook.Code);

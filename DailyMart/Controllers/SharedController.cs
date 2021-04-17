@@ -127,7 +127,11 @@ namespace DailyMart.Controllers
             var itemCount = 0;
             var q = 0;
             result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-
+            if (!User.Identity.IsAuthenticated)
+            {
+                result.Data = new { Success = false, Message = "User is not LoggedIn", CartLength = itemCount };
+                return result;
+            }
             if (Session["cart"] == null)
             {
                 List<Item> cart = new List<Item>();
@@ -228,6 +232,11 @@ namespace DailyMart.Controllers
             {
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
+            if (!User.Identity.IsAuthenticated)
+            {
+                result.Data = new { Success = false, Message = "Unable to add to Wishlist" };
+                return result;
+            }
             if (act == 1)
             {
                 Wishlist wishlist = new Wishlist()

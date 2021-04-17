@@ -15,11 +15,15 @@ $(".addTocartBtn").on("click", function () {
             console.log(response);
             if (response.Success) {
                 $("#cartProductsCount").html(response.CartLength);
+
+                swal("Done", "Product Added To Cart", "success");
             }
-            swal("Done", "Product Added To Cart", "success");
+            else {
+                window.location.href = "/Account/Login";
+            }
         })
         .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-            alert("FAIL to Add Product In Cart");
+            swal("Error", "Unable to add product to cart", "error");
         });
 });
 
@@ -52,11 +56,15 @@ $(".addTowish").on("click", function () {
                             break;
                     }
                 });
+
+                setTimeout(function () { refreshProduct(); /*window.location.reload()*/ }, 1500);
             }
-            setTimeout(function () { refreshProduct(); /*window.location.reload()*/ }, 1500);
+            else {
+                window.location.href = "/Account/Login";
+            }
         })
         .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-            alert("FAIL to Add Product to wishlist");
+            swal("Error","FAIL to Add Product to wishlist","error");
         });
 });
 $(".removefromwish").on("click", function () {
@@ -86,11 +94,12 @@ $(".removefromwish").on("click", function () {
                         break;
                 }
             });
+
+            setTimeout(function () { refreshProduct(); }, 1500);
         }
-        setTimeout(function () { refreshProduct(); }, 1500);
     })
         .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-            alert("FAIL to Remove from wishlist");
+            swal("Error","FAIL to Remove from wishlist","error");
         });
 });
     function refreshProduct() {

@@ -7,11 +7,14 @@ using System.IO;
 using DailyMart.Models;
 using DailyMart.ViewModels;
 using Microsoft.AspNet.Identity;
+using NLog;
+using NLog.Targets;
 
 namespace DailyMart.Controllers
 {
     public class SharedController : Controller
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         private readonly ApplicationDbContext ctx = new ApplicationDbContext();
         [Authorize(Roles = "Admin")]
         public JsonResult UploadImage()
@@ -262,6 +265,8 @@ namespace DailyMart.Controllers
         }
         public ActionResult Error()
         {
+            logger.Error("Error occurred at");
+            
             return View();
         }
     }

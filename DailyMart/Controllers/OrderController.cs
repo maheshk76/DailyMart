@@ -99,7 +99,7 @@ namespace DailyMart.Controllers
            
             var callbackUrl = Url.Action("MyOrders", "Home", null, protocol: Request.Url.Scheme);
             string body = "<html>Your order is " + status + "  <br/>Manage your orders here <a href=\"" + callbackUrl + "\">MyOrders</a></html>";
-            await UserManager.SendEmailAsync(order.UserId, "Order Placed", body);
+            await UserManager.SendEmailAsync(order.UserId, "Order #"+ID, body);
             return result;
         }
     }

@@ -64,33 +64,6 @@ namespace DailyMart
 
                 ));
 
-            bundles.Add(new ScriptBundle("~/bundles/rev-slider/js").Include(
-
-                "~/Content/javascript/rev-slider.js",
-                "~/Content/rev-slider/js/jquery.themepunch.tools.min.js",
-    "~/Content/rev-slider/js/jquery.themepunch.revolution.min.js",
-    "~/Content/javascript/rev-slider.js",
-   "~/Content/rev-slider/js/extensions/revolution.extension.actions.min.js",
-
-   "~/Content/rev-slider/js/extensions/revolution.extension.carousel.min.js",
-
-   "~/Content/rev-slider/js/extensions/revolution.extension.kenburn.min.js",
-
-   "~/Content/rev-slider/js/extensions/revolution.extension.layeranimation.min.js",
-
-   "~/Content/rev-slider/js/extensions/revolution.extension.migration.min.js",
-
-   "~/Content/rev-slider/js/extensions/revolution.extension.navigation.min.js",
-
-   "~/Content/rev-slider/js/extensions/revolution.extension.parallax.min.js",
-
-   "~/Content/rev-slider/js/extensions/revolution.extension.slideanims.min.js",
-
-   "~/Content/rev-slider/js/extensions/revolution.extension.video.min.js"
-
-
-               ));
-
         }
     }
 }
